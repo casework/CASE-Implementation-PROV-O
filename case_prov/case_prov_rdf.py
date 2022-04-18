@@ -44,6 +44,7 @@ NS_UCO_CORE = rdflib.Namespace(
 NS_UCO_IDENTITY = rdflib.Namespace(
     "https://ontology.unifiedcyberontology.org/uco/identity/"
 )
+NS_XSD = rdflib.XSD
 
 
 def main() -> None:
@@ -69,8 +70,11 @@ def main() -> None:
     in_graph.namespace_manager.bind("uco-core", NS_UCO_CORE)
     in_graph.namespace_manager.bind("uco-identity", NS_UCO_IDENTITY)
 
-    # Inherit prefixes defined in input context dictionary.
-    nsdict = {k: v for (k, v) in in_graph.namespace_manager.namespaces()}
+    # Inherit prefixes defined in input context dictionary.  Except, guarantee XSD is bound to "xsd" prefix instead of "xs".
+    nsdict: typing.Dict[str, rdflib.Namespace] = {"xsd": NS_XSD}
+    for (nskey, nsvalue) in in_graph.namespace_manager.namespaces():
+        if str(nsvalue) != str(NS_XSD):
+            nsdict[nskey] = nsvalue
     for prefix in nsdict:
         out_graph.namespace_manager.bind(prefix, nsdict[prefix])
 
