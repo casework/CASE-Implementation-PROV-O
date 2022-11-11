@@ -43,6 +43,7 @@ _logger = logging.getLogger(os.path.basename(__file__))
 
 NS_PROV = rdflib.Namespace("http://www.w3.org/ns/prov#")
 NS_RDFS = rdflib.RDFS
+NS_TIME = rdflib.TIME
 
 # This one isn't among the prov constants.
 PROV_COLLECTION = NS_PROV.Collection
@@ -771,6 +772,43 @@ WHERE {
                 kwargs = record[2]
                 dot_edge = pydot.Edge(node_id_1, node_id_2, **kwargs)
                 dot_graph.add_edge(dot_edge)
+
+    # Include any temporal ordering among the filtered nodes as hidden edges to impose ordering.
+    # This sorting assumes the non-normative alignment of TIME and PROV-O, available at:
+    # https://github.com/w3c/sdw/blob/gh-pages/time/rdf/time-prov.ttl
+    invisible_edge_node_pairs: typing.Set[
+        typing.Tuple[rdflib.URIRef, rdflib.URIRef]
+    ] = set()
+    n_predicate: rdflib.URIRef
+    order: str
+    for (n_predicate, order) in {
+        (NS_TIME.after, "rtl"),
+        (NS_TIME.before, "ltr"),
+        (NS_TIME.intervalAfter, "rtl"),
+        (NS_TIME.intervalBefore, "ltr"),
+    }:
+        for triple in graph.triples((None, n_predicate, None)):
+            if str(triple[0]) not in iris_used:
+                continue
+            if str(triple[2]) not in iris_used:
+                continue
+            if not isinstance(triple[0], rdflib.URIRef):
+                continue
+            if not isinstance(triple[2], rdflib.URIRef):
+                continue
+
+            if order == "ltr":
+                invisible_edge_node_pairs.add((triple[0], triple[2]))
+            else:
+                invisible_edge_node_pairs.add((triple[2], triple[0]))
+    _logger.debug(
+        "len(invisible_edge_node_pairs) = %d.", len(invisible_edge_node_pairs)
+    )
+    for invisible_edge_node_pair in invisible_edge_node_pairs:
+        node_id_1 = record[0]
+        node_id_2 = record[1]
+        dot_edge = pydot.Edge(node_id_1, node_id_2, style="invis")
+        dot_graph.add_edge(dot_edge)
 
     dot_graph.write_raw(args.out_dot)
 
