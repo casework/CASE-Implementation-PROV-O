@@ -21,7 +21,7 @@ This script renders PROV-O elements of a graph according to the graphic design e
 # get quoted.  This turns out to be a dot syntax error.  Need to report
 # this upstream to pydot.
 
-__version__ = "0.3.0"
+__version__ = "0.4.1"
 
 import argparse
 import collections
@@ -41,7 +41,7 @@ from case_utils.namespace import NS_CASE_INVESTIGATION
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
-NS_PROV = rdflib.Namespace("http://www.w3.org/ns/prov#")
+NS_PROV = rdflib.PROV
 NS_RDFS = rdflib.RDFS
 NS_TIME = rdflib.TIME
 
@@ -140,7 +140,7 @@ def main() -> None:
     filter_iris: typing.Optional[typing.Set[str]] = None
     if args.from_empty_set:
         filter_iris = set()
-        filter_iris.add("http://www.w3.org/ns/prov#EmptyCollection")
+        filter_iris.add(str(NS_PROV.EmptyCollection))
         select_query_actions_text = """\
 SELECT ?nDerivingAction
 WHERE {
@@ -171,7 +171,7 @@ WHERE {
   ?nEntity prov:wasDerivedFrom prov:EmptyCollection .
 }
 """
-        for (select_query_label, select_query_text) in [
+        for select_query_label, select_query_text in [
             ("activities", select_query_actions_text),
             ("agents", select_query_agents_text),
             ("entities", select_query_entities_text),
@@ -181,7 +181,9 @@ WHERE {
                 select_query_text, initNs=nsdict
             )
             for record in graph.query(select_query_object):
-                (n_include,) = record
+                assert isinstance(record, rdflib.query.ResultRow)
+                assert isinstance(record[0], rdflib.term.IdentifiedNode)
+                n_include = record[0]
                 filter_iri = n_include.toPython()
                 filter_iris.add(filter_iri)
             _logger.debug("len(filter_iris) = %d.", len(filter_iris))
@@ -201,6 +203,7 @@ WHERE {
                 query_ancestry_text, initNs=nsdict
             )
             for result in graph.query(query_ancestry_object):
+                assert isinstance(result, rdflib.query.ResultRow)
                 for result_member in result:
                     if not isinstance(result_member, rdflib.URIRef):
                         raise ValueError(
@@ -246,7 +249,7 @@ WHERE {
   ?nEndIRI prov:wasDerivedFrom* ?nPrecedingEntity .
 }
 """
-        for (select_query_label, select_query_text) in [
+        for select_query_label, select_query_text in [
             ("activities", select_query_actions_text),
             ("agents", select_query_agents_text),
             ("entities", select_query_entities_text),
@@ -261,7 +264,9 @@ WHERE {
                     select_query_object,
                     initBindings={"nEndIRI": rdflib.URIRef(terminal_iri)},
                 ):
-                    (n_include,) = record
+                    assert isinstance(record, rdflib.query.ResultRow)
+                    assert isinstance(record[0], rdflib.term.IdentifiedNode)
+                    n_include = record[0]
                     filter_iri = n_include.toPython()
                     filter_iris.add(filter_iri)
             _logger.debug("len(filter_iris) = %d.", len(filter_iris))
@@ -317,8 +322,14 @@ WHERE {
     select_query_object = rdflib.plugins.sparql.processor.prepareQuery(
         select_query_text, initNs=nsdict
     )
-    for record in graph.query(select_query_object):
-        (n_agent, l_label, l_comment) = record
+    for result in graph.query(select_query_object):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        assert result[1] is None or isinstance(result[1], rdflib.Literal)
+        assert result[2] is None or isinstance(result[2], rdflib.Literal)
+        n_agent = result[0]
+        l_label = result[1]
+        l_comment = result[2]
         agent_iri = n_agent.toPython()
         dot_label = "ID - " + graph.namespace_manager.qname(agent_iri)
         if l_label is not None:
@@ -328,13 +339,13 @@ WHERE {
         kwargs = clone_style(prov.constants.PROV_AGENT)
         kwargs["label"] = dot_label
         # _logger.debug("Agent %r.", agent_iri)
-        record = (iri_to_gv_node_id(agent_iri), kwargs)
-        nodes[agent_iri] = record
-        nodes_agents[agent_iri] = record
+        node_record = (iri_to_gv_node_id(agent_iri), kwargs)
+        nodes[agent_iri] = node_record
+        nodes_agents[agent_iri] = node_record
     # _logger.debug("nodes = %s." % pprint.pformat(nodes))
 
     # Find Collections, to adjust Entity rendering in the next block.
-    collection_iris = {"http://www.w3.org/ns/prov#EmptyCollection"}
+    collection_iris: typing.Set[str] = {str(NS_PROV.EmptyCollection)}
     select_query_text = """\
 SELECT ?nCollection
 WHERE {
@@ -345,16 +356,25 @@ WHERE {
         select_query_text, initNs=nsdict
     )
     for record in graph.query(select_query_object):
-        (n_collection,) = record
+        assert isinstance(record, rdflib.query.ResultRow)
+        assert isinstance(record[0], rdflib.term.IdentifiedNode)
+        n_collection = record[0]
         collection_iri = n_collection.toPython()
         collection_iris.add(collection_iri)
     # _logger.debug("len(collection_iris) = %d.", len(collection_iris))
 
     # Render Entities.
     # This loop operates differently from the others, to insert prov:EmptyCollection.
-    entity_iri_to_label_comment = dict()
+    entity_iri_to_label_comment: typing.Dict[
+        str,
+        typing.Tuple[
+            typing.Optional[rdflib.Literal],
+            typing.Optional[rdflib.Literal],
+            typing.Optional[rdflib.Literal],
+        ],
+    ] = dict()
     if not args.omit_empty_set:
-        entity_iri_to_label_comment["http://www.w3.org/ns/prov#EmptyCollection"] = (
+        entity_iri_to_label_comment[str(NS_PROV.EmptyCollection)] = (
             None,
             None,
             None,
@@ -380,28 +400,48 @@ WHERE {
     select_query_object = rdflib.plugins.sparql.processor.prepareQuery(
         select_query_text, initNs=nsdict
     )
+    l_entity_label: typing.Optional[rdflib.Literal]
+    l_entity_comment: typing.Optional[rdflib.Literal]
+    l_entity_exhibit_number: typing.Optional[rdflib.Literal]
     for record in graph.query(select_query_object):
-        (n_entity, l_label, l_comment, l_exhibit_number) = record
+        assert isinstance(record, rdflib.query.ResultRow)
+        assert isinstance(record[0], rdflib.term.IdentifiedNode)
+        assert record[1] is None or isinstance(record[1], rdflib.Literal)
+        assert record[2] is None or isinstance(record[2], rdflib.Literal)
+        assert record[3] is None or isinstance(record[3], rdflib.Literal)
+        n_entity = record[0]
+        l_entity_label = record[1]
+        l_entity_comment = record[2]
+        l_entity_exhibit_number = record[3]
+
         entity_iri = n_entity.toPython()
-        entity_iri_to_label_comment[entity_iri] = (l_label, l_comment, l_exhibit_number)
+        entity_iri_to_label_comment[entity_iri] = (
+            l_entity_label,
+            l_entity_comment,
+            l_entity_exhibit_number,
+        )
     for entity_iri in sorted(entity_iri_to_label_comment):
-        (l_label, l_comment, l_exhibit_number) = entity_iri_to_label_comment[entity_iri]
+        (
+            l_entity_label,
+            l_entity_comment,
+            l_entity_exhibit_number,
+        ) = entity_iri_to_label_comment[entity_iri]
         dot_label = "ID - " + graph.namespace_manager.qname(entity_iri)
-        if l_exhibit_number is not None:
-            dot_label += "\nExhibit - " + l_exhibit_number.toPython()
-        if l_label is not None:
-            dot_label += "\n" + l_label.toPython()
-        if l_comment is not None:
-            dot_label += "\n\n" + "\n".join(wrapper.wrap((l_comment.toPython())))
+        if l_entity_exhibit_number is not None:
+            dot_label += "\nExhibit - " + l_entity_exhibit_number.toPython()
+        if l_entity_label is not None:
+            dot_label += "\n" + l_entity_label.toPython()
+        if l_entity_comment is not None:
+            dot_label += "\n\n" + "\n".join(wrapper.wrap((l_entity_comment.toPython())))
         if entity_iri in collection_iris:
             kwargs = clone_style(PROV_COLLECTION)
         else:
             kwargs = clone_style(prov.constants.PROV_ENTITY)
         kwargs["label"] = dot_label
         # _logger.debug("Entity %r.", entity_iri)
-        record = (iri_to_gv_node_id(entity_iri), kwargs)
-        nodes[entity_iri] = record
-        nodes_entities[entity_iri] = record
+        entity_record = (iri_to_gv_node_id(entity_iri), kwargs)
+        nodes[entity_iri] = entity_record
+        nodes_entities[entity_iri] = entity_record
 
     # Render Activities.
     select_query_text = """\
@@ -430,7 +470,18 @@ WHERE {
         select_query_text, initNs=nsdict
     )
     for record in graph.query(select_query_object):
-        (n_activity, l_label, l_comment, l_start_time, l_end_time) = record
+        assert isinstance(record, rdflib.query.ResultRow)
+        assert isinstance(record[0], rdflib.term.IdentifiedNode)
+        assert record[1] is None or isinstance(record[1], rdflib.Literal)
+        assert record[2] is None or isinstance(record[2], rdflib.Literal)
+        assert record[3] is None or isinstance(record[3], rdflib.Literal)
+        assert record[4] is None or isinstance(record[4], rdflib.Literal)
+        n_activity = record[0]
+        l_label = record[1]
+        l_comment = record[2]
+        l_start_time = record[3]
+        l_end_time = record[4]
+
         activity_iri = n_activity.toPython()
         dot_label = "ID - " + graph.namespace_manager.qname(activity_iri)
         if l_label is not None:
@@ -449,9 +500,9 @@ WHERE {
         kwargs = clone_style(prov.constants.PROV_ACTIVITY)
         kwargs["label"] = dot_label
         # _logger.debug("Activity %r.", activity_iri)
-        record = (iri_to_gv_node_id(activity_iri), kwargs)
-        nodes[activity_iri] = record
-        nodes_activities[activity_iri] = record
+        activity_record = (iri_to_gv_node_id(activity_iri), kwargs)
+        nodes[activity_iri] = activity_record
+        nodes_activities[activity_iri] = activity_record
 
     def _render_edges(
         select_query_text: str,
@@ -463,15 +514,22 @@ WHERE {
             select_query_text, initNs=nsdict
         )
         for record in graph.query(select_query_object):
-            (n_thing_1, n_thing_2) = record
+            assert isinstance(record, rdflib.query.ResultRow)
+            assert isinstance(record[0], rdflib.term.IdentifiedNode)
+            assert isinstance(record[1], rdflib.term.IdentifiedNode)
+            n_thing_1 = record[0]
+            n_thing_2 = record[1]
+
             thing_1_iri = n_thing_1.toPython()
             thing_2_iri = n_thing_2.toPython()
             gv_node_id_1 = iri_to_gv_node_id(thing_1_iri)
             gv_node_id_2 = iri_to_gv_node_id(thing_2_iri)
-            record = (gv_node_id_1, gv_node_id_2, kwargs)
-            edges[thing_1_iri][thing_2_iri][short_edge_label] = record
+            edge_record = (gv_node_id_1, gv_node_id_2, kwargs)
+            edges[thing_1_iri][thing_2_iri][short_edge_label] = edge_record
             if supplemental_dict is not None:
-                supplemental_dict[thing_1_iri][thing_2_iri][short_edge_label] = record
+                supplemental_dict[thing_1_iri][thing_2_iri][
+                    short_edge_label
+                ] = edge_record
 
     # Render actedOnBehalfOf.
     select_query_text = """\
@@ -766,10 +824,10 @@ WHERE {
                 continue
             for short_edge_label in sorted(edges[iri_1][iri_2]):
                 # short_edge_label is intentionally not used aside from as a selector.  Edge labelling is left to pydot.
-                record = edges[iri_1][iri_2][short_edge_label]
-                node_id_1 = record[0]
-                node_id_2 = record[1]
-                kwargs = record[2]
+                edge_record = edges[iri_1][iri_2][short_edge_label]
+                node_id_1 = edge_record[0]
+                node_id_2 = edge_record[1]
+                kwargs = edge_record[2]
                 dot_edge = pydot.Edge(node_id_1, node_id_2, **kwargs)
                 dot_graph.add_edge(dot_edge)
 
