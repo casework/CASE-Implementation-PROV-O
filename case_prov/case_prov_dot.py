@@ -839,7 +839,7 @@ WHERE {
     ] = set()
     n_predicate: rdflib.URIRef
     order: str
-    for (n_predicate, order) in {
+    for n_predicate, order in {
         (NS_TIME.after, "rtl"),
         (NS_TIME.before, "ltr"),
         (NS_TIME.intervalAfter, "rtl"),
@@ -863,8 +863,8 @@ WHERE {
         "len(invisible_edge_node_pairs) = %d.", len(invisible_edge_node_pairs)
     )
     for invisible_edge_node_pair in invisible_edge_node_pairs:
-        node_id_1 = record[0]
-        node_id_2 = record[1]
+        node_id_1 = iri_to_gv_node_id(invisible_edge_node_pair[0])
+        node_id_2 = iri_to_gv_node_id(invisible_edge_node_pair[1])
         dot_edge = pydot.Edge(node_id_1, node_id_2, style="invis")
         dot_graph.add_edge(dot_edge)
 
