@@ -1,0 +1,203 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:after-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:after-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalAfter kb:after-i ;
+	.
+
+kb:before-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalBefore kb:before-j ;
+	.
+
+kb:before-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:contains-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:contains-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalContains kb:contains-i ;
+	.
+
+kb:during-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalDuring kb:during-j ;
+	.
+
+kb:during-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:equals-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalEquals kb:equals-j ;
+	.
+
+kb:equals-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:finishedBy-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:finishedBy-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalFinishedBy kb:finishedBy-i ;
+	.
+
+kb:finishes-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalFinishes kb:finishes-j ;
+	.
+
+kb:finishes-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:meets-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalMeets kb:meets-j ;
+	.
+
+kb:meets-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:metBy-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:metBy-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalMetBy kb:metBy-i ;
+	.
+
+kb:overlappedBy-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:overlappedBy-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalOverlappedBy kb:overlappedBy-i ;
+	.
+
+kb:overlaps-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalOverlaps kb:overlaps-j ;
+	.
+
+kb:overlaps-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:startedBy-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:startedBy-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalStartedBy kb:startedBy-i ;
+	.
+
+kb:starts-i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:intervalStarts kb:starts-j ;
+	.
+
+kb:starts-j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
