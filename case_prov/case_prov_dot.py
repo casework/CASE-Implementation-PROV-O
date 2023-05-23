@@ -336,9 +336,8 @@ WHERE {
         kwargs = clone_style(prov.constants.PROV_AGENT)
         kwargs["label"] = dot_label
         # _logger.debug("Agent %r.", agent_iri)
-        node_record = (iri_to_gv_node_id(agent_iri), kwargs)
-        nodes[agent_iri] = node_record
-        nodes_agents[agent_iri] = node_record
+        nodes[agent_iri] = kwargs
+        nodes_agents[agent_iri] = kwargs
     # _logger.debug("nodes = %s." % pprint.pformat(nodes))
 
     # Find Collections, to adjust Entity rendering in the next block.
@@ -436,9 +435,8 @@ WHERE {
             kwargs = clone_style(prov.constants.PROV_ENTITY)
         kwargs["label"] = dot_label
         # _logger.debug("Entity %r.", entity_iri)
-        entity_record = (iri_to_gv_node_id(entity_iri), kwargs)
-        nodes[entity_iri] = entity_record
-        nodes_entities[entity_iri] = entity_record
+        nodes[entity_iri] = kwargs
+        nodes_entities[entity_iri] = kwargs
 
     # Render Activities.
     select_query_text = """\
@@ -497,9 +495,8 @@ WHERE {
         kwargs = clone_style(prov.constants.PROV_ACTIVITY)
         kwargs["label"] = dot_label
         # _logger.debug("Activity %r.", activity_iri)
-        activity_record = (iri_to_gv_node_id(activity_iri), kwargs)
-        nodes[activity_iri] = activity_record
-        nodes_activities[activity_iri] = activity_record
+        nodes[activity_iri] = kwargs
+        nodes_activities[activity_iri] = kwargs
 
     def _render_edges(
         select_query_text: str,
@@ -806,8 +803,8 @@ WHERE {
     _logger.debug("len(iris_used) = %d.", len(iris_used))
 
     for iri in sorted(iris_used):
-        node_id = nodes[iri][0]
-        kwargs = nodes[iri][1]
+        node_id = iri_to_gv_node_id(iri)
+        kwargs = nodes[iri]
         dot_node = pydot.Node(node_id, **kwargs)
         dot_graph.add_node(dot_node)
     for iri_1 in sorted(iris_used):
