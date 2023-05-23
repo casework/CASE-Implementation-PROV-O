@@ -281,9 +281,7 @@ WHERE {
     # IRI -> IRI -> short predicate -> (pydot.Edge identifier, kwargs)
     EdgesType = typing.DefaultDict[
         str,
-        typing.DefaultDict[
-            str, typing.Dict[str, typing.Tuple[str, str, typing.Dict[str, typing.Any]]]
-        ],
+        typing.DefaultDict[str, typing.Dict[str, typing.Dict[str, typing.Any]]],
     ]
     edges: EdgesType = collections.defaultdict(lambda: collections.defaultdict(dict))
     edges_deriving: EdgesType = collections.defaultdict(
@@ -521,14 +519,9 @@ WHERE {
 
             thing_1_iri = n_thing_1.toPython()
             thing_2_iri = n_thing_2.toPython()
-            gv_node_id_1 = iri_to_gv_node_id(thing_1_iri)
-            gv_node_id_2 = iri_to_gv_node_id(thing_2_iri)
-            edge_record = (gv_node_id_1, gv_node_id_2, kwargs)
-            edges[thing_1_iri][thing_2_iri][short_edge_label] = edge_record
+            edges[thing_1_iri][thing_2_iri][short_edge_label] = kwargs
             if supplemental_dict is not None:
-                supplemental_dict[thing_1_iri][thing_2_iri][
-                    short_edge_label
-                ] = edge_record
+                supplemental_dict[thing_1_iri][thing_2_iri][short_edge_label] = kwargs
 
     # Render actedOnBehalfOf.
     select_query_text = """\
@@ -823,10 +816,9 @@ WHERE {
                 continue
             for short_edge_label in sorted(edges[iri_1][iri_2]):
                 # short_edge_label is intentionally not used aside from as a selector.  Edge labelling is left to pydot.
-                edge_record = edges[iri_1][iri_2][short_edge_label]
-                node_id_1 = edge_record[0]
-                node_id_2 = edge_record[1]
-                kwargs = edge_record[2]
+                node_id_1 = iri_to_gv_node_id(iri_1)
+                node_id_2 = iri_to_gv_node_id(iri_2)
+                kwargs = edges[iri_1][iri_2][short_edge_label]
                 dot_edge = pydot.Edge(node_id_1, node_id_2, **kwargs)
                 dot_graph.add_edge(dot_edge)
 
