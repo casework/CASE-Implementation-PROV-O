@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:Association-0c97ffab-0909-5eb2-8b52-d52f2879bae0
@@ -628,6 +629,7 @@ kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95
 	prov:startedAtTime "2017-06-21T22:36:24.350000+00:00"^^xsd:dateTime ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:athens-warrant-3a0c2e90-d6ad-412d-a4d2-e0997e640305 ;
+	uco-core:name "preserved" ;
 	.
 
 kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89
@@ -651,6 +653,7 @@ kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89
 		;
 	prov:wasAssociatedWith kb:tool-e39f1bf1-8abd-4411-bc05-36f03192bc40 ;
 	prov:wasInformedBy kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
+	uco-core:name "parsed" ;
 	.
 
 kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997
@@ -674,6 +677,7 @@ kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997
 		;
 	prov:wasAssociatedWith kb:tool-d38cc165-d21d-40e3-8080-174671a5f6f6 ;
 	prov:wasInformedBy kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62 ;
+	uco-core:name "extracted" ;
 	.
 
 kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62
@@ -696,6 +700,7 @@ kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62
 		;
 	prov:wasAssociatedWith kb:athens-warrant-3a0c2e90-d6ad-412d-a4d2-e0997e640305 ;
 	prov:wasInformedBy kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95 ;
+	uco-core:name "transferred" ;
 	.
 
 kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe
@@ -722,6 +727,7 @@ kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe
 		;
 	prov:wasAssociatedWith kb:tool-5316a112-dcd3-4515-a14e-06396126ed98 ;
 	prov:wasInformedBy kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997 ;
+	uco-core:name "extracted" ;
 	.
 
 kb:investigative-action-relationship-97b9d9ac-deeb-45ea-8f81-6acda53c9b3e
@@ -742,10 +748,12 @@ kb:investigative-action-relationship-97b9d9ac-deeb-45ea-8f81-6acda53c9b3e
 
 kb:investigator-6f465841-07f4-40a6-b9ac-7b069a7cf196
 	a prov:Agent ;
+	uco-core:name "Investigator" ;
 	.
 
 kb:investigator-72986b46-69f5-4767-878c-d4894be9069e
 	a prov:Agent ;
+	uco-core:name "Investigator" ;
 	.
 
 kb:provenance-record-4fc5478b-b6f3-440c-9d09-d7f8363c6792
@@ -753,7 +761,6 @@ kb:provenance-record-4fc5478b-b6f3-440c-9d09-d7f8363c6792
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Mobile device used by murder victim Cassandra" ;
 	prov:hadMember kb:cassandra-device-d2ac1471-2d0f-4032-8cca-53d317600cba ;
 	prov:qualifiedAttribution kb:Attribution-f00494aa-f783-5078-9063-37a65d7d06df ;
 	prov:qualifiedDerivation kb:Derivation-8f90dce3-4d15-5db4-bc3b-bec21fd8b24c ;
@@ -762,6 +769,7 @@ kb:provenance-record-4fc5478b-b6f3-440c-9d09-d7f8363c6792
 	prov:wasDerivedFrom prov:EmptyCollection ;
 	prov:wasGeneratedBy kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95 ;
 	case-investigation:exhibitNumber "ArgosPD-20170622-001A" ;
+	uco-core:description "Mobile device used by murder victim Cassandra" ;
 	.
 
 kb:provenance-record-728090d9-6a05-42e5-9b7e-d4bb1ff5a181
@@ -769,7 +777,6 @@ kb:provenance-record-728090d9-6a05-42e5-9b7e-d4bb1ff5a181
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Android smartphone seized by Argos PD" ;
 	prov:hadMember kb:cassandra-device-d2ac1471-2d0f-4032-8cca-53d317600cba ;
 	prov:qualifiedAttribution kb:Attribution-1de75a56-1319-5c0e-9dd3-3043bf2a8e3a ;
 	prov:qualifiedDerivation
@@ -784,6 +791,7 @@ kb:provenance-record-728090d9-6a05-42e5-9b7e-d4bb1ff5a181
 		;
 	prov:wasGeneratedBy kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62 ;
 	case-investigation:exhibitNumber "AthensPD-2017220601" ;
+	uco-core:description "Android smartphone seized by Argos PD" ;
 	.
 
 kb:provenance-record-9a1b4927-15e7-4985-8bd6-734c160d1503
@@ -791,7 +799,6 @@ kb:provenance-record-9a1b4927-15e7-4985-8bd6-734c160d1503
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Parsed messages from mobile device used by murder victim Cassandra" ;
 	prov:hadMember
 		kb:argive-elder1-phoneaccnt-10ecce02-71b9-4623-8fbc-1f2914c79362 ,
 		kb:argive-elder2-phoneaccnt-7d296cea-00aa-4f42-b357-281a64df01e6 ,
@@ -812,6 +819,7 @@ kb:provenance-record-9a1b4927-15e7-4985-8bd6-734c160d1503
 		;
 	prov:wasGeneratedBy kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	case-investigation:exhibitNumber "ArgosPD-20170622-001A-100" ;
+	uco-core:description "Parsed messages from mobile device used by murder victim Cassandra" ;
 	.
 
 kb:provenance-record-bfea7cae-055e-46d9-8549-22ad27328137
@@ -819,7 +827,6 @@ kb:provenance-record-bfea7cae-055e-46d9-8549-22ad27328137
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Forensic duplicate of mobile device used by murder victim Cassandra" ;
 	prov:hadMember kb:cassandra-mobiledevice-forensicduplicate-95d5a618-8265-4cb8-8140-ac8ea281c536 ;
 	prov:qualifiedAttribution kb:Attribution-abb893c6-3392-5268-85f7-95989a5187b6 ;
 	prov:qualifiedDerivation
@@ -834,6 +841,7 @@ kb:provenance-record-bfea7cae-055e-46d9-8549-22ad27328137
 		;
 	prov:wasGeneratedBy kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997 ;
 	case-investigation:exhibitNumber "AthensPD-2017220601-02" ;
+	uco-core:description "Forensic duplicate of mobile device used by murder victim Cassandra" ;
 	.
 
 kb:provenance-record-dcbca583-84c5-4d29-a232-f78bcdc6058b
@@ -841,7 +849,6 @@ kb:provenance-record-dcbca583-84c5-4d29-a232-f78bcdc6058b
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "SMS SQLite database on mobile device used by murder victim Cassandra" ;
 	prov:hadMember
 		kb:cassandra-mobiledevice-mmssms-1ab55cb8-581d-4ebc-99e4-4db8d4261535 ,
 		kb:investigative-action-relationship-97b9d9ac-deeb-45ea-8f81-6acda53c9b3e
@@ -859,6 +866,7 @@ kb:provenance-record-dcbca583-84c5-4d29-a232-f78bcdc6058b
 		;
 	prov:wasGeneratedBy kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
 	case-investigation:exhibitNumber "AthensPD-2017220601-02-03" ;
+	uco-core:description "SMS SQLite database on mobile device used by murder victim Cassandra" ;
 	.
 
 kb:sms-message-4e9bfb9e-c4b4-4ebd-a7b0-a49eba0811a6
@@ -904,6 +912,7 @@ kb:tool-5316a112-dcd3-4515-a14e-06396126ed98
 		;
 	prov:actedOnBehalfOf kb:investigator-72986b46-69f5-4767-878c-d4894be9069e ;
 	prov:qualifiedDelegation kb:Delegation-f5fcb80d-0e23-5fec-bc06-3f52245ce831 ;
+	uco-core:name "Plaso" ;
 	.
 
 kb:tool-d38cc165-d21d-40e3-8080-174671a5f6f6
@@ -913,6 +922,7 @@ kb:tool-d38cc165-d21d-40e3-8080-174671a5f6f6
 		;
 	prov:actedOnBehalfOf kb:investigator-72986b46-69f5-4767-878c-d4894be9069e ;
 	prov:qualifiedDelegation kb:Delegation-3ee90c46-916f-5561-8145-a38fd9e18b11 ;
+	uco-core:name "MobileExtractor" ;
 	.
 
 kb:tool-e39f1bf1-8abd-4411-bc05-36f03192bc40
@@ -922,5 +932,6 @@ kb:tool-e39f1bf1-8abd-4411-bc05-36f03192bc40
 		;
 	prov:actedOnBehalfOf kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
 	prov:qualifiedDelegation kb:Delegation-84155f56-7bbe-53c5-9551-11a719485f44 ;
+	uco-core:name "sqlite/android_sms" ;
 	.
 

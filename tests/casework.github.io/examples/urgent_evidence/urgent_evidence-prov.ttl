@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:Association-04eb3476-a17f-5c07-ac57-1100809aed02
@@ -956,7 +957,6 @@ kb:Usage-f5c18d5b-87cf-55bd-beb4-6d916c59c3dc
 
 kb:action-uuid-1
 	a prov:Activity ;
-	rdfs:comment "Exhibit submitted for Kiosk examination" ;
 	prov:endedAtTime "2019-01-01T14:00:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-d482b418-e457-5a1b-aba9-c41cb5ab8c82 ;
 	prov:qualifiedEnd kb:End-4bed3f73-208a-5c20-8574-d6cbbf9e2d4c ;
@@ -964,11 +964,11 @@ kb:action-uuid-1
 	prov:qualifiedUsage kb:Usage-d1aff435-6037-5171-ab87-88907445afda ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:officer-uuid-1 ;
+	uco-core:description "Exhibit submitted for Kiosk examination" ;
 	.
 
 kb:action-uuid-10
 	a prov:Activity ;
-	rdfs:comment "Report DVD Generated as associated exhibit" ;
 	prov:endedAtTime "2019-01-01T15:05:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-662e7d7e-0102-553d-a116-f87129653e0f ;
 	prov:qualifiedCommunication
@@ -994,11 +994,12 @@ kb:action-uuid-10
 		kb:action-uuid-7 ,
 		kb:action-uuid-9
 		;
+	uco-core:description "Report DVD Generated as associated exhibit" ;
+	uco-core:name "burned" ;
 	.
 
 kb:action-uuid-11
 	a prov:Activity ;
-	rdfs:comment "DVD Report sealed" ;
 	prov:endedAtTime "2019-01-01T15:10:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-7ec9e20b-0f0c-5f23-9a4b-cc8c413001f3 ;
 	prov:qualifiedEnd kb:End-894c1ab4-9b4a-54ef-9f25-baca59e26fb3 ;
@@ -1006,11 +1007,11 @@ kb:action-uuid-11
 	prov:qualifiedUsage kb:Usage-71fc2006-ba1b-5fa3-9815-72e6b382f695 ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:officer-uuid-3 ;
+	uco-core:description "DVD Report sealed" ;
 	.
 
 kb:action-uuid-12
 	a prov:Activity ;
-	rdfs:comment "Witness statement completed" ;
 	prov:endedAtTime "2019-01-01T15:15:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-fd84559b-636b-558b-a057-1d933aca72ba ;
 	prov:qualifiedCommunication kb:Communication-2ea6d41f-0c72-5155-91f6-ed7eef9f63ae ;
@@ -1026,11 +1027,11 @@ kb:action-uuid-12
 		;
 	prov:wasAssociatedWith kb:officer-uuid-3 ;
 	prov:wasInformedBy kb:action-uuid-10 ;
+	uco-core:description "Witness statement completed" ;
 	.
 
 kb:action-uuid-13
 	a prov:Activity ;
-	rdfs:comment "Sealed Exhibit handed the OIC & Transfer documentation signed" ;
 	prov:endedAtTime "2019-01-01T15:20:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-be77f131-4518-591e-ab61-60f182b0019c ;
 	prov:qualifiedCommunication kb:Communication-7b3ba65f-879f-54f6-85d8-b03f2080cdee ;
@@ -1046,11 +1047,12 @@ kb:action-uuid-13
 		;
 	prov:wasAssociatedWith kb:officer-uuid-3 ;
 	prov:wasInformedBy kb:action-uuid-3 ;
+	uco-core:description "Sealed Exhibit handed the OIC & Transfer documentation signed" ;
+	uco-core:name "transferred" ;
 	.
 
 kb:action-uuid-2
 	a prov:Activity ;
-	rdfs:comment "Exhibit seal checks (passed) & Exhibit receipted in lab" ;
 	prov:endedAtTime "2019-01-01T14:05:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-123a16d8-9793-56cb-a8aa-40df74ccdbd8 ;
 	prov:qualifiedCommunication kb:Communication-aed5baff-ff26-5caa-beea-c73e7f3b6c6e ;
@@ -1066,11 +1068,12 @@ kb:action-uuid-2
 		;
 	prov:wasAssociatedWith kb:officer-uuid-2 ;
 	prov:wasInformedBy kb:action-uuid-1 ;
+	uco-core:description "Exhibit seal checks (passed) & Exhibit receipted in lab" ;
+	uco-core:name "transferred" ;
 	.
 
 kb:action-uuid-3
 	a prov:Activity ;
-	rdfs:comment "Exhibit assigned to Kiosk technician" ;
 	prov:endedAtTime "2019-01-01T14:05:30+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-2d74acd2-f231-578a-9995-301ade08a37e ;
 	prov:qualifiedCommunication kb:Communication-661c4b54-3e3b-5f41-9213-8d4e441e84ae ;
@@ -1086,11 +1089,12 @@ kb:action-uuid-3
 		;
 	prov:wasAssociatedWith kb:officer-uuid-2 ;
 	prov:wasInformedBy kb:action-uuid-1 ;
+	uco-core:description "Exhibit assigned to Kiosk technician" ;
+	uco-core:name "assigned" ;
 	.
 
 kb:action-uuid-4
 	a prov:Activity ;
-	rdfs:comment "Sealed Exhibit Photographed" ;
 	prov:endedAtTime "2019-01-01T14:15:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-30baa5cc-e7bd-5924-9ce5-3b1b74a1ece8 ,
@@ -1109,11 +1113,12 @@ kb:action-uuid-4
 		;
 	prov:wasAssociatedWith kb:camera-uuid-1 ;
 	prov:wasInformedBy kb:action-uuid-3 ;
+	uco-core:description "Sealed Exhibit Photographed" ;
+	uco-core:name "photographed" ;
 	.
 
 kb:action-uuid-5
 	a prov:Activity ;
-	rdfs:comment "Exhibit Unsealed" ;
 	prov:endedAtTime "2019-01-01T14:20:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-3d156b08-fa03-5bc6-9297-b665046a29f2 ;
 	prov:qualifiedEnd kb:End-1cde7fe2-690b-5cd1-8636-cecc1eb25abb ;
@@ -1121,11 +1126,11 @@ kb:action-uuid-5
 	prov:qualifiedUsage kb:Usage-3f02ab35-d0a2-5312-a5de-8aaa8da6812d ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:officer-uuid-3 ;
+	uco-core:description "Exhibit Unsealed" ;
 	.
 
 kb:action-uuid-6
 	a prov:Activity ;
-	rdfs:comment "Unsealed Exhibit Photographed" ;
 	prov:endedAtTime "2019-01-01T14:21:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-6eff4464-ec23-5beb-86ee-c5f7ccbd7d11 ,
@@ -1144,11 +1149,12 @@ kb:action-uuid-6
 		;
 	prov:wasAssociatedWith kb:camera-uuid-1 ;
 	prov:wasInformedBy kb:action-uuid-3 ;
+	uco-core:description "Unsealed Exhibit Photographed" ;
+	uco-core:name "photographed" ;
 	.
 
 kb:action-uuid-7
 	a prov:Activity ;
-	rdfs:comment "Exhibit Connected to Kiosk & process started; exhibit disconnected at conclusion" ;
 	prov:endedAtTime "2019-01-01T14:55:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-22c19332-a26b-5f7a-b8bd-9392e001f13d ,
@@ -1168,11 +1174,12 @@ kb:action-uuid-7
 		;
 	prov:wasAssociatedWith kb:kiosk-uuid-1 ;
 	prov:wasInformedBy kb:action-uuid-3 ;
+	uco-core:description "Exhibit Connected to Kiosk & process started; exhibit disconnected at conclusion" ;
+	uco-core:name "processed" ;
 	.
 
 kb:action-uuid-8
 	a prov:Activity ;
-	rdfs:comment "Exhibit Resealed" ;
 	prov:endedAtTime "2019-01-01T15:00:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-cdf69915-4135-5158-a0d1-a6a39460b5dd ;
 	prov:qualifiedEnd kb:End-04a9d0cc-ff01-5988-94bf-bf8c4580d582 ;
@@ -1180,11 +1187,11 @@ kb:action-uuid-8
 	prov:qualifiedUsage kb:Usage-76381af4-8823-55c7-ae24-3333f827681f ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:officer-uuid-3 ;
+	uco-core:description "Exhibit Resealed" ;
 	.
 
 kb:action-uuid-9
 	a prov:Activity ;
-	rdfs:comment "Picture selected, via kiosk review screen, from those extracted from exhibit" ;
 	prov:endedAtTime "2019-01-01T15:03:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-04eb3476-a17f-5c07-ac57-1100809aed02 ,
@@ -1205,6 +1212,8 @@ kb:action-uuid-9
 		;
 	prov:wasAssociatedWith kb:kiosk-uuid-1 ;
 	prov:wasInformedBy kb:action-uuid-7 ;
+	uco-core:description "Picture selected, via kiosk review screen, from those extracted from exhibit" ;
+	uco-core:name "selected" ;
 	.
 
 kb:camera-uuid-1
@@ -1289,7 +1298,6 @@ kb:extracted-file-uuid-3
 
 kb:file-uuid-1
 	a prov:Entity ;
-	rdfs:comment "Intake Form" ;
 	prov:qualifiedAttribution kb:Attribution-2c417348-8f05-53d7-a88f-f65e7ddfbf22 ;
 	prov:qualifiedDerivation
 		kb:Derivation-1d03a1bc-420f-51b7-b620-7a510da6f28a ,
@@ -1302,11 +1310,11 @@ kb:file-uuid-1
 		kb:subject-device-uuid-1
 		;
 	prov:wasGeneratedBy kb:action-uuid-2 ;
+	uco-core:description "Intake Form" ;
 	.
 
 kb:file-uuid-2
 	a prov:Entity ;
-	rdfs:comment "Kiosk report" ;
 	prov:qualifiedAttribution kb:Attribution-3244efe8-c8da-53e5-b843-9a8005ffe732 ;
 	prov:qualifiedDerivation
 		kb:Derivation-4454b361-5390-57f1-a59e-a88212dc8ab4 ,
@@ -1319,11 +1327,11 @@ kb:file-uuid-2
 		kb:subject-device-uuid-1
 		;
 	prov:wasGeneratedBy kb:action-uuid-7 ;
+	uco-core:description "Kiosk report" ;
 	.
 
 kb:file-uuid-3
 	a prov:Entity ;
-	rdfs:comment "Witness statement" ;
 	prov:qualifiedAttribution kb:Attribution-e63b9846-109e-5983-a4fb-27023c7d257a ;
 	prov:qualifiedDerivation
 		kb:Derivation-99b14de5-0698-510a-8dbe-3c7ecdb209be ,
@@ -1336,6 +1344,7 @@ kb:file-uuid-3
 		kb:provenance-record-uuid-7
 		;
 	prov:wasGeneratedBy kb:action-uuid-12 ;
+	uco-core:description "Witness statement" ;
 	.
 
 kb:file2-uuid-1

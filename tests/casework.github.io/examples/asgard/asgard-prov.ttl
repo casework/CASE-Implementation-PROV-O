@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:Association-166a48b0-8086-5484-a950-d18ee9c731da
@@ -160,6 +161,7 @@ kb:configuredtool-4c21b431-1746-410b-bc54-f2fd6a9b2516
 		;
 	prov:actedOnBehalfOf kb:forensicexaminer-acf60326-de21-4a85-9909-692f1780470f ;
 	prov:qualifiedDelegation kb:Delegation-95c33170-fdf6-50ea-b6ea-f4908fc6615f ;
+	uco-core:name "Embedded Device Extrator" ;
 	.
 
 kb:device-9420af3b-4d3a-4239-88fc-d33feec8dc4f
@@ -204,11 +206,11 @@ kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd
 	prov:startedAtTime "2019-03-30T22:36:24.350000+00:00"^^xsd:dateTime ;
 	prov:used prov:EmptyCollection ;
 	prov:wasAssociatedWith kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
+	uco-core:name "preserved" ;
 	.
 
 kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49
 	a prov:Activity ;
-	rdfs:comment "Suspect device physical acquisition" ;
 	prov:endedAtTime "2019-03-30T22:47:32+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-899eb981-02fd-557f-bb92-108eb1d97066 ,
@@ -228,6 +230,8 @@ kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49
 		;
 	prov:wasAssociatedWith kb:configuredtool-4c21b431-1746-410b-bc54-f2fd6a9b2516 ;
 	prov:wasInformedBy kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
+	uco-core:description "Suspect device physical acquisition" ;
+	uco-core:name "acquired" ;
 	.
 
 kb:investigator-899bb310-f5cd-4ab5-9e96-1234a37ed1da
@@ -248,7 +252,6 @@ kb:provenancerecord-a2a5098c-43fd-4556-a437-2d3ddb821a53
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Suspect device found near Bifrost Bridge after disruption" ;
 	prov:hadMember kb:forensicimage-68b52e60-1f7f-4f22-8c5e-dd0492d3ee07 ;
 	prov:qualifiedAttribution kb:Attribution-c1053f1d-b4f0-5d72-a4a2-ef2a67987eda ;
 	prov:qualifiedDerivation
@@ -263,6 +266,7 @@ kb:provenancerecord-a2a5098c-43fd-4556-a437-2d3ddb821a53
 		;
 	prov:wasGeneratedBy kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	case-investigation:exhibitNumber "AsgardPD-20190330-001A" ;
+	uco-core:description "Suspect device found near Bifrost Bridge after disruption" ;
 	.
 
 kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa
@@ -270,7 +274,6 @@ kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Suspect device found near Bifrost Bridge after disruption" ;
 	prov:hadMember kb:device-9420af3b-4d3a-4239-88fc-d33feec8dc4f ;
 	prov:qualifiedAttribution kb:Attribution-b6251b8d-f6d1-5d49-aebe-d925d6f3ed97 ;
 	prov:qualifiedDerivation kb:Derivation-c6b5212c-76e7-5dff-a47b-167ee05facd6 ;
@@ -279,5 +282,6 @@ kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa
 	prov:wasDerivedFrom prov:EmptyCollection ;
 	prov:wasGeneratedBy kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	case-investigation:exhibitNumber "AsgardPD-20190330-001A" ;
+	uco-core:description "Suspect device found near Bifrost Bridge after disruption" ;
 	.
 

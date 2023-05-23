@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:Association-0561cf99-f18b-548f-bde1-45cd35fc20a2
@@ -433,6 +434,7 @@ kb:investigativeaction1-65b73dc0-8a4b-4be1-92b6-c45bedf1eb49
 	prov:startedAtTime "2013-05-12T17:14:45.100000+00:00"^^xsd:dateTime ;
 	prov:used kb:nistimage-05a9a342-6748-4e8b-97e2-6f4ec97e1eac ;
 	prov:wasAssociatedWith kb:tool-a40d8626-82d3-4f10-aa55-12b6553088cc ;
+	uco-core:name "carved" ;
 	.
 
 kb:investigativeaction2-9eadcaa9-4ebe-4e26-a6f0-a87c6ce5940d
@@ -460,6 +462,7 @@ kb:investigativeaction2-9eadcaa9-4ebe-4e26-a6f0-a87c6ce5940d
 		;
 	prov:wasAssociatedWith kb:tool-a40d8626-82d3-4f10-aa55-12b6553088cc ;
 	prov:wasInformedBy kb:investigativeaction1-65b73dc0-8a4b-4be1-92b6-c45bedf1eb49 ;
+	uco-core:name "repaired" ;
 	.
 
 kb:nistimage-05a9a342-6748-4e8b-97e2-6f4ec97e1eac
@@ -471,7 +474,6 @@ kb:provenancerecord1-ae596806-cbe5-4c4c-8f54-33630f178eeb
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Reconstructed JPG File" ;
 	prov:hadMember
 		kb:file-5c53068f-0843-4f51-8a2c-0a81a8ff86f8 ,
 		kb:relationship0-1d944e25-c488-41e4-90a3-c3a2cfcd7697 ,
@@ -495,6 +497,7 @@ kb:provenancerecord1-ae596806-cbe5-4c4c-8f54-33630f178eeb
 		;
 	prov:wasGeneratedBy kb:investigativeaction2-9eadcaa9-4ebe-4e26-a6f0-a87c6ce5940d ;
 	case-investigation:exhibitNumber "ESC-976553402389-01" ;
+	uco-core:description "Reconstructed JPG File" ;
 	.
 
 kb:provenancerecord2-2eb22784-63ee-46ce-8a59-eb3820431109
@@ -502,7 +505,6 @@ kb:provenancerecord2-2eb22784-63ee-46ce-8a59-eb3820431109
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Carved data fragments" ;
 	prov:hadMember
 		kb:fragment0-b0606dc6-b89b-440e-8344-41cf6bc54f15 ,
 		kb:fragment1-8428b15f-f61f-47f8-9659-98b37f3507ad ,
@@ -518,6 +520,7 @@ kb:provenancerecord2-2eb22784-63ee-46ce-8a59-eb3820431109
 	prov:wasDerivedFrom kb:nistimage-05a9a342-6748-4e8b-97e2-6f4ec97e1eac ;
 	prov:wasGeneratedBy kb:investigativeaction1-65b73dc0-8a4b-4be1-92b6-c45bedf1eb49 ;
 	case-investigation:exhibitNumber "ESC-976553402389-02" ;
+	uco-core:description "Carved data fragments" ;
 	.
 
 kb:relationship0-1d944e25-c488-41e4-90a3-c3a2cfcd7697
