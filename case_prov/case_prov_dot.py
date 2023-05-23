@@ -271,6 +271,31 @@ WHERE {
             _logger.debug("len(filter_iris) = %d.", len(filter_iris))
     _logger.debug("filter_iris = %s.", pprint.pformat(filter_iris))
 
+    # Define dicts to hold 1-to-manies of various string Literals -
+    # comments, labels, and exhibit numbers.  These Literals will be
+    # rendered into the Dot label string.
+    AnnoMapType = typing.DefaultDict[
+        rdflib.term.IdentifiedNode, typing.Set[rdflib.Literal]
+    ]
+    n_thing_to_l_comments: AnnoMapType = collections.defaultdict(set)
+    n_thing_to_l_labels: AnnoMapType = collections.defaultdict(set)
+    n_provenance_record_to_l_exhibit_numbers: AnnoMapType = collections.defaultdict(set)
+
+    for triple in graph.triples((None, NS_RDFS.comment, None)):
+        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
+        assert isinstance(triple[2], rdflib.Literal)
+        n_thing_to_l_comments[triple[0]].add(triple[2])
+
+    for triple in graph.triples((None, NS_RDFS.label, None)):
+        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
+        assert isinstance(triple[2], rdflib.Literal)
+        n_thing_to_l_labels[triple[0]].add(triple[2])
+
+    for triple in graph.triples((None, NS_CASE_INVESTIGATION.exhibitNumber, None)):
+        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
+        assert isinstance(triple[2], rdflib.Literal)
+        n_provenance_record_to_l_exhibit_numbers[triple[0]].add(triple[2])
+
     # The nodes and edges dicts need to store information to construct, not constructed objects.  There is a hidden dependency for edges of a parent graph object not available until after some filtering decisions are made.
     # IRI -> (pydot.Node identifier, kwargs)
     nodes = dict()
@@ -303,19 +328,41 @@ WHERE {
         width=args.wrap_comment,
     )
 
+    # Add some general-purpose subroutines for augmenting Dot node labels.
+
+    def _annotate_comments(
+        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
+    ) -> None:
+        """
+        Render `rdfs:comment`s.
+        """
+        if n_thing in n_thing_to_l_comments:
+            for l_comment in sorted(n_thing_to_l_comments[n_thing]):
+                label_parts.append("\n")
+                label_parts.append("\n")
+                label_part = "\n".join(wrapper.wrap(str(l_comment)))
+                label_parts.append(label_part)
+
+    def _annotate_labels(
+        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
+    ) -> None:
+        """
+        Render `rdfs:label`s.
+
+        Unlike `rdfs:comment`s and `uco-core:description`s, labels don't have a blank line separating them.  This is just a design choice to keep what might be shorter string annotations together.
+        """
+        if n_thing in n_thing_to_l_labels:
+            label_parts.append("\n")
+            for l_label in sorted(n_thing_to_l_labels[n_thing]):
+                label_parts.append("\n")
+                label_part = "\n".join(wrapper.wrap(str(l_label)))
+                label_parts.append(label_part)
+
     # Render Agents.
     select_query_text = """\
-SELECT ?nAgent ?lLabel ?lComment
+SELECT ?nAgent
 WHERE {
   ?nAgent a/rdfs:subClassOf* prov:Agent .
-
-  OPTIONAL {
-    ?nAgent rdfs:label ?lLabel .
-  }
-
-  OPTIONAL {
-    ?nAgent rdfs:comment ?lComment .
-  }
 }
 """
     select_query_object = rdflib.plugins.sparql.processor.prepareQuery(
@@ -324,19 +371,18 @@ WHERE {
     for result in graph.query(select_query_object):
         assert isinstance(result, rdflib.query.ResultRow)
         assert isinstance(result[0], rdflib.term.IdentifiedNode)
-        assert result[1] is None or isinstance(result[1], rdflib.Literal)
-        assert result[2] is None or isinstance(result[2], rdflib.Literal)
         n_agent = result[0]
-        l_label = result[1]
-        l_comment = result[2]
         agent_iri = n_agent.toPython()
-        dot_label = "ID - " + graph.namespace_manager.qname(agent_iri)
-        if l_label is not None:
-            dot_label += "\n" + l_label.toPython()
-        if l_comment is not None:
-            dot_label += "\n\n" + "\n".join(wrapper.wrap((l_comment.toPython())))
+
         kwargs = clone_style(prov.constants.PROV_AGENT)
+
+        # Build label.
+        dot_label_parts = ["ID - " + graph.namespace_manager.qname(agent_iri)]
+        _annotate_labels(n_agent, dot_label_parts)
+        _annotate_comments(n_agent, dot_label_parts)
+        dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
+
         # _logger.debug("Agent %r.", agent_iri)
         node_record = (iri_to_gv_node_id(agent_iri), kwargs)
         nodes[agent_iri] = node_record
@@ -364,79 +410,44 @@ WHERE {
 
     # Render Entities.
     # This loop operates differently from the others, to insert prov:EmptyCollection.
-    entity_iri_to_label_comment: typing.Dict[
-        str,
-        typing.Tuple[
-            typing.Optional[rdflib.Literal],
-            typing.Optional[rdflib.Literal],
-            typing.Optional[rdflib.Literal],
-        ],
-    ] = dict()
+    n_entities: typing.Set[rdflib.term.IdentifiedNode] = set()
     if not args.omit_empty_set:
-        entity_iri_to_label_comment[str(NS_PROV.EmptyCollection)] = (
-            None,
-            None,
-            None,
-        )
+        n_entities.add(NS_PROV.EmptyCollection)
     select_query_text = """\
-SELECT ?nEntity ?lLabel ?lComment ?lExhibitNumber
+SELECT ?nEntity
 WHERE {
   ?nEntity a/rdfs:subClassOf* prov:Entity .
-
-  OPTIONAL {
-    ?nEntity rdfs:label ?lLabel .
-  }
-
-  OPTIONAL {
-    ?nEntity rdfs:comment ?lComment .
-  }
-
-  OPTIONAL {
-    ?nEntity case-investigation:exhibitNumber ?lExhibitNumber .
-  }
 }
 """
     select_query_object = rdflib.plugins.sparql.processor.prepareQuery(
         select_query_text, initNs=nsdict
     )
-    l_entity_label: typing.Optional[rdflib.Literal]
-    l_entity_comment: typing.Optional[rdflib.Literal]
-    l_entity_exhibit_number: typing.Optional[rdflib.Literal]
     for record in graph.query(select_query_object):
         assert isinstance(record, rdflib.query.ResultRow)
         assert isinstance(record[0], rdflib.term.IdentifiedNode)
-        assert record[1] is None or isinstance(record[1], rdflib.Literal)
-        assert record[2] is None or isinstance(record[2], rdflib.Literal)
-        assert record[3] is None or isinstance(record[3], rdflib.Literal)
         n_entity = record[0]
-        l_entity_label = record[1]
-        l_entity_comment = record[2]
-        l_entity_exhibit_number = record[3]
-
+        n_entities.add(n_entity)
+    for n_entity in n_entities:
         entity_iri = n_entity.toPython()
-        entity_iri_to_label_comment[entity_iri] = (
-            l_entity_label,
-            l_entity_comment,
-            l_entity_exhibit_number,
-        )
-    for entity_iri in sorted(entity_iri_to_label_comment):
-        (
-            l_entity_label,
-            l_entity_comment,
-            l_entity_exhibit_number,
-        ) = entity_iri_to_label_comment[entity_iri]
-        dot_label = "ID - " + graph.namespace_manager.qname(entity_iri)
-        if l_entity_exhibit_number is not None:
-            dot_label += "\nExhibit - " + l_entity_exhibit_number.toPython()
-        if l_entity_label is not None:
-            dot_label += "\n" + l_entity_label.toPython()
-        if l_entity_comment is not None:
-            dot_label += "\n\n" + "\n".join(wrapper.wrap((l_entity_comment.toPython())))
+
         if entity_iri in collection_iris:
             kwargs = clone_style(PROV_COLLECTION)
         else:
             kwargs = clone_style(prov.constants.PROV_ENTITY)
+
+        # Build label.
+        dot_label_parts = ["ID - " + graph.namespace_manager.qname(entity_iri)]
+        if n_entity in n_provenance_record_to_l_exhibit_numbers:
+            for l_exhibit_number in sorted(
+                n_provenance_record_to_l_exhibit_numbers[n_entity]
+            ):
+                dot_label_parts.append("\n")
+                dot_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
+        _annotate_labels(n_entity, dot_label_parts)
+        _annotate_comments(n_entity, dot_label_parts)
+        dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
+
         # _logger.debug("Entity %r.", entity_iri)
         entity_record = (iri_to_gv_node_id(entity_iri), kwargs)
         nodes[entity_iri] = entity_record
@@ -444,17 +455,9 @@ WHERE {
 
     # Render Activities.
     select_query_text = """\
-SELECT ?nActivity ?lLabel ?lComment ?lStartTime ?lEndTime
+SELECT ?nActivity ?lStartTime ?lEndTime
 WHERE {
   ?nActivity a prov:Activity .
-
-  OPTIONAL {
-    ?nActivity rdfs:label ?lLabel .
-  }
-
-  OPTIONAL {
-    ?nActivity rdfs:comment ?lComment .
-  }
 
   OPTIONAL {
     ?nActivity prov:startedAtTime ?lStartTime .
@@ -473,31 +476,33 @@ WHERE {
         assert isinstance(record[0], rdflib.term.IdentifiedNode)
         assert record[1] is None or isinstance(record[1], rdflib.Literal)
         assert record[2] is None or isinstance(record[2], rdflib.Literal)
-        assert record[3] is None or isinstance(record[3], rdflib.Literal)
-        assert record[4] is None or isinstance(record[4], rdflib.Literal)
         n_activity = record[0]
-        l_label = record[1]
-        l_comment = record[2]
-        l_start_time = record[3]
-        l_end_time = record[4]
-
         activity_iri = n_activity.toPython()
-        dot_label = "ID - " + graph.namespace_manager.qname(activity_iri)
-        if l_label is not None:
-            dot_label += "\n" + l_label.toPython()
-        if l_start_time is not None or l_end_time is not None:
-            if l_start_time is None:
-                dot_label += "\n (..., "
-            else:
-                dot_label += "\n [%s, " % l_start_time
-            if l_end_time is None:
-                dot_label += "...)"
-            else:
-                dot_label += "%s]" % l_end_time
-        if l_comment is not None:
-            dot_label += "\n\n" + "\n".join(wrapper.wrap((l_comment.toPython())))
+
+        l_start_time = record[1]
+        l_end_time = record[2]
+
         kwargs = clone_style(prov.constants.PROV_ACTIVITY)
+
+        # Build label.
+        dot_label_parts = ["ID - " + graph.namespace_manager.qname(activity_iri)]
+        if l_start_time is not None or l_end_time is not None:
+            dot_label_parts.append("\n")
+            section_parts = []
+            if l_start_time is None:
+                section_parts.append("(...")
+            else:
+                section_parts.append("[%s" % l_start_time)
+            if l_end_time is None:
+                section_parts.append("...)")
+            else:
+                section_parts.append("%s]" % l_end_time)
+            dot_label_parts.append(", ".join(section_parts))
+        _annotate_labels(n_activity, dot_label_parts)
+        _annotate_comments(n_activity, dot_label_parts)
+        dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
+
         # _logger.debug("Activity %r.", activity_iri)
         activity_record = (iri_to_gv_node_id(activity_iri), kwargs)
         nodes[activity_iri] = activity_record
