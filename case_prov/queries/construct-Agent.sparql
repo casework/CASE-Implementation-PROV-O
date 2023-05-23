@@ -13,7 +13,8 @@ CONSTRUCT
 {
   # Designate InvestigativeAction performers, and the instruments they use, as Agents.
   ?nAgent a prov:Agent .
-  ?nAgent rdfs:comment ?lDescription ;
+  ?nAgent uco-core:description ?lDescription .
+  ?nAgent uco-core:name ?lName .
 }
 WHERE {
   ?nInvestigativeAction
@@ -24,6 +25,12 @@ WHERE {
   OPTIONAL {
     ?nAgent
       uco-core:description ?lDescription ;
+      .
+  }
+
+  OPTIONAL {
+    ?nAgent
+      uco-core:name ?lName ;
       .
   }
 }

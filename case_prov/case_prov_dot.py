@@ -37,7 +37,7 @@ import prov.constants  # type: ignore
 import prov.dot  # type: ignore
 import pydot  # type: ignore
 import rdflib.plugins.sparql
-from case_utils.namespace import NS_CASE_INVESTIGATION
+from case_utils.namespace import NS_CASE_INVESTIGATION, NS_UCO_CORE
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
@@ -272,14 +272,16 @@ WHERE {
     _logger.debug("filter_iris = %s.", pprint.pformat(filter_iris))
 
     # Define dicts to hold 1-to-manies of various string Literals -
-    # comments, labels, and exhibit numbers.  These Literals will be
-    # rendered into the Dot label string.
+    # comments, labels, names, descriptions, and exhibit numbers.  These
+    # Literals will be rendered into the Dot label string.
     AnnoMapType = typing.DefaultDict[
         rdflib.term.IdentifiedNode, typing.Set[rdflib.Literal]
     ]
     n_thing_to_l_comments: AnnoMapType = collections.defaultdict(set)
     n_thing_to_l_labels: AnnoMapType = collections.defaultdict(set)
     n_provenance_record_to_l_exhibit_numbers: AnnoMapType = collections.defaultdict(set)
+    n_uco_object_to_l_uco_descriptions: AnnoMapType = collections.defaultdict(set)
+    n_uco_object_to_l_uco_name: AnnoMapType = collections.defaultdict(set)
 
     for triple in graph.triples((None, NS_RDFS.comment, None)):
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
@@ -295,6 +297,16 @@ WHERE {
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
         assert isinstance(triple[2], rdflib.Literal)
         n_provenance_record_to_l_exhibit_numbers[triple[0]].add(triple[2])
+
+    for triple in graph.triples((None, NS_UCO_CORE.description, None)):
+        assert isinstance(triple[0], rdflib.term.URIRef)
+        assert isinstance(triple[2], rdflib.Literal)
+        n_uco_object_to_l_uco_descriptions[triple[0]].add(triple[2])
+
+    for triple in graph.triples((None, NS_UCO_CORE.name, None)):
+        assert isinstance(triple[0], rdflib.term.URIRef)
+        assert isinstance(triple[2], rdflib.Literal)
+        n_uco_object_to_l_uco_name[triple[0]].add(triple[2])
 
     # The nodes and edges dicts need to store information to construct, not constructed objects.  There is a hidden dependency for edges of a parent graph object not available until after some filtering decisions are made.
     # IRI -> (pydot.Node identifier, kwargs)
@@ -343,6 +355,35 @@ WHERE {
                 label_part = "\n".join(wrapper.wrap(str(l_comment)))
                 label_parts.append(label_part)
 
+    def _annotate_descriptions(
+        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
+    ) -> None:
+        """
+        Render `uco-core:description`s.
+        """
+        if n_thing in n_uco_object_to_l_uco_descriptions:
+            for l_uco_description in sorted(
+                n_uco_object_to_l_uco_descriptions[n_thing]
+            ):
+                label_parts.append("\n")
+                label_parts.append("\n")
+                label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
+                label_parts.append(label_part)
+
+    def _annotate_name(
+        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
+    ) -> None:
+        """
+        Render `uco-core:name`.
+
+        SHACL constraints on UCO will mean there will be only one name.
+        """
+        if n_thing in n_uco_object_to_l_uco_name:
+            label_parts.append("\n")
+            for l_uco_name in sorted(n_uco_object_to_l_uco_name[n_thing]):
+                label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
+                label_parts.append(label_part)
+
     def _annotate_labels(
         n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
     ) -> None:
@@ -378,7 +419,9 @@ WHERE {
 
         # Build label.
         dot_label_parts = ["ID - " + graph.namespace_manager.qname(agent_iri)]
+        _annotate_name(n_agent, dot_label_parts)
         _annotate_labels(n_agent, dot_label_parts)
+        _annotate_descriptions(n_agent, dot_label_parts)
         _annotate_comments(n_agent, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
@@ -443,7 +486,9 @@ WHERE {
             ):
                 dot_label_parts.append("\n")
                 dot_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
+        _annotate_name(n_entity, dot_label_parts)
         _annotate_labels(n_entity, dot_label_parts)
+        _annotate_descriptions(n_entity, dot_label_parts)
         _annotate_comments(n_entity, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
@@ -498,7 +543,9 @@ WHERE {
             else:
                 section_parts.append("%s]" % l_end_time)
             dot_label_parts.append(", ".join(section_parts))
+        _annotate_name(n_activity, dot_label_parts)
         _annotate_labels(n_activity, dot_label_parts)
+        _annotate_descriptions(n_activity, dot_label_parts)
         _annotate_comments(n_activity, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
