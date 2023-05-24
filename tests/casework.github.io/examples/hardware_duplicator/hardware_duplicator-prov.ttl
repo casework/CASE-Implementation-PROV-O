@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:Association-3b934f57-78f8-5e2e-81ac-4e6c99e83ba5
@@ -218,6 +219,7 @@ kb:ConfiguredTool-58f07c30-ae20-4587-9bb8-1a5299821e57
 		;
 	prov:actedOnBehalfOf kb:role-856975ce-3c25-49c3-b6eb-28d1e929f915 ;
 	prov:qualifiedDelegation kb:Delegation-6ef9f651-a314-567c-85c7-5cf537686365 ;
+	uco-core:name "Logicube" ;
 	.
 
 kb:Delegation-6ef9f651-a314-567c-85c7-5cf537686365
@@ -1056,7 +1058,6 @@ kb:file-fb00a9cd-17e1-438f-9b28-ca5d7149f9c7
 
 kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4
 	a prov:Activity ;
-	rdfs:comment "Acquisition of TOSHIBA_MQ01ABD100" ;
 	prov:endedAtTime "2018-10-26T16:31:50+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-3b934f57-78f8-5e2e-81ac-4e6c99e83ba5 ,
@@ -1068,6 +1069,8 @@ kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4
 	prov:startedAtTime "2018-10-26T13:12:48+00:00"^^xsd:dateTime ;
 	prov:used kb:disk-e598c1b3-f76d-4c27-b592-49bfdbf23d11 ;
 	prov:wasAssociatedWith kb:ConfiguredTool-58f07c30-ae20-4587-9bb8-1a5299821e57 ;
+	uco-core:description "Acquisition of TOSHIBA_MQ01ABD100" ;
+	uco-core:name "acquired" ;
 	.
 
 kb:provenancerecord-43f26e68-b02f-410b-a917-506c70b732e6
@@ -1081,7 +1084,6 @@ kb:provenancerecord-d1828cbb-bb0f-42e3-b021-cfd9d6419ae6
 		prov:Collection ,
 		prov:Entity
 		;
-	rdfs:comment "Segment files (38) partitions with E01Capture" ;
 	prov:hadMember
 		kb:file-05f2d0ad-1fb0-4015-8805-5cf2b17574de ,
 		kb:file-14ca15b8-020c-449e-9206-7c66c92a7663 ,
@@ -1128,9 +1130,11 @@ kb:provenancerecord-d1828cbb-bb0f-42e3-b021-cfd9d6419ae6
 	prov:wasAttributedTo kb:ConfiguredTool-58f07c30-ae20-4587-9bb8-1a5299821e57 ;
 	prov:wasDerivedFrom kb:disk-e598c1b3-f76d-4c27-b592-49bfdbf23d11 ;
 	prov:wasGeneratedBy kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
+	uco-core:description "Segment files (38) partitions with E01Capture" ;
 	.
 
 kb:role-856975ce-3c25-49c3-b6eb-28d1e929f915
 	a prov:Agent ;
+	uco-core:name "Forensic Expert" ;
 	.
 
