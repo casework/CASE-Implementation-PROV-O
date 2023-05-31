@@ -21,7 +21,11 @@ urgent_evidence_json := $(top_srcdir)/dependencies/CASE-Examples-QC/dependencies
 
 all:
 	$(MAKE) \
-	  --file ../src/example.mk
+	  --file ../src/example.mk \
+	  all \
+	  urgent_evidence-prov-activities-agents.svg \
+	  urgent_evidence-prov-activities-entities.svg \
+	  urgent_evidence-prov-agents-entities.svg
 	$(MAKE) \
 	  urgent_evidence-prov-activities-focus-extracted-file-uuid-1.svg \
 	  urgent_evidence-prov-all-focus-extracted-file-uuid-1.svg \
