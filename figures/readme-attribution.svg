@@ -12,14 +12,20 @@
 <!-- _b3e54d5a1184906f1df8e89ec65665c571405b0d8a37d02c3a00fbd34397b3df -->
 <g id="node1" class="node">
 <title>_b3e54d5a1184906f1df8e89ec65665c571405b0d8a37d02c3a00fbd34397b3df</title>
+<g id="a_node1"><a xlink:title="ID &#45; urn:example:qualifiablyAttributedEntity">
 <ellipse fill="#fff68f" stroke="#808080" cx="134.54" cy="-18" rx="134.58" ry="18"/>
 <text text-anchor="middle" x="134.54" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:qualifiablyAttributedEntity</text>
+</a>
+</g>
 </g>
 <!-- _d35f749b2a59a4c852425d8a45c5c57b6daa5cf2eaa3376a61840d5af32e6a4a -->
 <g id="node2" class="node">
 <title>_d35f749b2a59a4c852425d8a45c5c57b6daa5cf2eaa3376a61840d5af32e6a4a</title>
+<g id="a_node2"><a xlink:title="ID &#45; urn:example:someAgent">
 <polygon fill="#fed37f" stroke="black" points="380.56,-106.56 282.54,-119 184.52,-106.56 184.61,-86.44 380.47,-86.44 380.56,-106.56"/>
 <text text-anchor="middle" x="282.54" y="-97.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:someAgent</text>
+</a>
+</g>
 </g>
 <!-- _b3e54d5a1184906f1df8e89ec65665c571405b0d8a37d02c3a00fbd34397b3df&#45;&gt;_d35f749b2a59a4c852425d8a45c5c57b6daa5cf2eaa3376a61840d5af32e6a4a -->
 <g id="edge1" class="edge">
@@ -31,8 +37,11 @@
 <!-- _480bdfd1fe5b252217b8998900a58a6d302338c1e59158f5873f5cd0cafc676e -->
 <g id="node3" class="node">
 <title>_480bdfd1fe5b252217b8998900a58a6d302338c1e59158f5873f5cd0cafc676e</title>
+<g id="a_node3"><a xlink:title="ID &#45; urn:example:unqualifiablyAttributedEntity">
 <ellipse fill="#fff68f" stroke="#808080" cx="430.54" cy="-18" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="430.54" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:unqualifiablyAttributedEntity</text>
+</a>
+</g>
 </g>
 <!-- _480bdfd1fe5b252217b8998900a58a6d302338c1e59158f5873f5cd0cafc676e&#45;&gt;_d35f749b2a59a4c852425d8a45c5c57b6daa5cf2eaa3376a61840d5af32e6a4a -->
 <g id="edge2" class="edge">

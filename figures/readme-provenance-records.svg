@@ -12,14 +12,20 @@
 <!-- _4ff8676506e04e724db6c9ed5b76dc39beeefd767b66036056fbce3593ded3dc -->
 <g id="node1" class="node">
 <title>_4ff8676506e04e724db6c9ed5b76dc39beeefd767b66036056fbce3593ded3dc</title>
+<g id="a_node1"><a xlink:title="ID &#45; urn:example:someCollection">
 <polygon fill="#cdc673" stroke="#808080" points="152.29,-36 149.29,-40 128.29,-40 125.29,-36 6.29,-36 6.29,0 152.29,0 152.29,-36"/>
 <text text-anchor="middle" x="79.29" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:someCollection</text>
+</a>
+</g>
 </g>
 <!-- _75447935a41fb2b4562606fec9bace2054521fecb4e82258780e1adacf20741f -->
 <g id="node2" class="node">
 <title>_75447935a41fb2b4562606fec9bace2054521fecb4e82258780e1adacf20741f</title>
+<g id="a_node2"><a xlink:title="ID &#45; urn:example:someEntity">
 <ellipse fill="#fff68f" stroke="#808080" cx="79.29" cy="-101" rx="79.09" ry="18"/>
 <text text-anchor="middle" x="79.29" y="-97.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:someEntity</text>
+</a>
+</g>
 </g>
 <!-- _4ff8676506e04e724db6c9ed5b76dc39beeefd767b66036056fbce3593ded3dc&#45;&gt;_75447935a41fb2b4562606fec9bace2054521fecb4e82258780e1adacf20741f -->
 <g id="edge1" class="edge">

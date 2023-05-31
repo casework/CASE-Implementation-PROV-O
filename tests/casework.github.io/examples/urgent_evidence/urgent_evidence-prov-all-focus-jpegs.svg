@@ -12,16 +12,22 @@
 <!-- _f69d7472a828b3c904780e8db73164a2b909dfe0ebb831bb1d513ce42cd49721 -->
 <g id="node1" class="node">
 <title>_f69d7472a828b3c904780e8db73164a2b909dfe0ebb831bb1d513ce42cd49721</title>
+<g id="a_node1"><a xlink:title="ID &#45; http://example.org/kb/action&#45;uuid&#45;1">
 <polygon fill="#9fb1fc" stroke="#0000ff" points="961.7,-765 720.7,-765 720.7,-696 961.7,-696 961.7,-765"/>
 <text text-anchor="middle" x="841.2" y="-749.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:action&#45;uuid&#45;1</text>
 <text text-anchor="middle" x="841.2" y="-734.8" font-family="Times,serif" font-size="14.00">(..., 2019&#45;01&#45;01T14:00:00+00:00]</text>
 <text text-anchor="middle" x="841.2" y="-703.8" font-family="Times,serif" font-size="14.00">Exhibit submitted for Kiosk examination</text>
+</a>
+</g>
 </g>
 <!-- _ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c -->
 <g id="node11" class="node">
 <title>_ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c</title>
+<g id="a_node11"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="1140.22,-835.56 1031.2,-848 922.19,-835.56 922.29,-815.44 1140.12,-815.44 1140.22,-835.56"/>
 <text text-anchor="middle" x="1031.2" y="-826.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _f69d7472a828b3c904780e8db73164a2b909dfe0ebb831bb1d513ce42cd49721&#45;&gt;_ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c -->
 <g id="edge1" class="edge">
@@ -33,8 +39,11 @@
 <!-- _357f00248bdc728725be43338ec69113a99cec9793681d0accd1f777e4dd5fbf -->
 <g id="node26" class="node">
 <title>_357f00248bdc728725be43338ec69113a99cec9793681d0accd1f777e4dd5fbf</title>
+<g id="a_node26"><a xlink:title="ID &#45; http://www.w3.org/ns/prov#EmptyCollection">
 <polygon fill="#cdc673" stroke="#808080" points="239.2,-848 236.2,-852 215.2,-852 212.2,-848 75.2,-848 75.2,-812 239.2,-812 239.2,-848"/>
 <text text-anchor="middle" x="157.2" y="-826.3" font-family="Times,serif" font-size="14.00">ID &#45; prov:EmptyCollection</text>
+</a>
+</g>
 </g>
 <!-- _f69d7472a828b3c904780e8db73164a2b909dfe0ebb831bb1d513ce42cd49721&#45;&gt;_357f00248bdc728725be43338ec69113a99cec9793681d0accd1f777e4dd5fbf -->
 <g id="edge2" class="edge">
@@ -46,11 +55,14 @@
 <!-- _4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b -->
 <g id="node2" class="node">
 <title>_4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b</title>
+<g id="a_node2"><a xlink:title="ID &#45; http://example.org/kb/action&#45;uuid&#45;3">
 <polygon fill="#9fb1fc" stroke="#0000ff" points="1405.2,-481 1189.2,-481 1189.2,-397 1405.2,-397 1405.2,-481"/>
 <text text-anchor="middle" x="1297.2" y="-465.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:action&#45;uuid&#45;3</text>
 <text text-anchor="middle" x="1297.2" y="-450.8" font-family="Times,serif" font-size="14.00">(..., 2019&#45;01&#45;01T14:05:30+00:00]</text>
 <text text-anchor="middle" x="1297.2" y="-435.8" font-family="Times,serif" font-size="14.00">assigned</text>
 <text text-anchor="middle" x="1297.2" y="-404.8" font-family="Times,serif" font-size="14.00">Exhibit assigned to Kiosk technician</text>
+</a>
+</g>
 </g>
 <!-- _4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b&#45;&gt;_f69d7472a828b3c904780e8db73164a2b909dfe0ebb831bb1d513ce42cd49721 -->
 <g id="edge3" class="edge">
@@ -62,8 +74,11 @@
 <!-- _be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8 -->
 <g id="node12" class="node">
 <title>_be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8</title>
+<g id="a_node12"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;2">
 <polygon fill="#fed37f" stroke="black" points="1551.22,-552.56 1442.2,-565 1333.19,-552.56 1333.29,-532.44 1551.12,-532.44 1551.22,-552.56"/>
 <text text-anchor="middle" x="1442.2" y="-543.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;2</text>
+</a>
+</g>
 </g>
 <!-- _4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b&#45;&gt;_be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8 -->
 <g id="edge4" class="edge">
@@ -75,9 +90,12 @@
 <!-- _65b1525d47c5649b4b1adfbf3e6c6109be7580e6edf9df407e9c741151caee77 -->
 <g id="node14" class="node">
 <title>_65b1525d47c5649b4b1adfbf3e6c6109be7580e6edf9df407e9c741151caee77</title>
+<g id="a_node14"><a xlink:title="ID &#45; http://example.org/kb/provenance&#45;record&#45;uuid&#45;1">
 <polygon fill="#cdc673" stroke="#808080" points="286.7,-566 283.7,-570 262.7,-570 259.7,-566 85.7,-566 85.7,-528 286.7,-528 286.7,-566"/>
 <text text-anchor="middle" x="186.2" y="-550.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:provenance&#45;record&#45;uuid&#45;1</text>
 <text text-anchor="middle" x="186.2" y="-535.8" font-family="Times,serif" font-size="14.00">Exhibit &#45; EXH&#45;20190101&#45;7</text>
+</a>
+</g>
 </g>
 <!-- _4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b&#45;&gt;_65b1525d47c5649b4b1adfbf3e6c6109be7580e6edf9df407e9c741151caee77 -->
 <g id="edge5" class="edge">
@@ -89,8 +107,11 @@
 <!-- _4e612817f5750d184e4518f1d2ca7aa251f41dfc4fa9e77f6cf49f02268ed43a -->
 <g id="node25" class="node">
 <title>_4e612817f5750d184e4518f1d2ca7aa251f41dfc4fa9e77f6cf49f02268ed43a</title>
+<g id="a_node25"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;uuid&#45;1">
 <ellipse fill="#fff68f" stroke="#808080" cx="1127.2" cy="-631" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="1127.2" y="-627.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b&#45;&gt;_4e612817f5750d184e4518f1d2ca7aa251f41dfc4fa9e77f6cf49f02268ed43a -->
 <g id="edge6" class="edge">
@@ -102,11 +123,14 @@
 <!-- _a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5 -->
 <g id="node3" class="node">
 <title>_a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5</title>
+<g id="a_node3"><a xlink:title="ID &#45; http://example.org/kb/action&#45;uuid&#45;4">
 <polygon fill="#9fb1fc" stroke="#0000ff" points="1967.7,-259.5 1764.7,-259.5 1764.7,-175.5 1967.7,-175.5 1967.7,-259.5"/>
 <text text-anchor="middle" x="1866.2" y="-244.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:action&#45;uuid&#45;4</text>
 <text text-anchor="middle" x="1866.2" y="-229.3" font-family="Times,serif" font-size="14.00">(..., 2019&#45;01&#45;01T14:15:00+00:00]</text>
 <text text-anchor="middle" x="1866.2" y="-214.3" font-family="Times,serif" font-size="14.00">photographed</text>
 <text text-anchor="middle" x="1866.2" y="-183.3" font-family="Times,serif" font-size="14.00">Sealed Exhibit Photographed</text>
+</a>
+</g>
 </g>
 <!-- _a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5&#45;&gt;_4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b -->
 <g id="edge7" class="edge">
@@ -118,8 +142,11 @@
 <!-- _397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67 -->
 <g id="node6" class="node">
 <title>_397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67</title>
+<g id="a_node6"><a xlink:title="ID &#45; http://example.org/kb/camera&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="1356.65,-337.56 1244.2,-350 1131.76,-337.56 1131.86,-317.44 1356.54,-317.44 1356.65,-337.56"/>
 <text text-anchor="middle" x="1244.2" y="-328.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:camera&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5&#45;&gt;_397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67 -->
 <g id="edge8" class="edge">
@@ -131,8 +158,11 @@
 <!-- _ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91 -->
 <g id="node13" class="node">
 <title>_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91</title>
+<g id="a_node13"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;3">
 <polygon fill="#fed37f" stroke="black" points="2295.22,-444.56 2186.2,-457 2077.19,-444.56 2077.29,-424.44 2295.12,-424.44 2295.22,-444.56"/>
 <text text-anchor="middle" x="2186.2" y="-435.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;3</text>
+</a>
+</g>
 </g>
 <!-- _a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5&#45;&gt;_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91 -->
 <g id="edge9" class="edge">
@@ -144,8 +174,11 @@
 <!-- _25d9954549ae2c73025969a0637aa1dacff6cef0f282ad4cb57fb34ac6b94c60 -->
 <g id="node15" class="node">
 <title>_25d9954549ae2c73025969a0637aa1dacff6cef0f282ad4cb57fb34ac6b94c60</title>
+<g id="a_node15"><a xlink:title="ID &#45; http://example.org/kb/provenance&#45;record&#45;uuid&#45;3">
 <polygon fill="#cdc673" stroke="#808080" points="1586.7,-350 1583.7,-354 1562.7,-354 1559.7,-350 1385.7,-350 1385.7,-314 1586.7,-314 1586.7,-350"/>
 <text text-anchor="middle" x="1486.2" y="-328.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:provenance&#45;record&#45;uuid&#45;3</text>
+</a>
+</g>
 </g>
 <!-- _a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5&#45;&gt;_25d9954549ae2c73025969a0637aa1dacff6cef0f282ad4cb57fb34ac6b94c60 -->
 <g id="edge10" class="edge">
@@ -164,11 +197,14 @@
 <!-- _fbc4cac489edf2b11ef60f73c6fd5f8f7bf7013dc9b901754a6c1b02ac026c4d -->
 <g id="node4" class="node">
 <title>_fbc4cac489edf2b11ef60f73c6fd5f8f7bf7013dc9b901754a6c1b02ac026c4d</title>
+<g id="a_node4"><a xlink:title="ID &#45; http://example.org/kb/action&#45;uuid&#45;6">
 <polygon fill="#9fb1fc" stroke="#0000ff" points="669.7,-259.5 466.7,-259.5 466.7,-175.5 669.7,-175.5 669.7,-259.5"/>
 <text text-anchor="middle" x="568.2" y="-244.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:action&#45;uuid&#45;6</text>
 <text text-anchor="middle" x="568.2" y="-229.3" font-family="Times,serif" font-size="14.00">(..., 2019&#45;01&#45;01T14:21:00+00:00]</text>
 <text text-anchor="middle" x="568.2" y="-214.3" font-family="Times,serif" font-size="14.00">photographed</text>
 <text text-anchor="middle" x="568.2" y="-183.3" font-family="Times,serif" font-size="14.00">Unsealed Exhibit Photographed</text>
+</a>
+</g>
 </g>
 <!-- _fbc4cac489edf2b11ef60f73c6fd5f8f7bf7013dc9b901754a6c1b02ac026c4d&#45;&gt;_4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b -->
 <g id="edge12" class="edge">
@@ -208,12 +244,15 @@
 <!-- _728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7 -->
 <g id="node5" class="node">
 <title>_728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7</title>
+<g id="a_node5"><a xlink:title="ID &#45; http://example.org/kb/action&#45;uuid&#45;7">
 <polygon fill="#9fb1fc" stroke="#0000ff" points="2912.2,-267 2562.2,-267 2562.2,-168 2912.2,-168 2912.2,-267"/>
 <text text-anchor="middle" x="2737.2" y="-251.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:action&#45;uuid&#45;7</text>
 <text text-anchor="middle" x="2737.2" y="-236.8" font-family="Times,serif" font-size="14.00">[2019&#45;01&#45;01T14:25:00+00:00, 2019&#45;01&#45;01T14:55:00+00:00]</text>
 <text text-anchor="middle" x="2737.2" y="-221.8" font-family="Times,serif" font-size="14.00">processed</text>
 <text text-anchor="middle" x="2737.2" y="-190.8" font-family="Times,serif" font-size="14.00">Exhibit Connected to Kiosk &amp; process started; exhibit </text>
 <text text-anchor="middle" x="2737.2" y="-175.8" font-family="Times,serif" font-size="14.00">disconnected at conclusion</text>
+</a>
+</g>
 </g>
 <!-- _728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7&#45;&gt;_4fff92433990a9c7d101f2962972eeee4ef83c4b30e26db77fece7989bf9265b -->
 <g id="edge17" class="edge">
@@ -225,8 +264,11 @@
 <!-- _c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f -->
 <g id="node10" class="node">
 <title>_c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f</title>
+<g id="a_node10"><a xlink:title="ID &#45; http://example.org/kb/kiosk&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="3238.97,-337.56 3135.2,-350 3031.43,-337.56 3031.53,-317.44 3238.88,-317.44 3238.97,-337.56"/>
 <text text-anchor="middle" x="3135.2" y="-328.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:kiosk&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7&#45;&gt;_c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f -->
 <g id="edge18" class="edge">
@@ -266,8 +308,11 @@
 <!-- _7c406068ab32c3bd872fbeced3a1e91d364c55c40a1ce1086876372606d3a115 -->
 <g id="node7" class="node">
 <title>_7c406068ab32c3bd872fbeced3a1e91d364c55c40a1ce1086876372606d3a115</title>
+<g id="a_node7"><a xlink:title="ID &#45; http://example.org/kb/extracted&#45;file&#45;uuid&#45;1">
 <ellipse fill="#fff68f" stroke="#808080" cx="3009.2" cy="-103" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="3009.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:extracted&#45;file&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _7c406068ab32c3bd872fbeced3a1e91d364c55c40a1ce1086876372606d3a115&#45;&gt;_728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7 -->
 <g id="edge23" class="edge">
@@ -300,8 +345,11 @@
 <!-- _b333e2ae30f0e5b7c8a703d7b6a58d7785103fe91e848579c0c978f97a4a1504 -->
 <g id="node8" class="node">
 <title>_b333e2ae30f0e5b7c8a703d7b6a58d7785103fe91e848579c0c978f97a4a1504</title>
+<g id="a_node8"><a xlink:title="ID &#45; http://example.org/kb/extracted&#45;file&#45;uuid&#45;2">
 <ellipse fill="#fff68f" stroke="#808080" cx="3251.2" cy="-103" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="3251.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:extracted&#45;file&#45;uuid&#45;2</text>
+</a>
+</g>
 </g>
 <!-- _b333e2ae30f0e5b7c8a703d7b6a58d7785103fe91e848579c0c978f97a4a1504&#45;&gt;_728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7 -->
 <g id="edge27" class="edge">
@@ -334,8 +382,11 @@
 <!-- _853b16b1b5b9201300f81d4f0b4d97fd3912f620626929e2a37493f9e6854f6f -->
 <g id="node9" class="node">
 <title>_853b16b1b5b9201300f81d4f0b4d97fd3912f620626929e2a37493f9e6854f6f</title>
+<g id="a_node9"><a xlink:title="ID &#45; http://example.org/kb/extracted&#45;file&#45;uuid&#45;3">
 <ellipse fill="#fff68f" stroke="#808080" cx="2767.2" cy="-103" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="2767.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:extracted&#45;file&#45;uuid&#45;3</text>
+</a>
+</g>
 </g>
 <!-- _853b16b1b5b9201300f81d4f0b4d97fd3912f620626929e2a37493f9e6854f6f&#45;&gt;_728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7 -->
 <g id="edge31" class="edge">
@@ -438,9 +489,12 @@
 <!-- _c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103 -->
 <g id="node16" class="node">
 <title>_c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103</title>
+<g id="a_node16"><a xlink:title="ID &#45; http://example.org/kb/provenance&#45;record&#45;uuid&#45;4">
 <polygon fill="#cdc673" stroke="#808080" points="2052.7,-38 2049.7,-42 2028.7,-42 2025.7,-38 1809.7,-38 1809.7,0 2052.7,0 2052.7,-38"/>
 <text text-anchor="middle" x="1931.2" y="-22.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:provenance&#45;record&#45;uuid&#45;4</text>
 <text text-anchor="middle" x="1931.2" y="-7.8" font-family="Times,serif" font-size="14.00">Exhibit &#45; EXH&#45;20190101&#45;7&#45;SealedPhotos</text>
+</a>
+</g>
 </g>
 <!-- _c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103&#45;&gt;_a4cd5e32ce07b45de21d91f6242aad329c8121fde920cfcfebb4d6da141f49f5 -->
 <g id="edge45" class="edge">
@@ -466,8 +520,11 @@
 <!-- _0e67518512a3e1a5b8dcee5f128322c6e1564017d5eb128c15bd6f66518368c2 -->
 <g id="node19" class="node">
 <title>_0e67518512a3e1a5b8dcee5f128322c6e1564017d5eb128c15bd6f66518368c2</title>
+<g id="a_node19"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;1">
 <ellipse fill="#fff68f" stroke="#808080" cx="1736.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="1736.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103&#45;&gt;_0e67518512a3e1a5b8dcee5f128322c6e1564017d5eb128c15bd6f66518368c2 -->
 <g id="edge48" class="edge">
@@ -479,8 +536,11 @@
 <!-- _970f0be0af6a87523bea5b16177ea73606726c49a237dadf7f0d75f20e6563b9 -->
 <g id="node20" class="node">
 <title>_970f0be0af6a87523bea5b16177ea73606726c49a237dadf7f0d75f20e6563b9</title>
+<g id="a_node20"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;2">
 <ellipse fill="#fff68f" stroke="#808080" cx="2178.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="2178.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;2</text>
+</a>
+</g>
 </g>
 <!-- _c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103&#45;&gt;_970f0be0af6a87523bea5b16177ea73606726c49a237dadf7f0d75f20e6563b9 -->
 <g id="edge49" class="edge">
@@ -492,8 +552,11 @@
 <!-- _4919aecae1be31ac9c79394cbbd762f6cdce9595613b7a249c4387e875a5a223 -->
 <g id="node21" class="node">
 <title>_4919aecae1be31ac9c79394cbbd762f6cdce9595613b7a249c4387e875a5a223</title>
+<g id="a_node21"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;3">
 <ellipse fill="#fff68f" stroke="#808080" cx="1401.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="1401.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;3</text>
+</a>
+</g>
 </g>
 <!-- _c4268a63f32bff6bcba613577d53148c0108d903271d08a88cdf457a3dc88103&#45;&gt;_4919aecae1be31ac9c79394cbbd762f6cdce9595613b7a249c4387e875a5a223 -->
 <g id="edge50" class="edge">
@@ -512,9 +575,12 @@
 <!-- _c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58 -->
 <g id="node17" class="node">
 <title>_c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58</title>
+<g id="a_node17"><a xlink:title="ID &#45; http://example.org/kb/provenance&#45;record&#45;uuid&#45;5">
 <polygon fill="#cdc673" stroke="#808080" points="744.7,-38 741.7,-42 720.7,-42 717.7,-38 487.7,-38 487.7,0 744.7,0 744.7,-38"/>
 <text text-anchor="middle" x="616.2" y="-22.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:provenance&#45;record&#45;uuid&#45;5</text>
 <text text-anchor="middle" x="616.2" y="-7.8" font-family="Times,serif" font-size="14.00">Exhibit &#45; EXH&#45;20190101&#45;7&#45;UnsealedPhotos</text>
+</a>
+</g>
 </g>
 <!-- _c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58&#45;&gt;_fbc4cac489edf2b11ef60f73c6fd5f8f7bf7013dc9b901754a6c1b02ac026c4d -->
 <g id="edge52" class="edge">
@@ -540,8 +606,11 @@
 <!-- _3d62232031066f6421ccdbcb8fca2315cd203586b1e9298bed0dbb8435019ecd -->
 <g id="node22" class="node">
 <title>_3d62232031066f6421ccdbcb8fca2315cd203586b1e9298bed0dbb8435019ecd</title>
+<g id="a_node22"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;4">
 <ellipse fill="#fff68f" stroke="#808080" cx="616.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="616.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;4</text>
+</a>
+</g>
 </g>
 <!-- _c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58&#45;&gt;_3d62232031066f6421ccdbcb8fca2315cd203586b1e9298bed0dbb8435019ecd -->
 <g id="edge55" class="edge">
@@ -553,8 +622,11 @@
 <!-- _b80efa3fa29172043dbf182091066e5175280d854dd0d44ada6f50348a06690a -->
 <g id="node23" class="node">
 <title>_b80efa3fa29172043dbf182091066e5175280d854dd0d44ada6f50348a06690a</title>
+<g id="a_node23"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;5">
 <ellipse fill="#fff68f" stroke="#808080" cx="951.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="951.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;5</text>
+</a>
+</g>
 </g>
 <!-- _c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58&#45;&gt;_b80efa3fa29172043dbf182091066e5175280d854dd0d44ada6f50348a06690a -->
 <g id="edge56" class="edge">
@@ -566,8 +638,11 @@
 <!-- _2eb2dfd268927a8cc65ba974ef8024dd521d164a3028d69ad836a6bf9a1730d0 -->
 <g id="node24" class="node">
 <title>_2eb2dfd268927a8cc65ba974ef8024dd521d164a3028d69ad836a6bf9a1730d0</title>
+<g id="a_node24"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;photograph&#45;uuid&#45;6">
 <ellipse fill="#fff68f" stroke="#808080" cx="174.2" cy="-103" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="174.2" y="-99.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;photograph&#45;uuid&#45;6</text>
+</a>
+</g>
 </g>
 <!-- _c692cff367c721837e19c200569f0258ac8c889178feadaeaca00d195c094d58&#45;&gt;_2eb2dfd268927a8cc65ba974ef8024dd521d164a3028d69ad836a6bf9a1730d0 -->
 <g id="edge57" class="edge">
@@ -586,9 +661,12 @@
 <!-- _484576af2846c3f036fafb4ee4fe1d1bb5a2a165356097276a3dded83e6b7377 -->
 <g id="node18" class="node">
 <title>_484576af2846c3f036fafb4ee4fe1d1bb5a2a165356097276a3dded83e6b7377</title>
+<g id="a_node18"><a xlink:title="ID &#45; http://example.org/kb/provenance&#45;record&#45;uuid&#45;6">
 <polygon fill="#cdc673" stroke="#808080" points="3128.7,-38 3125.7,-42 3104.7,-42 3101.7,-38 2889.7,-38 2889.7,0 3128.7,0 3128.7,-38"/>
 <text text-anchor="middle" x="3009.2" y="-22.8" font-family="Times,serif" font-size="14.00">ID &#45; kb:provenance&#45;record&#45;uuid&#45;6</text>
 <text text-anchor="middle" x="3009.2" y="-7.8" font-family="Times,serif" font-size="14.00">Exhibit &#45; EXH&#45;20190101&#45;7&#45;KioskReport</text>
+</a>
+</g>
 </g>
 <!-- _484576af2846c3f036fafb4ee4fe1d1bb5a2a165356097276a3dded83e6b7377&#45;&gt;_728161ffc6ebe8725602a10a1e900a5e8f082d454ee552e12d53701fd976c7c7 -->
 <g id="edge59" class="edge">
