@@ -94,12 +94,51 @@ $(subjectdir_basename)-prov_activities.dot: \
 	    $<
 	mv _$@ $@
 
+$(subjectdir_basename)-prov_activities-agents.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov_activities-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --entity-deriving \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
 $(subjectdir_basename)-prov_agents.dot: \
   $(subjectdir_basename)-prov.ttl \
   $(top_srcdir)/case_prov/case_prov_dot.py
 	source $(tests_srcdir)/venv/bin/activate \
 	  && case_prov_dot \
 	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov_agents-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --agent-delegating \
+	    --entity-deriving \
 	    --dash-unqualified \
 	    --debug \
 	    _$@ \
