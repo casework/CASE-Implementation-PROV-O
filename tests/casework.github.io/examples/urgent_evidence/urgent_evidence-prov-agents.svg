@@ -12,14 +12,20 @@
 <!-- _397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67 -->
 <g id="node1" class="node">
 <title>_397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67</title>
+<g id="a_node1"><a xlink:title="ID &#45; http://example.org/kb/camera&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="224.92,-23.56 112.47,-36 0.03,-23.56 0.13,-3.44 224.81,-3.44 224.92,-23.56"/>
 <text text-anchor="middle" x="112.47" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:camera&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91 -->
 <g id="node5" class="node">
 <title>_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91</title>
+<g id="a_node5"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;3">
 <polygon fill="#fed37f" stroke="black" points="338.49,-106.56 229.47,-119 120.45,-106.56 120.56,-86.44 338.39,-86.44 338.49,-106.56"/>
 <text text-anchor="middle" x="229.47" y="-97.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;3</text>
+</a>
+</g>
 </g>
 <!-- _397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67&#45;&gt;_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91 -->
 <g id="edge1" class="edge">
@@ -31,8 +37,11 @@
 <!-- _c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f -->
 <g id="node2" class="node">
 <title>_c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f</title>
+<g id="a_node2"><a xlink:title="ID &#45; http://example.org/kb/kiosk&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="450.24,-23.56 346.47,-36 242.7,-23.56 242.8,-3.44 450.15,-3.44 450.24,-23.56"/>
 <text text-anchor="middle" x="346.47" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:kiosk&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f&#45;&gt;_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91 -->
 <g id="edge2" class="edge">
@@ -44,14 +53,20 @@
 <!-- _ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c -->
 <g id="node3" class="node">
 <title>_ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c</title>
+<g id="a_node3"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;1">
 <polygon fill="#fed37f" stroke="black" points="686.49,-23.56 577.47,-36 468.45,-23.56 468.56,-3.44 686.39,-3.44 686.49,-23.56"/>
 <text text-anchor="middle" x="577.47" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;1</text>
+</a>
+</g>
 </g>
 <!-- _be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8 -->
 <g id="node4" class="node">
 <title>_be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8</title>
+<g id="a_node4"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;2">
 <polygon fill="#fed37f" stroke="black" points="923.49,-23.56 814.47,-36 705.45,-23.56 705.56,-3.44 923.39,-3.44 923.49,-23.56"/>
 <text text-anchor="middle" x="814.47" y="-14.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;2</text>
+</a>
+</g>
 </g>
 </g>
 </svg>

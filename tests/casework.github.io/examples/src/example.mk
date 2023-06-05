@@ -65,12 +65,14 @@ $(subjectdir_basename)-prov.ttl: \
   $(construct_sparql_files) \
   $(tests_srcdir)/.venv.done.log \
   $(top_srcdir)/case_prov/case_prov_rdf.py
-	source $(tests_srcdir)/venv/bin/activate \
-	  && case_prov_rdf \
-	    --allow-empty-results \
-	    --debug \
-	    __$@ \
-	    $<
+	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	  && source $(tests_srcdir)/venv/bin/activate \
+	    && case_prov_rdf \
+	      --allow-empty-results \
+	      --debug \
+	      --use-deterministic-uuids \
+	      __$@ \
+	      $<
 	java -jar $(rdf_toolkit_jar) \
 	  --inline-blank-nodes \
 	  --source __$@ \
@@ -92,12 +94,51 @@ $(subjectdir_basename)-prov-activities.dot: \
 	    $<
 	mv _$@ $@
 
+$(subjectdir_basename)-prov-activities-agents.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-activities-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --entity-deriving \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
 $(subjectdir_basename)-prov-agents.dot: \
   $(subjectdir_basename)-prov.ttl \
   $(top_srcdir)/case_prov/case_prov_dot.py
 	source $(tests_srcdir)/venv/bin/activate \
 	  && case_prov_dot \
 	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-agents-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --agent-delegating \
+	    --entity-deriving \
 	    --dash-unqualified \
 	    --debug \
 	    _$@ \
