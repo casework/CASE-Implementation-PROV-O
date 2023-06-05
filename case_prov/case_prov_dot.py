@@ -1034,7 +1034,12 @@ WHERE {
     for invisible_edge_node_pair in invisible_edge_node_pairs:
         node_id_1 = iri_to_gv_node_id(invisible_edge_node_pair[0])
         node_id_2 = iri_to_gv_node_id(invisible_edge_node_pair[1])
-        dot_edge = pydot.Edge(node_id_1, node_id_2, style="invis")
+        # Edge direction is "backwards" in time, favoring use of the
+        # "inverse" Allen relationship.  This is so time will flow
+        # downwards with the case_prov_dot chart directionality.  This
+        # is in alignment with the PROV-O edges' directions being in
+        # direction of dependency (& thus reverse of time flow).
+        dot_edge = pydot.Edge(node_id_2, node_id_1, style="invis")
         dot_graph.add_edge(dot_edge)
 
     dot_graph.write_raw(args.out_dot)
