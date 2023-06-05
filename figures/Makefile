@@ -17,11 +17,13 @@ top_srcdir := $(shell cd .. ; pwd)
 
 all: \
   readme-activities.svg \
+  readme-allen-relations.svg \
   readme-attribution.svg \
   readme-provenance-records.svg
 
 .PRECIOUS: \
   readme-activities.dot \
+  readme-allen-relations.dot \
   readme-attribution.dot \
   readme-provenance-records.dot
 
@@ -41,6 +43,19 @@ readme-activities.dot: \
   $(top_srcdir)/tests/.venv.done.log
 	source $(top_srcdir)/tests/venv/bin/activate \
 	  && case_prov_dot \
+	    --omit-empty-set \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+readme-allen-relations.dot: \
+  readme-allen-relations.ttl \
+  $(top_srcdir)/case_prov/__init__.py \
+  $(top_srcdir)/case_prov/case_prov_dot.py \
+  $(top_srcdir)/tests/.venv.done.log
+	source $(top_srcdir)/tests/venv/bin/activate \
+	  && case_prov_dot \
+	    --debug \
 	    --omit-empty-set \
 	    _$@ \
 	    $<
