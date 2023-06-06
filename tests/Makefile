@@ -84,6 +84,7 @@ check-mypy: \
 	source venv/bin/activate \
 	  && mypy \
 	    --exclude venv \
+	    --strict \
 	    $(top_srcdir)/case_prov \
 	    .
 
