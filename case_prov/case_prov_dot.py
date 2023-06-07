@@ -68,6 +68,13 @@ def clone_style(prov_constant: rdflib.URIRef) -> typing.Dict[str, str]:
 
 
 def iri_to_gv_node_id(n_thing: rdflib.term.IdentifiedNode) -> str:
+    """
+    This function returns a string safe to use as a Dot node identifier.  The main concern addressed is Dot syntax errors caused by use of colons in IRIs.
+
+    >>> x = rdflib.URIRef("urn:example:kb:x")
+    >>> iri_to_gv_node_id(x)
+    '_b42f80365d50f29359b0a4d682366646248b4939a2b291e821a0f8bdaae4cd2a'
+    """
     hasher = hashlib.sha256()
     hasher.update(str(n_thing).encode())
     return "_" + hasher.hexdigest()

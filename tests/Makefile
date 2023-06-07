@@ -28,6 +28,7 @@ all: \
   all-casework.github.io \
   check-CASE-Examples \
   check-casework.github.io \
+  check-doctest \
   check-mypy \
   clean-CASE-Examples \
   clean-casework.github.io \
@@ -64,6 +65,7 @@ all-casework.github.io: \
 
 check: \
   check-mypy \
+  check-doctest \
   check-CASE-Examples \
   check-casework.github.io
 
@@ -78,6 +80,14 @@ check-casework.github.io: \
 	$(MAKE) \
 	  --directory casework.github.io/examples \
 	  check
+
+check-doctest: \
+  .venv.done.log
+	source venv/bin/activate \
+	  && pytest \
+	    --doctest-modules \
+	    --log-level=DEBUG \
+	    $(top_srcdir)/case_prov
 
 check-mypy: \
   .venv.done.log
