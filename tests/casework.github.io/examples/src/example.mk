@@ -49,6 +49,7 @@ all: \
   prov-constraints.log
 
 .PHONY: \
+  all-prov-time \
   check-prov-constraints \
   check-pytest
 
@@ -90,6 +91,7 @@ $(subjectdir_basename)-prov-activities.dot: \
 	    --activity-informing \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -103,6 +105,7 @@ $(subjectdir_basename)-prov-activities-agents.dot: \
 	    --agent-delegating \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -116,6 +119,7 @@ $(subjectdir_basename)-prov-activities-entities.dot: \
 	    --entity-deriving \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -128,6 +132,7 @@ $(subjectdir_basename)-prov-agents.dot: \
 	    --agent-delegating \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -141,6 +146,7 @@ $(subjectdir_basename)-prov-agents-entities.dot: \
 	    --entity-deriving \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -152,6 +158,7 @@ $(subjectdir_basename)-prov-all.dot: \
 	  && case_prov_dot \
 	    --dash-unqualified \
 	    --debug \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -164,6 +171,7 @@ $(subjectdir_basename)-prov-entities.dot: \
 	    --dash-unqualified \
 	    --debug \
 	    --entity-deriving \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
@@ -176,9 +184,118 @@ $(subjectdir_basename)-prov-originals.dot: \
 	    --dash-unqualified \
 	    --debug \
 	    --from-empty-set \
+	    --use-deterministic-uuids \
 	    _$@ \
 	    $<
 	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-activities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-activities-agents.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-activities-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --activity-informing \
+	    --entity-deriving \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-agents.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --agent-delegating \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-agents-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --agent-delegating \
+	    --entity-deriving \
+	    --dash-unqualified \
+	    --debug \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-all.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+$(subjectdir_basename)-prov-time-entities.dot: \
+  $(subjectdir_basename)-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --dash-unqualified \
+	    --debug \
+	    --entity-deriving \
+	    --display-time-links \
+	    --use-deterministic-uuids \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+all-prov-time: \
+  $(subjectdir_basename)-prov-time-activities.svg \
+  $(subjectdir_basename)-prov-time-activities-agents.svg \
+  $(subjectdir_basename)-prov-time-activities-entities.svg \
+  $(subjectdir_basename)-prov-time-all.svg \
+  $(subjectdir_basename)-prov-time-agents.svg \
+  $(subjectdir_basename)-prov-time-agents-entities.svg \
+  $(subjectdir_basename)-prov-time-entities.svg
 
 case_prov_check.ttl: \
   $(check_shape_files) \

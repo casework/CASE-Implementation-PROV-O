@@ -39,13 +39,16 @@ clean:
 
 readme-activities.dot: \
   readme-activities.ttl \
+  $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	source $(top_srcdir)/tests/venv/bin/activate \
-	  && case_prov_dot \
-	    --omit-empty-set \
-	    _$@ \
-	    $<
+	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	  && source $(top_srcdir)/tests/venv/bin/activate \
+	    && case_prov_dot \
+	      --omit-empty-set \
+	      --use-deterministic-uuids \
+	      _$@ \
+	      $<
 	mv _$@ $@
 
 readme-allen-relations.dot: \
@@ -53,33 +56,38 @@ readme-allen-relations.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	source $(top_srcdir)/tests/venv/bin/activate \
-	  && case_prov_dot \
-	    --debug \
-	    --omit-empty-set \
-	    _$@ \
-	    $<
+	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	  && source $(top_srcdir)/tests/venv/bin/activate \
+	    && case_prov_dot \
+	      --debug \
+	      --omit-empty-set \
+	      _$@ \
+	      $<
 	mv _$@ $@
 
 readme-attribution.dot: \
   readme-attribution.ttl \
+  $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	source $(top_srcdir)/tests/venv/bin/activate \
-	  && case_prov_dot \
-	    --dash-unqualified \
-	    --omit-empty-set \
-	    _$@ \
-	    $<
+	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	  && source $(top_srcdir)/tests/venv/bin/activate \
+	    && case_prov_dot \
+	      --dash-unqualified \
+	      --omit-empty-set \
+	      _$@ \
+	      $<
 	mv _$@ $@
 
 readme-provenance-records.dot: \
   readme-provenance-records.ttl \
+  $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	source $(top_srcdir)/tests/venv/bin/activate \
-	  && case_prov_dot \
-	    --omit-empty-set \
-	    _$@ \
-	    $<
+	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	  && source $(top_srcdir)/tests/venv/bin/activate \
+	    && case_prov_dot \
+	      --omit-empty-set \
+	      _$@ \
+	      $<
 	mv _$@ $@

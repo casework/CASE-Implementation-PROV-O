@@ -28,7 +28,6 @@ all: \
   all-casework.github.io \
   check-CASE-Examples \
   check-casework.github.io \
-  check-doctest \
   check-mypy \
   clean-CASE-Examples \
   clean-casework.github.io \
