@@ -1,0 +1,49 @@
+{
+    "@context":{
+        "case-investigation": "https://ontology.caseontology.org/case/investigation/",
+        "kb": "urn:example:",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "prov": "http://www.w3.org/ns/prov#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "time": "http://www.w3.org/2006/time#",
+        "uco-action": "https://ontology.unifiedcyberontology.org/uco/action/",
+        "uco-action:endTime": {
+            "@type": "xsd:dateTime"
+        },
+        "uco-action:startTime": {
+            "@type": "xsd:dateTime"
+        },
+        "uco-core": "https://ontology.unifiedcyberontology.org/uco/core/",
+        "uco-observable": "https://ontology.unifiedcyberontology.org/uco/observable/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#"
+    },
+    "@graph": [
+        {
+            "@id": "kb:Action-e9f1edc9-4e0c-43c3-a1c4-891143e3fa86",
+            "@type": [
+                "prov:Activity",
+                "case-investigation:InvestigativeAction"
+            ],
+            "uco-action:endTime": "2020-01-02T06:00:00Z",
+            "uco-action:startTime": "2020-01-02T03:00:00Z"
+        },
+        {
+            "@id": "kb:Action-417af923-6ff4-48da-b7a7-177cb5f3d6f3",
+            "@type": [
+                "prov:Activity",
+                "case-investigation:InvestigativeAction"
+            ],
+            "uco-action:startTime": "2020-01-02T04:00:00Z"
+        },
+        {
+            "@id": "kb:Action-60dddd50-07ac-4177-930d-7954c56f49b9",
+            "@type": [
+                "prov:Activity",
+                "case-investigation:InvestigativeAction"
+            ],
+            "uco-action:endTime": "2020-01-02T08:00:00Z",
+            "uco-action:startTime": "2020-01-02T05:00:00Z"
+        }
+    ]
+}
