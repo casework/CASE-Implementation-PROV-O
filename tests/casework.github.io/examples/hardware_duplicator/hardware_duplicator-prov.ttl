@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -463,212 +464,340 @@ kb:Derivation-f87615b7-ea24-50dd-b272-ad0a5052a57b
 	.
 
 kb:End-69228e7a-55a0-5ede-922b-015b77702620
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2018-10-26T16:31:50+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2018-10-26T16:31:50+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-0552a038-8e13-5d76-a30d-63be9957dbd5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-0f900d86-279d-534b-b17d-73ea7e7c2dc4
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-1217eab2-23ab-5ae2-a21d-67c32556857a
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-22786c66-05be-5aaf-bc28-fcd46e149547
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-2539beae-0572-50ff-9d91-ab807836cea2
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-26f61626-3686-5b96-8f7b-c3dd53672519
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-2a222bce-9463-592e-b012-c1ab4e2e5720
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-2ba1ce3c-14ea-5738-b5c8-12d6a2db7389
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-2e9f7b15-f2b4-58eb-b099-dbedebf0440b
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-30044e6e-4536-5dc3-9a64-c0bc1c855cdb
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-38bd14ed-616c-5830-bb59-8e2ff26c710a
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-3a5003c3-cd27-5b2d-9092-e6d262eb0ba1
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-3a61eb99-b31d-5d14-91a0-e19b73a9d7f5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-40f7447c-b185-5b7d-8f41-84cd98745929
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-450fbf55-025b-5e1e-b5f5-1750caea2be5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-45790a47-ff80-51b7-92e2-a665803c718e
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-46227b6c-f272-5b31-8680-781ecf2b5f7f
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-4671152e-b1e2-5f88-ba95-12d414425267
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-50f69601-e3af-5945-be11-30f8f879a61c
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-57256d9a-c40c-5676-b75d-e6e6f3513cc7
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-574d986f-1deb-545d-9b5d-16524a88b63a
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-65d83cd6-12a4-50ae-ad27-6efa4f14ebfa
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-66b28ca5-24b5-5843-8581-3bd49cabe46e
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-6cd147bb-ec0f-5533-8182-3aa65c353a2d
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-710c755f-e51e-5a85-8e8d-58122cb77bb2
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-81b5d786-4033-5a4f-8a4f-f78510768b0b
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-8cb27193-4123-57b0-9b60-a3967993b7f1
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-8e964316-0d29-5087-9e49-e2c6b489661d
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-988b9c7c-fe70-5089-92eb-4a18d5e54a47
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-a070e27b-4110-5a65-b407-1b7dd90a4934
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-ab667faa-58fc-5f6a-872e-b8a634e4d6a5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-bde54dcf-580c-5672-9351-4c817144f4f1
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-d2127729-9f9d-5abc-be01-dd084e4d50b6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-d4173a7a-bbbb-537e-afe6-5a64eb0ede0b
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-e1e64548-8df6-5f9d-807a-c7e3e22a71c3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-f606c159-4d53-57bf-a5d0-9a84df0d47af
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-f71b44cd-8bea-50f1-8871-f0ef170a6174
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-fba866df-1c90-505c-9c7e-c634b7e2a53b
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Generation-fc5b3462-979d-56c5-9fc2-3afe4d6bd095
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4 ;
 	.
 
 kb:Start-d5e15040-d947-5aa4-9a12-86ed97c67b6b
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2018-10-26T13:12:48+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2018-10-26T13:12:48+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-2ba91268-df53-5611-ae94-a40f56b83368
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:disk-e598c1b3-f76d-4c27-b592-49bfdbf23d11 ;
 	.
 
@@ -1057,7 +1186,54 @@ kb:file-fb00a9cd-17e1-438f-9b28-ca5d7149f9c7
 	.
 
 kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-d5e15040-d947-5aa4-9a12-86ed97c67b6b ;
+	time:hasEnd kb:End-69228e7a-55a0-5ede-922b-015b77702620 ;
+	time:inside
+		kb:Generation-0552a038-8e13-5d76-a30d-63be9957dbd5 ,
+		kb:Generation-0f900d86-279d-534b-b17d-73ea7e7c2dc4 ,
+		kb:Generation-1217eab2-23ab-5ae2-a21d-67c32556857a ,
+		kb:Generation-22786c66-05be-5aaf-bc28-fcd46e149547 ,
+		kb:Generation-2539beae-0572-50ff-9d91-ab807836cea2 ,
+		kb:Generation-26f61626-3686-5b96-8f7b-c3dd53672519 ,
+		kb:Generation-2a222bce-9463-592e-b012-c1ab4e2e5720 ,
+		kb:Generation-2ba1ce3c-14ea-5738-b5c8-12d6a2db7389 ,
+		kb:Generation-2e9f7b15-f2b4-58eb-b099-dbedebf0440b ,
+		kb:Generation-30044e6e-4536-5dc3-9a64-c0bc1c855cdb ,
+		kb:Generation-38bd14ed-616c-5830-bb59-8e2ff26c710a ,
+		kb:Generation-3a5003c3-cd27-5b2d-9092-e6d262eb0ba1 ,
+		kb:Generation-3a61eb99-b31d-5d14-91a0-e19b73a9d7f5 ,
+		kb:Generation-40f7447c-b185-5b7d-8f41-84cd98745929 ,
+		kb:Generation-450fbf55-025b-5e1e-b5f5-1750caea2be5 ,
+		kb:Generation-45790a47-ff80-51b7-92e2-a665803c718e ,
+		kb:Generation-46227b6c-f272-5b31-8680-781ecf2b5f7f ,
+		kb:Generation-4671152e-b1e2-5f88-ba95-12d414425267 ,
+		kb:Generation-50f69601-e3af-5945-be11-30f8f879a61c ,
+		kb:Generation-57256d9a-c40c-5676-b75d-e6e6f3513cc7 ,
+		kb:Generation-574d986f-1deb-545d-9b5d-16524a88b63a ,
+		kb:Generation-65d83cd6-12a4-50ae-ad27-6efa4f14ebfa ,
+		kb:Generation-66b28ca5-24b5-5843-8581-3bd49cabe46e ,
+		kb:Generation-6cd147bb-ec0f-5533-8182-3aa65c353a2d ,
+		kb:Generation-710c755f-e51e-5a85-8e8d-58122cb77bb2 ,
+		kb:Generation-81b5d786-4033-5a4f-8a4f-f78510768b0b ,
+		kb:Generation-8cb27193-4123-57b0-9b60-a3967993b7f1 ,
+		kb:Generation-8e964316-0d29-5087-9e49-e2c6b489661d ,
+		kb:Generation-988b9c7c-fe70-5089-92eb-4a18d5e54a47 ,
+		kb:Generation-a070e27b-4110-5a65-b407-1b7dd90a4934 ,
+		kb:Generation-ab667faa-58fc-5f6a-872e-b8a634e4d6a5 ,
+		kb:Generation-bde54dcf-580c-5672-9351-4c817144f4f1 ,
+		kb:Generation-d2127729-9f9d-5abc-be01-dd084e4d50b6 ,
+		kb:Generation-d4173a7a-bbbb-537e-afe6-5a64eb0ede0b ,
+		kb:Generation-e1e64548-8df6-5f9d-807a-c7e3e22a71c3 ,
+		kb:Generation-f606c159-4d53-57bf-a5d0-9a84df0d47af ,
+		kb:Generation-f71b44cd-8bea-50f1-8871-f0ef170a6174 ,
+		kb:Generation-fba866df-1c90-505c-9c7e-c634b7e2a53b ,
+		kb:Generation-fc5b3462-979d-56c5-9fc2-3afe4d6bd095 ,
+		kb:Usage-2ba91268-df53-5611-ae94-a40f56b83368
+		;
 	prov:endedAtTime "2018-10-26T16:31:50+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-3b934f57-78f8-5e2e-81ac-4e6c99e83ba5 ,

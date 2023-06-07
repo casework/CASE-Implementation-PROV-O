@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -100,57 +101,88 @@ kb:Derivation-cca3f143-b4e7-5d68-ad97-172f031b7da6
 	prov:hadActivity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	.
 
-kb:End-8e1eb70f-0773-5ded-8e53-a2cc3f7f1b24
-	a prov:End ;
-	.
-
 kb:End-c21c802b-1ef3-5bc5-a856-8de8dc164c99
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-03-30T22:47:32+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-03-30T22:47:32+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-356ee4b0-db2e-5eca-81a7-4056c426ebb5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-bae52a41-ccc8-555a-ac24-e78205d20299 ;
 	prov:activity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	.
 
 kb:Generation-45ae8137-f5d6-51bd-b08a-fd0153af1934
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	.
 
 kb:Generation-80facc0f-0d47-5a9f-aeec-af40a25bf5f0
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-52ebb769-e03a-5f86-b783-30babfed39ea ;
 	prov:activity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	.
 
 kb:Generation-a2819157-37e9-5e99-81b6-9e957f20df0c
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	.
 
 kb:Start-7e0658c0-29c5-553c-ac0f-564f6bd82ad0
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2019-03-30T22:36:24.350000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-03-30T22:36:24.350000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-a80277f8-b5fd-5cfd-b732-aab017544ab9
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2019-03-30T22:17:31+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-03-30T22:17:31+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-52ebb769-e03a-5f86-b783-30babfed39ea
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa ;
 	.
 
 kb:Usage-683712a8-abd3-5469-ab16-8e2816e7006d
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-bae52a41-ccc8-555a-ac24-e78205d20299
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:device-9420af3b-4d3a-4239-88fc-d33feec8dc4f ;
 	.
 
@@ -195,12 +227,20 @@ kb:forensicimage-68b52e60-1f7f-4f22-8c5e-dd0492d3ee07
 	.
 
 kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-7e0658c0-29c5-553c-ac0f-564f6bd82ad0 ;
+	time:inside
+		kb:Generation-356ee4b0-db2e-5eca-81a7-4056c426ebb5 ,
+		kb:Generation-80facc0f-0d47-5a9f-aeec-af40a25bf5f0 ,
+		kb:Usage-683712a8-abd3-5469-ab16-8e2816e7006d
+		;
 	prov:qualifiedAssociation
 		kb:Association-166a48b0-8086-5484-a950-d18ee9c731da ,
 		kb:Association-ac0c946d-71df-5b7e-bf98-d4fe10aa3eb2
 		;
-	prov:qualifiedEnd kb:End-8e1eb70f-0773-5ded-8e53-a2cc3f7f1b24 ;
 	prov:qualifiedStart kb:Start-7e0658c0-29c5-553c-ac0f-564f6bd82ad0 ;
 	prov:qualifiedUsage kb:Usage-683712a8-abd3-5469-ab16-8e2816e7006d ;
 	prov:startedAtTime "2019-03-30T22:36:24.350000+00:00"^^xsd:dateTime ;
@@ -210,7 +250,18 @@ kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd
 	.
 
 kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-a80277f8-b5fd-5cfd-b732-aab017544ab9 ;
+	time:hasEnd kb:End-c21c802b-1ef3-5bc5-a856-8de8dc164c99 ;
+	time:inside
+		kb:Generation-45ae8137-f5d6-51bd-b08a-fd0153af1934 ,
+		kb:Generation-a2819157-37e9-5e99-81b6-9e957f20df0c ,
+		kb:Usage-52ebb769-e03a-5f86-b783-30babfed39ea ,
+		kb:Usage-bae52a41-ccc8-555a-ac24-e78205d20299
+		;
 	prov:endedAtTime "2019-03-30T22:47:32+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-899eb981-02fd-557f-bb92-108eb1d97066 ,

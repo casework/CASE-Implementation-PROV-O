@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xs: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -112,59 +113,83 @@ kb:Derivation-cc3fb8b7-8450-53aa-ad26-01353a4486ff
 	prov:hadActivity kb:investigativeaction-b4b0805e-84ec-4553-98c2-6f0454829c30 ;
 	.
 
-kb:End-63719a11-caa5-5e6a-9c02-2e50eda1aebe
-	a prov:End ;
-	.
-
-kb:End-e2655adc-6154-5264-803f-fd02ab40ae67
-	a prov:End ;
-	.
-
 kb:Generation-39aa1538-f6a3-5692-b2d6-6ba2d605b6f0
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-a8b91c35-a0f0-53a5-97e7-acae901a2f20 ;
 	prov:activity kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f ;
 	.
 
 kb:Generation-cd640ce1-52a9-544b-bc90-8e805c2bfddf
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-e664c1e9-cf06-5077-86c7-de7b494c8da0 ;
 	prov:activity kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f ;
 	.
 
 kb:Generation-ce49f592-8d87-5e57-bc99-879115c6a1b5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeaction-b4b0805e-84ec-4553-98c2-6f0454829c30 ;
 	.
 
 kb:Generation-dffe8b31-b6d2-5853-9efa-eaae9aa2c16d
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigativeaction-b4b0805e-84ec-4553-98c2-6f0454829c30 ;
 	.
 
 kb:Start-57113518-385d-5389-b33d-b75b3fe502f9
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-88a525a4-8451-511d-bb5c-3c4fc5be7f48
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Usage-2c3cf509-d4b6-58ef-a93f-dab2f4521d9d
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:mobiledevice-803df237-bc7e-4e24-a5cb-8157063014b4 ;
 	.
 
 kb:Usage-990abb55-1f97-5231-8998-99493d36bf89
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenancerecord-9326149a-31c5-4d20-ada3-b97743d3e563 ;
 	.
 
 kb:Usage-a8b91c35-a0f0-53a5-97e7-acae901a2f20
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-e64b7aed-cecb-4291-81d4-4adb5b8020b2 ;
 	.
 
 kb:Usage-e664c1e9-cf06-5077-86c7-de7b494c8da0
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:forensicimage-f3fd304e-ef6c-4cbd-94cb-425880f82748 ;
 	.
 
@@ -221,12 +246,21 @@ kb:forensicimage-f3fd304e-ef6c-4cbd-94cb-425880f82748
 	.
 
 kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-57113518-385d-5389-b33d-b75b3fe502f9 ;
+	time:inside
+		kb:Generation-39aa1538-f6a3-5692-b2d6-6ba2d605b6f0 ,
+		kb:Generation-cd640ce1-52a9-544b-bc90-8e805c2bfddf ,
+		kb:Usage-2c3cf509-d4b6-58ef-a93f-dab2f4521d9d ,
+		kb:Usage-990abb55-1f97-5231-8998-99493d36bf89
+		;
 	prov:qualifiedAssociation
 		kb:Association-470665c9-e94b-5ead-9355-51098f8b792c ,
 		kb:Association-f6ea3bb3-fd70-59ee-82a9-dd53fff51234
 		;
-	prov:qualifiedEnd kb:End-63719a11-caa5-5e6a-9c02-2e50eda1aebe ;
 	prov:qualifiedStart kb:Start-57113518-385d-5389-b33d-b75b3fe502f9 ;
 	prov:qualifiedUsage
 		kb:Usage-2c3cf509-d4b6-58ef-a93f-dab2f4521d9d ,
@@ -241,13 +275,22 @@ kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f
 	.
 
 kb:investigativeaction-b4b0805e-84ec-4553-98c2-6f0454829c30
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-88a525a4-8451-511d-bb5c-3c4fc5be7f48 ;
+	time:inside
+		kb:Generation-ce49f592-8d87-5e57-bc99-879115c6a1b5 ,
+		kb:Generation-dffe8b31-b6d2-5853-9efa-eaae9aa2c16d ,
+		kb:Usage-a8b91c35-a0f0-53a5-97e7-acae901a2f20 ,
+		kb:Usage-e664c1e9-cf06-5077-86c7-de7b494c8da0
+		;
 	prov:qualifiedAssociation
 		kb:Association-0ab620cd-a8d7-5561-b58c-2aca0bf7360e ,
 		kb:Association-338af0a0-b8b2-5f04-b8eb-2ebbce67910e
 		;
 	prov:qualifiedCommunication kb:Communication-b6493770-8f1d-5e88-8ffa-7b801b476e1b ;
-	prov:qualifiedEnd kb:End-e2655adc-6154-5264-803f-fd02ab40ae67 ;
 	prov:qualifiedStart kb:Start-88a525a4-8451-511d-bb5c-3c4fc5be7f48 ;
 	prov:qualifiedUsage
 		kb:Usage-a8b91c35-a0f0-53a5-97e7-acae901a2f20 ,

@@ -3,6 +3,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -34,22 +35,36 @@ kb:Derivation-19bf2d02-d31f-58d0-b171-cd30b1ad3a4d
 	.
 
 kb:End-64e0bccb-5337-5c04-8000-e58afcb6af1d
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2010-01-15T18:59:43.250000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2010-01-15T18:59:43.250000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-a19bfc2d-0682-5023-8046-4a4b0fe6c3f3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:forensic_action-306e44f8-446d-4cff-a2fd-9e54affb1fa3 ;
 	.
 
 kb:Start-1f683eec-81dd-5dad-a2fb-0937aa55b9d4
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2010-01-15T17:59:43.250000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2010-01-15T17:59:43.250000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-00a4f357-3e85-52a1-857e-9cc8e3c6e124
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
@@ -78,7 +93,16 @@ kb:examiner-88a08acc-dad2-4964-be3b-8b70e11a4f4d
 	.
 
 kb:forensic_action-306e44f8-446d-4cff-a2fd-9e54affb1fa3
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-1f683eec-81dd-5dad-a2fb-0937aa55b9d4 ;
+	time:hasEnd kb:End-64e0bccb-5337-5c04-8000-e58afcb6af1d ;
+	time:inside
+		kb:Generation-a19bfc2d-0682-5023-8046-4a4b0fe6c3f3 ,
+		kb:Usage-00a4f357-3e85-52a1-857e-9cc8e3c6e124
+		;
 	prov:endedAtTime "2010-01-15T18:59:43.250000+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-4efe673f-d484-546d-ba02-744d18c0fd26 ,

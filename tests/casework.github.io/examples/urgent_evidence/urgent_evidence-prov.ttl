@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -593,370 +594,649 @@ kb:Derivation-f65e6674-4415-5632-9e20-19c7ecd79c14
 	.
 
 kb:End-04a9d0cc-ff01-5988-94bf-bf8c4580d582
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:00:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:00:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-09ef4b50-e763-568a-b52b-590cbab8540c
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:21:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:21:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-0bf4eb72-e60e-56c3-ad45-a039046bc6d5
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:03:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:03:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-19d25fe9-ae1a-5596-b3a3-0070d7fc8ffc
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:20:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:20:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-1cde7fe2-690b-5cd1-8636-cecc1eb25abb
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:20:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:20:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-1ebaffe2-5315-5f32-98f3-b503c73825da
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:05:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:05:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-31764af5-0e93-5954-93c9-5d7c33047356
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:05:30+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:05:30+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-4bed3f73-208a-5c20-8574-d6cbbf9e2d4c
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:00:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:00:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-604080c9-3ea8-59fb-8f4c-1ccfa1e73495
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:05:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:05:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-894c1ab4-9b4a-54ef-9f25-baca59e26fb3
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:10:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:10:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-8b553cd2-3fd1-5e88-a0a6-915cd5e67e8e
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T15:15:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T15:15:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-e88c0c83-6fcb-5bd6-ac8e-78e37f20bf68
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:15:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:15:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-f1ee6cda-bd2c-5924-a007-018de2f3fc2b
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:55:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:55:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-00915cbc-e0d9-575c-8690-61f1eb494ac6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-666c7f49-231f-5866-8ea8-820f125e0a6e ,
+		kb:Usage-f2eb760b-2d63-57dd-bd1a-b835a10a78ae
+		;
 	prov:activity kb:action-uuid-7 ;
 	.
 
 kb:Generation-0d767eac-a7d5-5409-b87b-b3bbc0b785e3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-4 ;
 	.
 
 kb:Generation-130da2fc-4be8-51a9-943f-bcc800c6c1d6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-08c96165-d757-5d24-9098-a8068368a763 ,
+		kb:Usage-57758c94-24d4-5186-8c67-94292966a982
+		;
 	prov:activity kb:action-uuid-7 ;
 	.
 
 kb:Generation-199e4034-0746-5b15-8d20-8c1934eb51b4
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-4 ;
 	.
 
 kb:Generation-1e0177a7-74b6-5e6e-aa93-30c94e0bf36a
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-4 ;
 	.
 
 kb:Generation-1ea0f51f-3da9-5ac6-830f-128736c8e7ad
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-85bd0f05-742a-5da2-a40f-c8845cc5ebde ;
 	prov:activity kb:action-uuid-7 ;
 	.
 
 kb:Generation-20863384-aa9b-5ef7-ab8a-a20ec24fe289
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-59e9740a-765f-54af-ac62-ddce059f9b77 ;
 	prov:activity kb:action-uuid-9 ;
 	.
 
 kb:Generation-2196a71d-79ab-540f-b1d2-523cb3792848
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-82e90348-861c-5f3e-8389-fb13edc60e5a ;
 	prov:activity kb:action-uuid-10 ;
 	.
 
 kb:Generation-3a4c3d26-6390-5e50-add7-47c9a3070e01
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-2 ;
 	.
 
 kb:Generation-48e01b98-7100-5f28-821b-793319f9fdd6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-13 ;
 	.
 
 kb:Generation-56fc8f86-62bb-5aa4-8039-05a59f29f487
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-6 ;
 	.
 
 kb:Generation-6afe5aa6-d823-5e35-8252-fb469cf935e2
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-000d5736-7150-5abe-b8d1-baae58d68dea ,
+		kb:Usage-aea1118d-815a-5b4b-a75c-95d2dfa34283
+		;
 	prov:activity kb:action-uuid-1 ;
 	.
 
 kb:Generation-7a5e1399-551c-594e-82bc-74e4e667516f
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-7 ;
 	.
 
 kb:Generation-7e06dc33-1a2f-5ffb-9c65-17dfd8df70a2
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-7 ;
 	.
 
 kb:Generation-7e206cb9-cd4e-5edd-a0d3-59221463ad1c
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-12 ;
 	.
 
 kb:Generation-8647dc38-8cd3-5512-b8e1-309e6e8c75c4
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-4 ;
 	.
 
 kb:Generation-9246885f-170a-5d97-9fbb-8f6e7fd537c3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-edbbbf4f-74a9-56fa-98d8-f4dfec328dad ;
 	prov:activity kb:action-uuid-10 ;
 	.
 
 kb:Generation-94659186-beea-5f0e-838b-8f43c1a44910
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-2 ;
 	.
 
 kb:Generation-c089cd32-5d68-5457-a0a1-e4a56ff1b366
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-6 ;
 	.
 
 kb:Generation-d01d5054-2b2c-5450-b058-07c0709d19fb
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-12 ;
 	.
 
 kb:Generation-d5163342-08cc-54fa-bbc2-f7bf01aa7941
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-230ea0dd-8b2d-5546-9f9f-422c7a3f779f ,
+		kb:Usage-414895b1-e40e-5168-9e22-88fd27a7116c ,
+		kb:Usage-4208984e-17d2-52f0-a48e-21a32c00e3d3 ,
+		kb:Usage-668b6ffe-3cb4-526d-a4af-ef34dd77cc83 ,
+		kb:Usage-a5cfa998-37a3-55d9-a086-f330dd926375 ,
+		kb:Usage-f5c18d5b-87cf-55bd-beb4-6d916c59c3dc
+		;
 	prov:activity kb:action-uuid-1 ;
 	.
 
 kb:Generation-dfa68ba5-48c4-5213-9f11-bc9a0e9c7b79
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-6 ;
 	.
 
 kb:Generation-e59dc07a-7c3e-585c-b302-49589802c3ef
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-4f8089f9-9bf8-55a0-825a-ea1e8675405e ,
+		kb:Usage-551e4494-be9b-5b7b-980f-02cabe397896 ,
+		kb:Usage-5c376dcf-a272-5c27-b233-a7b948ee07be ,
+		kb:Usage-eb580b46-193a-5c33-a9a4-15927d2473aa
+		;
 	prov:activity kb:action-uuid-3 ;
 	.
 
 kb:Generation-fd4e1edf-d058-5daf-b0a9-adce85ee52a8
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:action-uuid-6 ;
 	.
 
 kb:Start-1c90956c-e17a-5f22-938d-2479a75c110c
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-1f191753-8f2b-5471-908c-663b4f61f691
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-612062f6-fd54-5f33-bb41-1d1a2768d685
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-65db0fc4-690b-582d-b2e9-cbc9aa75ce70
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-81f4d9c6-b4df-54f7-8403-cd90a0136923
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-8ea56a88-720f-5697-8d2e-89d68cc930f1
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-9e3ee06d-8708-5a08-8a8f-ccc8f8d1bdfa
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2019-01-01T14:25:00+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2019-01-01T14:25:00+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-bcfe441e-db6b-543f-ab6a-59da5df89ab9
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-bd7bd16e-6386-5df2-b70f-c008b548eec1
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-cef68541-ac3a-595f-9fca-d702e97730b3
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-d230e5cd-4594-54f9-88f1-fca4639aa0a2
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-db2694df-de4d-5dd2-a923-797a49f4c1b2
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Start-f01440ac-45dd-50ba-8a87-5bd932f64fbe
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Usage-000d5736-7150-5abe-b8d1-baae58d68dea
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-1 ;
 	.
 
 kb:Usage-08c96165-d757-5d24-9098-a8068368a763
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-6 ;
 	.
 
 kb:Usage-230ea0dd-8b2d-5546-9f9f-422c7a3f779f
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:Usage-3f02ab35-d0a2-5312-a5de-8aaa8da6812d
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-414895b1-e40e-5168-9e22-88fd27a7116c
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:Usage-4208984e-17d2-52f0-a48e-21a32c00e3d3
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:Usage-4f8089f9-9bf8-55a0-825a-ea1e8675405e
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-3 ;
 	.
 
 kb:Usage-551e4494-be9b-5b7b-980f-02cabe397896
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-3 ;
 	.
 
 kb:Usage-57758c94-24d4-5186-8c67-94292966a982
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-6 ;
 	.
 
 kb:Usage-59e9740a-765f-54af-ac62-ddce059f9b77
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-6e ;
 	.
 
 kb:Usage-5c376dcf-a272-5c27-b233-a7b948ee07be
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-3 ;
 	.
 
 kb:Usage-666c7f49-231f-5866-8ea8-820f125e0a6e
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:extracted-file-uuid-1 ;
 	.
 
 kb:Usage-668b6ffe-3cb4-526d-a4af-ef34dd77cc83
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:Usage-71fc2006-ba1b-5fa3-9815-72e6b382f695
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-76381af4-8823-55c7-ae24-3333f827681f
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-82e90348-861c-5f3e-8389-fb13edc60e5a
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:dvd-uuid-1 ;
 	.
 
 kb:Usage-85bd0f05-742a-5da2-a40f-c8845cc5ebde
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:extracted-file-uuid-2 ;
 	.
 
 kb:Usage-a5cfa998-37a3-55d9-a086-f330dd926375
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:Usage-aea1118d-815a-5b4b-a75c-95d2dfa34283
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-1 ;
 	.
 
 kb:Usage-d1aff435-6037-5171-ab87-88907445afda
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-eb580b46-193a-5c33-a9a4-15927d2473aa
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-3 ;
 	.
 
 kb:Usage-edbbbf4f-74a9-56fa-98d8-f4dfec328dad
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-uuid-7 ;
 	.
 
 kb:Usage-f06cbf2d-2441-58cb-9e1f-1b7e917cba13
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:file2-uuid-1 ;
 	.
 
 kb:Usage-f2eb760b-2d63-57dd-bd1a-b835a10a78ae
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:extracted-file-uuid-1 ;
 	.
 
 kb:Usage-f5c18d5b-87cf-55bd-beb4-6d916c59c3dc
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:subject-device-uuid-1 ;
 	.
 
 kb:action-uuid-1
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-cef68541-ac3a-595f-9fca-d702e97730b3 ;
+	time:hasEnd kb:End-4bed3f73-208a-5c20-8574-d6cbbf9e2d4c ;
+	time:inside
+		kb:Generation-6afe5aa6-d823-5e35-8252-fb469cf935e2 ,
+		kb:Generation-d5163342-08cc-54fa-bbc2-f7bf01aa7941 ,
+		kb:Usage-d1aff435-6037-5171-ab87-88907445afda
+		;
 	prov:endedAtTime "2019-01-01T14:00:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-d482b418-e457-5a1b-aba9-c41cb5ab8c82 ;
 	prov:qualifiedEnd kb:End-4bed3f73-208a-5c20-8574-d6cbbf9e2d4c ;
@@ -968,7 +1248,20 @@ kb:action-uuid-1
 	.
 
 kb:action-uuid-10
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-bd7bd16e-6386-5df2-b70f-c008b548eec1 ;
+	time:hasEnd kb:End-604080c9-3ea8-59fb-8f4c-1ccfa1e73495 ;
+	time:inside
+		kb:Generation-2196a71d-79ab-540f-b1d2-523cb3792848 ,
+		kb:Generation-9246885f-170a-5d97-9fbb-8f6e7fd537c3 ,
+		kb:Usage-08c96165-d757-5d24-9098-a8068368a763 ,
+		kb:Usage-59e9740a-765f-54af-ac62-ddce059f9b77 ,
+		kb:Usage-f06cbf2d-2441-58cb-9e1f-1b7e917cba13 ,
+		kb:Usage-f2eb760b-2d63-57dd-bd1a-b835a10a78ae
+		;
 	prov:endedAtTime "2019-01-01T15:05:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-662e7d7e-0102-553d-a116-f87129653e0f ;
 	prov:qualifiedCommunication
@@ -999,7 +1292,13 @@ kb:action-uuid-10
 	.
 
 kb:action-uuid-11
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-1f191753-8f2b-5471-908c-663b4f61f691 ;
+	time:hasEnd kb:End-894c1ab4-9b4a-54ef-9f25-baca59e26fb3 ;
+	time:inside kb:Usage-71fc2006-ba1b-5fa3-9815-72e6b382f695 ;
 	prov:endedAtTime "2019-01-01T15:10:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-7ec9e20b-0f0c-5f23-9a4b-cc8c413001f3 ;
 	prov:qualifiedEnd kb:End-894c1ab4-9b4a-54ef-9f25-baca59e26fb3 ;
@@ -1011,7 +1310,18 @@ kb:action-uuid-11
 	.
 
 kb:action-uuid-12
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-1c90956c-e17a-5f22-938d-2479a75c110c ;
+	time:hasEnd kb:End-8b553cd2-3fd1-5e88-a0a6-915cd5e67e8e ;
+	time:inside
+		kb:Generation-7e206cb9-cd4e-5edd-a0d3-59221463ad1c ,
+		kb:Generation-d01d5054-2b2c-5450-b058-07c0709d19fb ,
+		kb:Usage-82e90348-861c-5f3e-8389-fb13edc60e5a ,
+		kb:Usage-edbbbf4f-74a9-56fa-98d8-f4dfec328dad
+		;
 	prov:endedAtTime "2019-01-01T15:15:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-fd84559b-636b-558b-a057-1d933aca72ba ;
 	prov:qualifiedCommunication kb:Communication-2ea6d41f-0c72-5155-91f6-ed7eef9f63ae ;
@@ -1031,7 +1341,17 @@ kb:action-uuid-12
 	.
 
 kb:action-uuid-13
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-612062f6-fd54-5f33-bb41-1d1a2768d685 ;
+	time:hasEnd kb:End-19d25fe9-ae1a-5596-b3a3-0070d7fc8ffc ;
+	time:inside
+		kb:Generation-48e01b98-7100-5f28-821b-793319f9fdd6 ,
+		kb:Usage-a5cfa998-37a3-55d9-a086-f330dd926375 ,
+		kb:Usage-eb580b46-193a-5c33-a9a4-15927d2473aa
+		;
 	prov:endedAtTime "2019-01-01T15:20:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-be77f131-4518-591e-ab61-60f182b0019c ;
 	prov:qualifiedCommunication kb:Communication-7b3ba65f-879f-54f6-85d8-b03f2080cdee ;
@@ -1052,7 +1372,18 @@ kb:action-uuid-13
 	.
 
 kb:action-uuid-2
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-65db0fc4-690b-582d-b2e9-cbc9aa75ce70 ;
+	time:hasEnd kb:End-1ebaffe2-5315-5f32-98f3-b503c73825da ;
+	time:inside
+		kb:Generation-3a4c3d26-6390-5e50-add7-47c9a3070e01 ,
+		kb:Generation-94659186-beea-5f0e-838b-8f43c1a44910 ,
+		kb:Usage-000d5736-7150-5abe-b8d1-baae58d68dea ,
+		kb:Usage-4208984e-17d2-52f0-a48e-21a32c00e3d3
+		;
 	prov:endedAtTime "2019-01-01T14:05:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-123a16d8-9793-56cb-a8aa-40df74ccdbd8 ;
 	prov:qualifiedCommunication kb:Communication-aed5baff-ff26-5caa-beea-c73e7f3b6c6e ;
@@ -1073,7 +1404,17 @@ kb:action-uuid-2
 	.
 
 kb:action-uuid-3
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-8ea56a88-720f-5697-8d2e-89d68cc930f1 ;
+	time:hasEnd kb:End-31764af5-0e93-5954-93c9-5d7c33047356 ;
+	time:inside
+		kb:Generation-e59dc07a-7c3e-585c-b302-49589802c3ef ,
+		kb:Usage-230ea0dd-8b2d-5546-9f9f-422c7a3f779f ,
+		kb:Usage-aea1118d-815a-5b4b-a75c-95d2dfa34283
+		;
 	prov:endedAtTime "2019-01-01T14:05:30+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-2d74acd2-f231-578a-9995-301ade08a37e ;
 	prov:qualifiedCommunication kb:Communication-661c4b54-3e3b-5f41-9213-8d4e441e84ae ;
@@ -1094,7 +1435,20 @@ kb:action-uuid-3
 	.
 
 kb:action-uuid-4
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-f01440ac-45dd-50ba-8a87-5bd932f64fbe ;
+	time:hasEnd kb:End-e88c0c83-6fcb-5bd6-ac8e-78e37f20bf68 ;
+	time:inside
+		kb:Generation-0d767eac-a7d5-5409-b87b-b3bbc0b785e3 ,
+		kb:Generation-199e4034-0746-5b15-8d20-8c1934eb51b4 ,
+		kb:Generation-1e0177a7-74b6-5e6e-aa93-30c94e0bf36a ,
+		kb:Generation-8647dc38-8cd3-5512-b8e1-309e6e8c75c4 ,
+		kb:Usage-551e4494-be9b-5b7b-980f-02cabe397896 ,
+		kb:Usage-668b6ffe-3cb4-526d-a4af-ef34dd77cc83
+		;
 	prov:endedAtTime "2019-01-01T14:15:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-30baa5cc-e7bd-5924-9ce5-3b1b74a1ece8 ,
@@ -1118,7 +1472,13 @@ kb:action-uuid-4
 	.
 
 kb:action-uuid-5
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-bcfe441e-db6b-543f-ab6a-59da5df89ab9 ;
+	time:hasEnd kb:End-1cde7fe2-690b-5cd1-8636-cecc1eb25abb ;
+	time:inside kb:Usage-3f02ab35-d0a2-5312-a5de-8aaa8da6812d ;
 	prov:endedAtTime "2019-01-01T14:20:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-3d156b08-fa03-5bc6-9297-b665046a29f2 ;
 	prov:qualifiedEnd kb:End-1cde7fe2-690b-5cd1-8636-cecc1eb25abb ;
@@ -1130,7 +1490,20 @@ kb:action-uuid-5
 	.
 
 kb:action-uuid-6
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-d230e5cd-4594-54f9-88f1-fca4639aa0a2 ;
+	time:hasEnd kb:End-09ef4b50-e763-568a-b52b-590cbab8540c ;
+	time:inside
+		kb:Generation-56fc8f86-62bb-5aa4-8039-05a59f29f487 ,
+		kb:Generation-c089cd32-5d68-5457-a0a1-e4a56ff1b366 ,
+		kb:Generation-dfa68ba5-48c4-5213-9f11-bc9a0e9c7b79 ,
+		kb:Generation-fd4e1edf-d058-5daf-b0a9-adce85ee52a8 ,
+		kb:Usage-414895b1-e40e-5168-9e22-88fd27a7116c ,
+		kb:Usage-4f8089f9-9bf8-55a0-825a-ea1e8675405e
+		;
 	prov:endedAtTime "2019-01-01T14:21:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-6eff4464-ec23-5beb-86ee-c5f7ccbd7d11 ,
@@ -1154,7 +1527,21 @@ kb:action-uuid-6
 	.
 
 kb:action-uuid-7
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-9e3ee06d-8708-5a08-8a8f-ccc8f8d1bdfa ;
+	time:hasEnd kb:End-f1ee6cda-bd2c-5924-a007-018de2f3fc2b ;
+	time:inside
+		kb:Generation-00915cbc-e0d9-575c-8690-61f1eb494ac6 ,
+		kb:Generation-130da2fc-4be8-51a9-943f-bcc800c6c1d6 ,
+		kb:Generation-1ea0f51f-3da9-5ac6-830f-128736c8e7ad ,
+		kb:Generation-7a5e1399-551c-594e-82bc-74e4e667516f ,
+		kb:Generation-7e06dc33-1a2f-5ffb-9c65-17dfd8df70a2 ,
+		kb:Usage-5c376dcf-a272-5c27-b233-a7b948ee07be ,
+		kb:Usage-f5c18d5b-87cf-55bd-beb4-6d916c59c3dc
+		;
 	prov:endedAtTime "2019-01-01T14:55:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-22c19332-a26b-5f7a-b8bd-9392e001f13d ,
@@ -1179,7 +1566,13 @@ kb:action-uuid-7
 	.
 
 kb:action-uuid-8
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-81f4d9c6-b4df-54f7-8403-cd90a0136923 ;
+	time:hasEnd kb:End-04a9d0cc-ff01-5988-94bf-bf8c4580d582 ;
+	time:inside kb:Usage-76381af4-8823-55c7-ae24-3333f827681f ;
 	prov:endedAtTime "2019-01-01T15:00:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-cdf69915-4135-5158-a0d1-a6a39460b5dd ;
 	prov:qualifiedEnd kb:End-04a9d0cc-ff01-5988-94bf-bf8c4580d582 ;
@@ -1191,7 +1584,18 @@ kb:action-uuid-8
 	.
 
 kb:action-uuid-9
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-db2694df-de4d-5dd2-a923-797a49f4c1b2 ;
+	time:hasEnd kb:End-0bf4eb72-e60e-56c3-ad45-a039046bc6d5 ;
+	time:inside
+		kb:Generation-20863384-aa9b-5ef7-ab8a-a20ec24fe289 ,
+		kb:Usage-57758c94-24d4-5186-8c67-94292966a982 ,
+		kb:Usage-666c7f49-231f-5866-8ea8-820f125e0a6e ,
+		kb:Usage-85bd0f05-742a-5da2-a40f-c8845cc5ebde
+		;
 	prov:endedAtTime "2019-01-01T15:03:00+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-04eb3476-a17f-5c07-ac57-1100809aed02 ,
