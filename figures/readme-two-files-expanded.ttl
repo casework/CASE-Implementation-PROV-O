@@ -1,0 +1,119 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:Action-1
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-41c7fd66-75d7-55b5-9e06-ba2b050a92f6 ;
+	time:hasEnd kb:End-a276875e-d3e3-5bba-a77f-ee26ca3b0810 ;
+	time:inside
+		kb:Generation-1 ,
+		kb:Generation-2 ,
+		kb:Generation-a299d02f-ea4f-5340-b0ac-2643ec68fb1e ,
+		kb:Invalidation-1 ,
+		kb:Usage-69a26cdf-cfbb-56de-9073-739a256f8c08
+		;
+	prov:endedAtTime "2020-01-02T12:00:30+00:00"^^xsd:dateTime ;
+	prov:qualifiedEnd kb:End-a276875e-d3e3-5bba-a77f-ee26ca3b0810 ;
+	prov:qualifiedStart kb:Start-41c7fd66-75d7-55b5-9e06-ba2b050a92f6 ;
+	prov:qualifiedUsage kb:Usage-69a26cdf-cfbb-56de-9073-739a256f8c08 ;
+	prov:startedAtTime "2020-01-02T12:00:30+00:00"^^xsd:dateTime ;
+	prov:used prov:EmptyCollection ;
+	uco-core:description "Activity known to create and delete a temporary file, File-1, and to create File-2." ;
+	.
+
+kb:Derivation-219156f4-ef48-5392-8db0-9014ceeb0994
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:Action-1 ;
+	.
+
+kb:Derivation-97796bb0-e0d3-5b94-b15d-ccf9b34428d5
+	a prov:Derivation ;
+	prov:entity kb:File-1 ;
+	prov:hadActivity kb:Action-1 ;
+	.
+
+kb:Derivation-e85bc570-2cc7-5a82-8519-97acc5525ec9
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:Action-1 ;
+	.
+
+kb:End-a276875e-d3e3-5bba-a77f-ee26ca3b0810
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2020-01-02T12:00:30+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T12:00:30+00:00"^^xsd:dateTime ;
+	.
+
+kb:File-2
+	a prov:Entity ;
+	prov:qualifiedDerivation
+		kb:Derivation-219156f4-ef48-5392-8db0-9014ceeb0994 ,
+		kb:Derivation-97796bb0-e0d3-5b94-b15d-ccf9b34428d5
+		;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:Action-1 ;
+	.
+
+kb:Generation-1
+	a time:Instant ;
+	time:before kb:Invalidation-1 ;
+	.
+
+kb:Generation-2
+	a time:Instant ;
+	.
+
+kb:Generation-a299d02f-ea4f-5340-b0ac-2643ec68fb1e
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	prov:activity kb:Action-1 ;
+	.
+
+kb:Invalidation-1
+	a time:Instant ;
+	.
+
+kb:ProvenanceRecord-1
+	a
+		prov:Collection ,
+		prov:Entity
+		;
+	prov:hadMember kb:File-2 ;
+	prov:qualifiedDerivation kb:Derivation-e85bc570-2cc7-5a82-8519-97acc5525ec9 ;
+	prov:qualifiedGeneration kb:Generation-a299d02f-ea4f-5340-b0ac-2643ec68fb1e ;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:Action-1 ;
+	.
+
+kb:Start-41c7fd66-75d7-55b5-9e06-ba2b050a92f6
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2020-01-02T12:00:30+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T12:00:30+00:00"^^xsd:dateTime ;
+	.
+
+kb:Usage-69a26cdf-cfbb-56de-9073-739a256f8c08
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity prov:EmptyCollection ;
+	.
+
