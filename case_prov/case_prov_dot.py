@@ -587,6 +587,18 @@ WHERE {
         debug_graph_fh.write(debug_graph.serialize(format="longturtle"))
 
 
+def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
+    """
+    This function provides, when a namespace is available, the prefixed form of the input node.  Blank nodes are rendered solely with str().
+    """
+    # TODO This function might be obviated by resolution of this issue:
+    # https://github.com/RDFLib/rdflib/issues/2429
+    if isinstance(n_thing, rdflib.URIRef):
+        return graph.namespace_manager.qname(n_thing)
+    else:
+        return str(n_thing)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true")
@@ -984,7 +996,7 @@ WHERE {
         kwargs["tooltip"] = "ID - " + str(n_agent)
 
         # Build label.
-        dot_label_parts = ["ID - " + graph.namespace_manager.qname(n_agent)]
+        dot_label_parts = ["ID - " + qname(graph, n_agent)]
         _annotate_name(n_agent, dot_label_parts)
         _annotate_labels(n_agent, dot_label_parts)
         _annotate_descriptions(n_agent, dot_label_parts)
@@ -1005,7 +1017,7 @@ WHERE {
         kwargs["tooltip"] = "ID - " + str(n_entity)
 
         # Build label.
-        dot_label_parts = ["ID - " + graph.namespace_manager.qname(n_entity)]
+        dot_label_parts = ["ID - " + qname(graph, n_entity)]
         if n_entity in n_provenance_record_to_l_exhibit_numbers:
             for l_exhibit_number in sorted(
                 n_provenance_record_to_l_exhibit_numbers[n_entity]
@@ -1060,7 +1072,7 @@ WHERE {
                     l_end_time = l_value
 
         # Build label.
-        dot_label_parts = ["ID - " + graph.namespace_manager.qname(n_activity)]
+        dot_label_parts = ["ID - " + qname(graph, n_activity)]
         if l_start_time is not None or l_end_time is not None:
             dot_label_parts.append("\n")
             section_parts = []
@@ -2082,7 +2094,7 @@ WHERE {
     # Render time:ProperIntervals that are not prov:Activities.
     for n_interval in sorted((n_intervals - n_activities) & n_time_things_to_display):
         # Build label.
-        dot_label_parts = ["ID - " + graph.namespace_manager.qname(n_interval), "\n"]
+        dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
         _annotate_name(n_interval, dot_label_parts)
         _annotate_labels(n_interval, dot_label_parts)
         _annotate_descriptions(n_interval, dot_label_parts)
