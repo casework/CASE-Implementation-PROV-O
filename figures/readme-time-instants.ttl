@@ -1,0 +1,116 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:inside-instant
+	a time:Instant ;
+	.
+
+kb:inside-interval
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:inside kb:inside-instant ;
+	.
+
+kb:instant-after-instant--i
+	a time:Instant ;
+	.
+
+kb:instant-after-instant--j
+	a time:Instant ;
+	time:after kb:instant-after-instant--i ;
+	.
+
+kb:instant-after-interval--instant
+	a time:Instant ;
+	time:after kb:instant-after-interval--interval ;
+	.
+
+kb:instant-after-interval--interval
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:instant-before-instant--i
+	a time:Instant ;
+	time:before kb:instant-before-instant--j ;
+	.
+
+kb:instant-before-instant--j
+	a time:Instant ;
+	.
+
+kb:instant-before-interval--instant
+	a time:Instant ;
+	time:before kb:instant-before-interval--interval ;
+	.
+
+kb:instant-before-interval--interval
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:interval-after-instant--instant
+	a time:Instant ;
+	.
+
+kb:interval-after-instant--interval
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:after kb:interval-after-instant--instant ;
+	.
+
+kb:interval-after-interval--i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+
+kb:interval-after-interval--j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:after kb:interval-after-interval--i ;
+	.
+
+kb:interval-before-instant--instant
+	a time:Instant ;
+	.
+
+kb:interval-before-instant--interval
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:before kb:interval-before-instant--instant ;
+	.
+
+kb:interval-before-interval--i
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:before kb:interval-before-interval--j ;
+	.
+
+kb:interval-before-interval--j
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	.
+

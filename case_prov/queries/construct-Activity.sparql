@@ -16,7 +16,8 @@ CONSTRUCT
     a prov:Activity ;
     prov:endedAtTime ?lEndTime ;
     prov:startedAtTime ?lStartTime ;
-    rdfs:comment ?lDescription ;
+    uco-core:description ?lDescription ;
+    uco-core:name ?lName ;
     .
 }
 WHERE {
@@ -39,6 +40,12 @@ WHERE {
   OPTIONAL {
     ?nAction
       uco-core:description ?lDescription ;
+      .
+  }
+
+  OPTIONAL {
+    ?nAction
+      uco-core:name ?lName ;
       .
   }
 }

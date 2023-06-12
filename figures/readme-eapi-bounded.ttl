@@ -1,0 +1,46 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:Activity-Bounded
+	a prov:Activity ;
+	rdfs:label "A time-bounded prov:Activity."@en ;
+	prov:qualifiedEnd kb:Activity-Bounded-End ;
+	prov:qualifiedStart kb:Activity-Bounded-Start ;
+	.
+
+kb:Activity-Bounded-End
+	a prov:End ;
+	.
+
+kb:Activity-Bounded-Start
+	a prov:Start ;
+	.
+
+kb:Entity-Bounded
+	a prov:Entity ;
+	rdfs:label "A time-bounded prov:Entity."@en ;
+	prov:qualifiedGeneration kb:Entity-Bounded-Generation ;
+	prov:qualifiedInvalidation kb:Entity-Bounded-Invalidation ;
+	prov:invalidatedAtTime "2007-08-09T10:11:12Z"^^xsd:dateTime ;
+	.
+
+kb:Entity-Bounded-Generation
+	a prov:Generation ;
+	.
+
+kb:Entity-Bounded-Invalidation
+	a prov:Invalidation ;
+	.
+
+kb:ProperInterval-Bounded
+	a time:ProperInterval ;
+	rdfs:label "A time-bounded time:ProperInterval."@en ;
+	time:hasBeginning kb:ProperInterval-Bounded-Beginning ;
+	time:hasEnd kb:ProperInterval-Bounded-End ;
+	.
+

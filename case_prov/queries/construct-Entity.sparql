@@ -17,7 +17,8 @@ CONSTRUCT
   # UcoObject would encompass UCO Actions, which would map to PROV
   # Activities.  In PROV, Activities can't be Entities.)
   ?nObject a prov:Entity .
-  ?nObject rdfs:comment ?lDescription .
+  ?nObject uco-core:description ?lDescription .
+  ?nObject uco-core:name ?lName .
 }
 WHERE {
   ?nAction
@@ -28,6 +29,12 @@ WHERE {
   OPTIONAL {
     ?nObject
       uco-core:description ?lDescription ;
+      .
+  }
+
+  OPTIONAL {
+    ?nObject
+      uco-core:name ?lName ;
       .
   }
 }

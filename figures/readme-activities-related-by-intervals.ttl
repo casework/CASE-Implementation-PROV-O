@@ -1,0 +1,31 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:activity-earlier
+	a prov:Activity ;
+	rdfs:label "An Activity that occurs earlier."@en ;
+	.
+
+kb:activity-later
+	a prov:Activity ;
+	rdfs:label "An Activity that occurs earlier."@en ;
+	.
+
+kb:interval-earlier
+	a time:ProperInterval ;
+	rdfs:label "A Proper Interval that starts and ends earlier, and contains the earlier activity."@en ;
+	time:intervalBefore kb:interval-later ;
+	time:intervalContains kb:activity-earlier ;
+	.
+
+kb:interval-later
+	a time:ProperInterval ;
+	rdfs:label "A Proper Interval that starts later, comes after the earlier interval, and contains the later activity."@en ;
+	time:intervalContains kb:activity-later ;
+	.
+

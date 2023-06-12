@@ -1,0 +1,122 @@
+@prefix kb: <urn:example:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:Action-417af923-6ff4-48da-b7a7-177cb5f3d6f3
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-adfc2e9d-7cbc-52a5-abb6-17ffec3657cc ;
+	time:inside kb:Usage-6078c8f2-d117-534a-a690-599d836f6093 ;
+	prov:qualifiedStart kb:Start-adfc2e9d-7cbc-52a5-abb6-17ffec3657cc ;
+	prov:qualifiedUsage kb:Usage-6078c8f2-d117-534a-a690-599d836f6093 ;
+	prov:startedAtTime "2020-01-02T04:00:00+00:00"^^xsd:dateTime ;
+	prov:used prov:EmptyCollection ;
+	.
+
+kb:Action-60dddd50-07ac-4177-930d-7954c56f49b9
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-c99941dc-5be0-5095-a74d-f85359f6c869 ;
+	time:hasEnd kb:End-cab73892-7636-54b4-afad-bc815a6578ae ;
+	time:inside kb:Usage-e69707d1-9c7b-5b1a-9801-8e4e3dc56dbb ;
+	prov:endedAtTime "2020-01-02T08:00:00+00:00"^^xsd:dateTime ;
+	prov:qualifiedEnd kb:End-cab73892-7636-54b4-afad-bc815a6578ae ;
+	prov:qualifiedStart kb:Start-c99941dc-5be0-5095-a74d-f85359f6c869 ;
+	prov:qualifiedUsage kb:Usage-e69707d1-9c7b-5b1a-9801-8e4e3dc56dbb ;
+	prov:startedAtTime "2020-01-02T05:00:00+00:00"^^xsd:dateTime ;
+	prov:used prov:EmptyCollection ;
+	.
+
+kb:Action-e9f1edc9-4e0c-43c3-a1c4-891143e3fa86
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-30a5ef5a-e33f-5a68-8ce1-946dfb30eb37 ;
+	time:hasEnd kb:End-50346631-166c-5588-b8ec-170c9037a028 ;
+	time:inside kb:Usage-4624f76f-9b3e-5d12-86cd-4ca7478378e1 ;
+	prov:endedAtTime "2020-01-02T06:00:00+00:00"^^xsd:dateTime ;
+	prov:qualifiedEnd kb:End-50346631-166c-5588-b8ec-170c9037a028 ;
+	prov:qualifiedStart kb:Start-30a5ef5a-e33f-5a68-8ce1-946dfb30eb37 ;
+	prov:qualifiedUsage kb:Usage-4624f76f-9b3e-5d12-86cd-4ca7478378e1 ;
+	prov:startedAtTime "2020-01-02T03:00:00+00:00"^^xsd:dateTime ;
+	prov:used prov:EmptyCollection ;
+	.
+
+kb:End-50346631-166c-5588-b8ec-170c9037a028
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2020-01-02T06:00:00+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T06:00:00+00:00"^^xsd:dateTime ;
+	.
+
+kb:End-cab73892-7636-54b4-afad-bc815a6578ae
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2020-01-02T08:00:00+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T08:00:00+00:00"^^xsd:dateTime ;
+	.
+
+kb:Start-30a5ef5a-e33f-5a68-8ce1-946dfb30eb37
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2020-01-02T03:00:00+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T03:00:00+00:00"^^xsd:dateTime ;
+	.
+
+kb:Start-adfc2e9d-7cbc-52a5-abb6-17ffec3657cc
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2020-01-02T04:00:00+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T04:00:00+00:00"^^xsd:dateTime ;
+	.
+
+kb:Start-c99941dc-5be0-5095-a74d-f85359f6c869
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2020-01-02T05:00:00+00:00"^^xsd:dateTimeStamp ;
+	prov:atTime "2020-01-02T05:00:00+00:00"^^xsd:dateTime ;
+	.
+
+kb:Usage-4624f76f-9b3e-5d12-86cd-4ca7478378e1
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity prov:EmptyCollection ;
+	.
+
+kb:Usage-6078c8f2-d117-534a-a690-599d836f6093
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity prov:EmptyCollection ;
+	.
+
+kb:Usage-e69707d1-9c7b-5b1a-9801-8e4e3dc56dbb
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity prov:EmptyCollection ;
+	.
+

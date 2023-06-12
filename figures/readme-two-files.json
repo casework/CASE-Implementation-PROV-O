@@ -1,0 +1,107 @@
+{
+    "@context":{
+        "case-investigation": "https://ontology.caseontology.org/case/investigation/",
+        "kb": "urn:example:",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "prov": "http://www.w3.org/ns/prov#",
+        "prov:activity": {
+            "@type": "@id"
+        },
+        "prov:qualifiedGeneration": {
+            "@type": "@id"
+        },
+        "prov:qualifiedInvalidation": {
+            "@type": "@id"
+        },
+        "prov:used": {
+            "@type": "@id"
+        },
+        "prov:wasDerivedFrom": {
+            "@type": "@id"
+        },
+        "prov:wasGeneratedBy": {
+            "@type": "@id"
+        },
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "time": "http://www.w3.org/2006/time#",
+        "time:after": {
+            "@type": "@id"
+        },
+        "time:inXSDDateTimeStamp": {
+            "@type": "xsd:dateTimeStamp"
+        },
+        "uco-action": "https://ontology.unifiedcyberontology.org/uco/action/",
+        "uco-action:endTime": {
+            "@type": "xsd:dateTime"
+        },
+        "uco-action:result": {
+            "@type": "@id"
+        },
+        "uco-action:startTime": {
+            "@type": "xsd:dateTime"
+        },
+        "uco-core": "https://ontology.unifiedcyberontology.org/uco/core/",
+        "uco-core:object": {
+            "@type": "@id"
+        },
+        "uco-observable": "https://ontology.unifiedcyberontology.org/uco/observable/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#"
+    },
+    "@graph": [
+        {
+            "@id": "kb:Action-1",
+            "@type": "case-investigation:InvestigativeAction",
+            "uco-action:endTime": "2020-01-02T12:00:30Z",
+            "uco-action:result": [
+                "kb:File-2",
+                "kb:ProvenanceRecord-1"
+            ],
+            "uco-action:startTime": "2020-01-02T12:00:30Z",
+            "uco-core:description": "Activity known to create and delete a temporary file, File-1, and to create File-2."
+        },
+        {
+            "@id": "kb:File-1",
+            "@type": [
+                "prov:Entity",
+                "uco-observable:File"
+            ],
+            "uco-core:description": "Temporary file",
+            "prov:qualifiedGeneration": "kb:Generation-1",
+            "prov:qualifiedInvalidation": "kb:Invalidation-1",
+            "prov:wasGeneratedBy": "kb:Action-1",
+            "prov:wasInvalidatedBy": "kb:Action-1"
+        },
+        {
+            "@id": "kb:File-2",
+            "@type": "uco-observable:File",
+            "prov:qualifiedGeneration": "kb:Generation-2",
+            "prov:wasDerivedFrom": "kb:File-1",
+            "prov:wasGeneratedBy": "kb:Action-1"
+        },
+        {
+            "@id": "kb:Generation-1",
+            "@type": "prov:Generation",
+            "prov:activity": "kb:Action-1",
+            "time:inXSDDateTimeStamp": "2020-01-02T12:00:30.1234Z"
+        },
+        {
+            "@id": "kb:Generation-2",
+            "@type": "prov:Generation",
+            "prov:activity": "kb:Action-1",
+            "time:inXSDDateTimeStamp": "2020-01-02T12:00:30.3456Z"
+        },
+        {
+            "@id": "kb:Invalidation-1",
+            "@type": "prov:Invalidation",
+            "prov:activity": "kb:Action-1",
+            "time:inXSDDateTimeStamp": "2020-01-02T12:00:30.5678Z"
+        },
+
+        {
+            "@id": "kb:ProvenanceRecord-1",
+            "@type": "case-investigation:ProvenanceRecord",
+            "uco-core:object": "kb:File-2"
+        }
+    ]
+}
