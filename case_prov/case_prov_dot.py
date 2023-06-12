@@ -27,7 +27,7 @@ prov:Activities and uco-action:Actions are further assumed to be time:ProperInte
 # get quoted.  This turns out to be a dot syntax error.  Need to report
 # this upstream to pydot.
 
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 
 import argparse
 import collections
