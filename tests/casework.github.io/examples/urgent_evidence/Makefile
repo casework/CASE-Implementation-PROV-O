@@ -23,6 +23,7 @@ all:
 	$(MAKE) \
 	  --file ../src/example.mk \
 	  all \
+	  all-prov-time \
 	  urgent_evidence-prov-activities-agents.svg \
 	  urgent_evidence-prov-activities-entities.svg \
 	  urgent_evidence-prov-agents-entities.svg
@@ -31,7 +32,8 @@ all:
 	  urgent_evidence-prov-all-focus-extracted-file-uuid-1.svg \
 	  urgent_evidence-prov-all-focus-jpegs.svg \
 	  urgent_evidence-prov-all-initial_investigative_actions.svg \
-	  urgent_evidence-prov-entities-focus-extracted-file-uuid-1.svg
+	  urgent_evidence-prov-entities-focus-extracted-file-uuid-1.svg \
+	  urgent_evidence-prov-time-all-focus-extracted-file-uuid-1.svg
 
 %.svg: \
   %.dot
@@ -109,6 +111,19 @@ urgent_evidence-prov-entities-focus-extracted-file-uuid-1.dot: \
 	    --dash-unqualified \
 	    --debug \
 	    --entity-deriving \
+	    --entity-ancestry http://example.org/kb/extracted-file-uuid-1 \
+	    _$@ \
+	    $<
+	mv _$@ $@
+
+urgent_evidence-prov-time-all-focus-extracted-file-uuid-1.dot: \
+  urgent_evidence-prov.ttl \
+  $(top_srcdir)/case_prov/case_prov_dot.py
+	source $(tests_srcdir)/venv/bin/activate \
+	  && case_prov_dot \
+	    --dash-unqualified \
+	    --debug \
+	    --display-time-links \
 	    --entity-ancestry http://example.org/kb/extracted-file-uuid-1 \
 	    _$@ \
 	    $<

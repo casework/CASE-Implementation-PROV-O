@@ -3,6 +3,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -80,41 +81,66 @@ kb:Derivation-fc138cee-3f5f-5c6d-9e30-689e7da94aba
 	.
 
 kb:End-9fcc3893-e514-5cfb-aff7-4cf345c8f728
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2017-09-29T11:47:54.288992+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-09-29T11:47:54.288992+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-375b6eee-be9c-520d-850c-25206e789823
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:extraction-action-a1c7e92a-5b0b-4156-8816-b337c66341f6 ;
 	.
 
 kb:Generation-892d0658-1a2f-507a-8fc8-8847a91d06b1
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:extraction-action-a1c7e92a-5b0b-4156-8816-b337c66341f6 ;
 	.
 
 kb:Generation-b8619da4-0187-5d2a-abcf-d63052a199c9
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:extraction-action-a1c7e92a-5b0b-4156-8816-b337c66341f6 ;
 	.
 
 kb:Generation-bdfa2e12-8278-59f4-9f27-83f4e1323bad
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:extraction-action-a1c7e92a-5b0b-4156-8816-b337c66341f6 ;
 	.
 
 kb:Start-d822844e-ff42-5d7b-817b-25a498f36d55
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
 	.
 
 kb:Usage-26593650-771b-52b7-a568-5f8ab46624e2
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:pcap-file-2200b4e1-3974-4e37-961b-d817079bc9e1 ;
 	.
 
 kb:Usage-8b9069ca-2924-54bc-a11e-27d423900233
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:pcap-provenancerecord-b668b007-76cc-4d1b-859e-6ae051d36abe ;
 	.
 
@@ -144,7 +170,20 @@ kb:extracted-connections-provenancerecord-55d66280-aa96-4806-a60f-303acdc0c078
 	.
 
 kb:extraction-action-a1c7e92a-5b0b-4156-8816-b337c66341f6
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-d822844e-ff42-5d7b-817b-25a498f36d55 ;
+	time:hasEnd kb:End-9fcc3893-e514-5cfb-aff7-4cf345c8f728 ;
+	time:inside
+		kb:Generation-375b6eee-be9c-520d-850c-25206e789823 ,
+		kb:Generation-892d0658-1a2f-507a-8fc8-8847a91d06b1 ,
+		kb:Generation-b8619da4-0187-5d2a-abcf-d63052a199c9 ,
+		kb:Generation-bdfa2e12-8278-59f4-9f27-83f4e1323bad ,
+		kb:Usage-26593650-771b-52b7-a568-5f8ab46624e2 ,
+		kb:Usage-8b9069ca-2924-54bc-a11e-27d423900233
+		;
 	prov:endedAtTime "2017-09-29T11:47:54.288992+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation kb:Association-7c34e5ea-ff99-5c63-a5d5-c0747d532e6e ;
 	prov:qualifiedEnd kb:End-9fcc3893-e514-5cfb-aff7-4cf345c8f728 ;

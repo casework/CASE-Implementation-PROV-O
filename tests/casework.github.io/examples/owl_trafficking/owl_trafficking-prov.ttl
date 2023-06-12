@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -58,32 +59,52 @@ kb:Derivation-f8fbd307-a564-55d3-aac5-676d05969557
 	.
 
 kb:End-484e8afe-eea3-5c44-99a0-965077374829
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2017-02-06T22:13:08+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-02-06T22:13:08+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-90a27089-f501-5bd4-811a-12de6f36cef3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-4d3778d9-8376-4277-9852-8e6bf926a5d1 ;
 	.
 
 kb:Generation-d7a7db01-1ef3-5f86-a12d-28984842700c
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-4d3778d9-8376-4277-9852-8e6bf926a5d1 ;
 	.
 
 kb:Start-d4f48397-5ce5-52b9-b407-a3aa95af7743
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-02-06T20:51:09+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-02-06T20:51:09+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-3dc7ce36-f0db-5f5d-836f-bd13378fd07e
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:lge-device-eee670c6-01d4-4e42-bb6b-ebeca149b168 ;
 	.
 
 kb:Usage-d3203198-15a5-510c-8bb5-05a3bb35b5e7
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-9bd9c456-5965-4782-8285-5fee34c8ddd2 ;
 	.
 
@@ -104,7 +125,18 @@ kb:f3fd304e-ef6c-4cbd-94cb-425880f82748
 	.
 
 kb:investigative-action-4d3778d9-8376-4277-9852-8e6bf926a5d1
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-d4f48397-5ce5-52b9-b407-a3aa95af7743 ;
+	time:hasEnd kb:End-484e8afe-eea3-5c44-99a0-965077374829 ;
+	time:inside
+		kb:Generation-90a27089-f501-5bd4-811a-12de6f36cef3 ,
+		kb:Generation-d7a7db01-1ef3-5f86-a12d-28984842700c ,
+		kb:Usage-3dc7ce36-f0db-5f5d-836f-bd13378fd07e ,
+		kb:Usage-d3203198-15a5-510c-8bb5-05a3bb35b5e7
+		;
 	prov:endedAtTime "2017-02-06T22:13:08+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-1696bf17-a3f4-5583-85d4-3d3a84638374 ,

@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -333,166 +334,269 @@ kb:Derivation-fb855a28-8315-5e0d-833e-158b20069579
 	prov:hadActivity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
-kb:End-08cccdce-0ea1-559b-ad7d-5dcf04bd9f4c
-	a prov:End ;
-	.
-
 kb:End-23328962-f49d-5769-b82d-bef9369856ac
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2017-06-22T08:39:19.240000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T08:39:19.240000+00:00"^^xsd:dateTime ;
 	.
 
-kb:End-7bf105b5-e219-537b-91fe-e66f2ca89b07
-	a prov:End ;
-	.
-
 kb:End-8def7942-680e-5e5a-bd9e-a0c2e035f52b
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTime ;
 	.
 
 kb:End-982645b4-3739-5fd9-8c9d-fb6555922622
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-03511c1a-6cb9-50cd-8b2b-797ee45f81e6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Generation-18faccd3-0cff-55dd-aa70-f1406bf7d298
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-ef04837a-e283-59e2-9b1a-4e02641921d0 ;
 	prov:activity kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95 ;
 	.
 
 kb:Generation-3e4d9090-ac3e-5448-920e-21a5dc928a4f
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Generation-3ed569b4-a465-58e9-9d64-dcd159248724
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-80a9d30e-a191-5d6b-917e-0eba6bd598bf ;
 	prov:activity kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997 ;
 	.
 
 kb:Generation-4153d8ac-330b-5461-87c5-68c117db0051
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-1b61ad97-02c5-5990-a343-7b23b5fe4d9f ;
 	prov:activity kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997 ;
 	.
 
 kb:Generation-4c651bae-875e-5d2c-b6c5-a9ccc4f16130
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before
+		kb:Usage-bebfe3c7-1d1b-519c-9744-a1bc44e54767 ,
+		kb:Usage-da5821a2-b62c-5f94-b85d-e6857cb0bff9
+		;
 	prov:activity kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95 ;
 	.
 
 kb:Generation-4cebe0bc-5c5c-5dc8-b7d6-3fb4b7a0abef
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
 	.
 
 kb:Generation-532b67a9-0af0-5b13-b3c5-943bb4c3c111
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Generation-583a181e-d8e2-5a36-b681-cb1b451ab8a7
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Generation-6a650ddc-c9c9-536e-98cc-cf8cda1d8bb5
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Generation-877affbc-21eb-54be-bd9f-adb8a8cfaae3
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-71e24ab9-9d59-5f90-a5c0-c154021e2210 ;
 	prov:activity kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
 	.
 
 kb:Generation-d86540f7-302f-5342-84f7-1d3a88aa1f31
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-5ab8edd6-2a84-5483-9eaa-9fc1f7fb7657 ;
 	prov:activity kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe ;
 	.
 
 kb:Generation-de6f3df8-d4cb-5afe-b1a3-83d70e52f146
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-652af62a-975f-50b7-be89-e64c7669f5e0 ;
 	prov:activity kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62 ;
 	.
 
 kb:Generation-e8cfb211-8bb0-5f7d-ba23-d6c180f82ab6
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89 ;
 	.
 
 kb:Start-374045d8-e8c6-59fc-bf64-650ed2e63e93
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-06-22T09:57:23.640000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T09:57:23.640000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-9e0e52fc-16d6-5536-ab0c-d9728e2f35b8
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-06-21T22:36:24.350000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-21T22:36:24.350000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-a2131571-c0fa-5fd0-97d6-777208d72098
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-06-22T09:57:23.640000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T09:57:23.640000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-b80b4d9a-9047-557c-b253-de62930afbc0
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-06-22T08:01:23.140000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T08:01:23.140000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Start-e4a6a525-e2d0-5cea-a868-cf883f517ea5
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2017-06-22T08:12:19.320000+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2017-06-22T08:12:19.320000+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-1b61ad97-02c5-5990-a343-7b23b5fe4d9f
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:cassandra-mobiledevice-forensicduplicate-95d5a618-8265-4cb8-8140-ac8ea281c536 ;
 	.
 
 kb:Usage-5ab8edd6-2a84-5483-9eaa-9fc1f7fb7657
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-dcbca583-84c5-4d29-a232-f78bcdc6058b ;
 	.
 
 kb:Usage-652af62a-975f-50b7-be89-e64c7669f5e0
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-728090d9-6a05-42e5-9b7e-d4bb1ff5a181 ;
 	.
 
 kb:Usage-71e24ab9-9d59-5f90-a5c0-c154021e2210
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:cassandra-mobiledevice-mmssms-1ab55cb8-581d-4ebc-99e4-4db8d4261535 ;
 	.
 
 kb:Usage-797768e2-6f2c-533e-a8c4-0b41e8e7e1ad
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity prov:EmptyCollection ;
 	.
 
 kb:Usage-80a9d30e-a191-5d6b-917e-0eba6bd598bf
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-bfea7cae-055e-46d9-8549-22ad27328137 ;
 	.
 
 kb:Usage-bebfe3c7-1d1b-519c-9744-a1bc44e54767
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:cassandra-device-d2ac1471-2d0f-4032-8cca-53d317600cba ;
 	.
 
 kb:Usage-da5821a2-b62c-5f94-b85d-e6857cb0bff9
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:cassandra-device-d2ac1471-2d0f-4032-8cca-53d317600cba ;
 	.
 
 kb:Usage-ef04837a-e283-59e2-9b1a-4e02641921d0
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:provenance-record-4fc5478b-b6f3-440c-9d09-d7f8363c6792 ;
 	.
 
@@ -618,12 +722,20 @@ kb:euripides-3696c710-161f-47af-9ae8-61b178611773
 	.
 
 kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-9e0e52fc-16d6-5536-ab0c-d9728e2f35b8 ;
+	time:inside
+		kb:Generation-18faccd3-0cff-55dd-aa70-f1406bf7d298 ,
+		kb:Generation-4c651bae-875e-5d2c-b6c5-a9ccc4f16130 ,
+		kb:Usage-797768e2-6f2c-533e-a8c4-0b41e8e7e1ad
+		;
 	prov:qualifiedAssociation
 		kb:Association-0c97ffab-0909-5eb2-8b52-d52f2879bae0 ,
 		kb:Association-6430009b-6070-519e-8594-1281e7ec9de9
 		;
-	prov:qualifiedEnd kb:End-08cccdce-0ea1-559b-ad7d-5dcf04bd9f4c ;
 	prov:qualifiedStart kb:Start-9e0e52fc-16d6-5536-ab0c-d9728e2f35b8 ;
 	prov:qualifiedUsage kb:Usage-797768e2-6f2c-533e-a8c4-0b41e8e7e1ad ;
 	prov:startedAtTime "2017-06-21T22:36:24.350000+00:00"^^xsd:dateTime ;
@@ -633,7 +745,22 @@ kb:investigative-action-30079255-a489-4dc2-ab5a-b9633a1cce95
 	.
 
 kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-a2131571-c0fa-5fd0-97d6-777208d72098 ;
+	time:hasEnd kb:End-8def7942-680e-5e5a-bd9e-a0c2e035f52b ;
+	time:inside
+		kb:Generation-03511c1a-6cb9-50cd-8b2b-797ee45f81e6 ,
+		kb:Generation-3e4d9090-ac3e-5448-920e-21a5dc928a4f ,
+		kb:Generation-532b67a9-0af0-5b13-b3c5-943bb4c3c111 ,
+		kb:Generation-583a181e-d8e2-5a36-b681-cb1b451ab8a7 ,
+		kb:Generation-6a650ddc-c9c9-536e-98cc-cf8cda1d8bb5 ,
+		kb:Generation-e8cfb211-8bb0-5f7d-ba23-d6c180f82ab6 ,
+		kb:Usage-5ab8edd6-2a84-5483-9eaa-9fc1f7fb7657 ,
+		kb:Usage-71e24ab9-9d59-5f90-a5c0-c154021e2210
+		;
 	prov:endedAtTime "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-0df2f94e-bb9d-5599-a1ed-2eaf44e90df5 ,
@@ -657,7 +784,18 @@ kb:investigative-action-49e0d70c-f1bc-40a4-8866-45ddb8ad4e89
 	.
 
 kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-e4a6a525-e2d0-5cea-a868-cf883f517ea5 ;
+	time:hasEnd kb:End-23328962-f49d-5769-b82d-bef9369856ac ;
+	time:inside
+		kb:Generation-3ed569b4-a465-58e9-9d64-dcd159248724 ,
+		kb:Generation-4153d8ac-330b-5461-87c5-68c117db0051 ,
+		kb:Usage-652af62a-975f-50b7-be89-e64c7669f5e0 ,
+		kb:Usage-da5821a2-b62c-5f94-b85d-e6857cb0bff9
+		;
 	prov:endedAtTime "2017-06-22T08:39:19.240000+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-4ab5ae74-b085-53e1-b980-ece73a42376e ,
@@ -681,13 +819,21 @@ kb:investigative-action-714255fe-ce2d-43e5-b0da-0910cc0e3997
 	.
 
 kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-b80b4d9a-9047-557c-b253-de62930afbc0 ;
+	time:inside
+		kb:Generation-de6f3df8-d4cb-5afe-b1a3-83d70e52f146 ,
+		kb:Usage-bebfe3c7-1d1b-519c-9744-a1bc44e54767 ,
+		kb:Usage-ef04837a-e283-59e2-9b1a-4e02641921d0
+		;
 	prov:qualifiedAssociation
 		kb:Association-2228a6b8-554e-57f5-8226-0b0cd8645cf0 ,
 		kb:Association-e4c16bb6-df57-51bc-ba9e-27017b95d8d0
 		;
 	prov:qualifiedCommunication kb:Communication-7217300b-916e-51b2-853a-13d8cd8f0ff5 ;
-	prov:qualifiedEnd kb:End-7bf105b5-e219-537b-91fe-e66f2ca89b07 ;
 	prov:qualifiedStart kb:Start-b80b4d9a-9047-557c-b253-de62930afbc0 ;
 	prov:qualifiedUsage
 		kb:Usage-bebfe3c7-1d1b-519c-9744-a1bc44e54767 ,
@@ -705,8 +851,18 @@ kb:investigative-action-7786ff3a-d40b-45a9-b65c-94ad10597b62
 
 kb:investigative-action-b8fd94b9-ceae-4c2f-aa38-8cfaa98804fe
 	a
+		time:ProperInterval ,
 		prov:Activity ,
 		prov:Agent
+		;
+	time:hasBeginning kb:Start-374045d8-e8c6-59fc-bf64-650ed2e63e93 ;
+	time:hasEnd kb:End-982645b4-3739-5fd9-8c9d-fb6555922622 ;
+	time:inside
+		kb:Generation-4cebe0bc-5c5c-5dc8-b7d6-3fb4b7a0abef ,
+		kb:Generation-877affbc-21eb-54be-bd9f-adb8a8cfaae3 ,
+		kb:Generation-d86540f7-302f-5342-84f7-1d3a88aa1f31 ,
+		kb:Usage-1b61ad97-02c5-5990-a343-7b23b5fe4d9f ,
+		kb:Usage-80a9d30e-a191-5d6b-917e-0eba6bd598bf
 		;
 	prov:endedAtTime "2017-06-22T10:31:19.240000+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation

@@ -4,6 +4,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -72,22 +73,43 @@ kb:Disk-6dbe5066-dfb8-4551-9bda-39aab2ae3db1
 	.
 
 kb:End-b7e9c240-c798-508c-8abb-bba2a90743f0
-	a prov:End ;
+	a
+		time:Instant ,
+		prov:End
+		;
+	time:inXSDDateTimeStamp "2018-11-19T15:58:38+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2018-11-19T15:58:38+00:00"^^xsd:dateTime ;
 	.
 
 kb:Generation-39794b09-cea8-5ebc-832b-58aba299df36
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:InvestigativeAction-e019ed92-af10-4a9f-a914-7a9ba539807c ;
 	.
 
 kb:Generation-9641ef8d-df3c-5b17-9109-41799e563f19
-	a prov:Generation ;
+	a
+		time:Instant ,
+		prov:Generation
+		;
 	prov:activity kb:InvestigativeAction-e019ed92-af10-4a9f-a914-7a9ba539807c ;
 	.
 
 kb:InvestigativeAction-e019ed92-af10-4a9f-a914-7a9ba539807c
-	a prov:Activity ;
+	a
+		time:ProperInterval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-0f4342fc-ff40-5bdb-a93f-7814693401ea ;
+	time:hasEnd kb:End-b7e9c240-c798-508c-8abb-bba2a90743f0 ;
+	time:inside
+		kb:Generation-39794b09-cea8-5ebc-832b-58aba299df36 ,
+		kb:Generation-9641ef8d-df3c-5b17-9109-41799e563f19 ,
+		kb:Usage-33d52b01-982b-5310-b89d-09d6f2dd7a95 ,
+		kb:Usage-b00b6811-7230-57e0-9f16-b0487a7f0185
+		;
 	prov:endedAtTime "2018-11-19T15:58:38+00:00"^^xsd:dateTime ;
 	prov:qualifiedAssociation
 		kb:Association-40a3d4c4-145f-5cfb-85c8-eb54a52e419f ,
@@ -147,17 +169,27 @@ kb:Role-870e2626-5ffd-4a80-83c2-8ee429709c81
 	.
 
 kb:Start-0f4342fc-ff40-5bdb-a93f-7814693401ea
-	a prov:Start ;
+	a
+		time:Instant ,
+		prov:Start
+		;
+	time:inXSDDateTimeStamp "2018-11-19T15:51:10+00:00"^^xsd:dateTimeStamp ;
 	prov:atTime "2018-11-19T15:51:10+00:00"^^xsd:dateTime ;
 	.
 
 kb:Usage-33d52b01-982b-5310-b89d-09d6f2dd7a95
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:Disk-6dbe5066-dfb8-4551-9bda-39aab2ae3db1 ;
 	.
 
 kb:Usage-b00b6811-7230-57e0-9f16-b0487a7f0185
-	a prov:Usage ;
+	a
+		time:Instant ,
+		prov:Usage
+		;
 	prov:entity kb:ProvenanceRecord-53d614ea-d7cd-4491-a100-2f0b88299e89 ;
 	.
 

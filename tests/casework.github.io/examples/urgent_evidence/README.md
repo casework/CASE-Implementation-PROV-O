@@ -3,6 +3,7 @@
 This directory includes some visual displays of the [CASE "Urgent Evidence" narrative](https://caseontology.org/examples/urgent_evidence/) mapped to PROV-O.
 
 The depictions are:
+
 * [All](urgent_evidence-prov-all.svg) - The entire narrative-mapping.
 * [Activities](urgent_evidence-prov-activities.svg) - All `prov:Activity`s and their `prov:wasInformedBy` relationships.
 * [Entities](urgent_evidence-prov-entities.svg) - All `prov:Entity`s (including `prov:Collection`s) and their `prov:wasDerivedFrom` (and `prov:hadMember`) relationships.
@@ -13,3 +14,9 @@ The depictions are:
    - [Agents and Entities](urgent_evidence-prov-agents-entities.svg)
 * [All produced JPEG files](urgent_evidence-prov-all-focus-jpegs.svg) - All files of MIME type `image/jpeg`, as selected by [this query](select-jpegs.sparql).
 * [Single extracted file](urgent_evidence-prov-all-focus-extracted-file-uuid-1.svg) - The provenance chain from a single extracted file, a JPEG, back to initial evidence submission.
+
+For visual reference, some of the depictions are also stored here with OWL-Time links displayed:
+
+* [All](urgent_evidence-prov-time-all.svg)
+* [Activities](urgent_evidence-prov-time-activities.svg)
+* [Single extracted file](urgent_evidence-prov-time-all-focus-extracted-file-uuid-1.svg)

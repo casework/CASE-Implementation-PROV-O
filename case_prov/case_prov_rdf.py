@@ -12,7 +12,7 @@
 # We would appreciate acknowledgement if the software is used.
 
 """
-This script executes CONSTRUCT queries, returning a supplemental graph.
+This script executes CONSTRUCT queries and other data translation, returning a supplemental graph.
 """
 
 __version__ = "0.3.1"
@@ -35,11 +35,32 @@ from case_utils.namespace import (
     NS_UCO_IDENTITY,
 )
 
+import case_prov
+
 from . import queries
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
 NS_PROV = rdflib.PROV
+NS_TIME = rdflib.TIME
+
+# This script augments the input graph with temporary triples that will
+# be serialized into a separate graph.  Some nodes that would be created
+# as part of the augmentation (e.g. inferred `prov:InstantaneousEvent`s)
+# might already be defined in the input graph as blank nodes.  To avoid
+# reliance on `owl:sameAs`, this script does not create extra IRI
+# references to attempt to supplant those blank nodes.
+# Because this script is not updating the original graph directly (i.e.
+# because the updates are written to a separate file), updates based on
+# blank nodes will not persist and link correctly, and thus are excluded
+# from the augmentations.  Compare this type with
+# `case_prov_dot.TmpTriplesType`, where blank nodes are included in
+# visualization-rendering logic.
+TmpPersistableTriplesType = typing.Set[
+    typing.Tuple[
+        rdflib.URIRef, rdflib.URIRef, typing.Union[rdflib.URIRef, rdflib.Literal]
+    ]
+]
 
 
 def main() -> None:
@@ -96,6 +117,8 @@ def main() -> None:
         NS_KB = rdflib.Namespace(args.kb_iri)
         out_graph.bind(args.kb_prefix, NS_KB)
 
+    use_deterministic_uuids = args.use_deterministic_uuids is True
+
     # Resource file loading c/o https://stackoverflow.com/a/20885799
     query_filenames = []
     for resource_filename in importlib.resources.contents(queries):
@@ -111,6 +134,8 @@ def main() -> None:
     n_entity: rdflib.URIRef
 
     # Generate inherent nodes.
+    # These graph augmentations are order-independent of the CONSTRUCT
+    # queries for the unqualified PROV predicates.
     n_actions: typing.Set[rdflib.URIRef] = set()
     for n_action in in_graph.subjects(
         NS_RDF.type, NS_CASE_INVESTIGATION.InvestigativeAction
@@ -118,45 +143,40 @@ def main() -> None:
         assert isinstance(n_action, rdflib.URIRef)
         n_actions.add(n_action)
     for n_action in sorted(n_actions):
-        assert isinstance(n_action, rdflib.URIRef)
+        if not isinstance(n_action, rdflib.URIRef):
+            continue
         action_inherence_uuid = case_utils.inherent_uuid.inherence_uuid(n_action)
 
-        # Generate Ends.
-        n_end: typing.Optional[rdflib.IdentifiedNode] = None
-        for n_value in in_graph.objects(n_action, NS_PROV.qualifiedEnd):
-            assert isinstance(n_value, rdflib.term.IdentifiedNode)
-            n_end = n_value
-        if n_end is None:
-            if args.use_deterministic_uuids:
-                end_uuid = str(
-                    uuid.uuid5(action_inherence_uuid, str(NS_PROV.qualifiedEnd))
-                )
-            else:
-                end_uuid = case_utils.local_uuid.local_uuid()
-            n_end = NS_KB["End-" + end_uuid]
-            out_graph.add((n_action, NS_PROV.qualifiedEnd, n_end))
-            out_graph.add((n_end, NS_RDF.type, NS_PROV.End))
-            for l_object in in_graph.objects(n_action, NS_UCO_ACTION.endTime):
-                out_graph.add((n_end, NS_PROV.atTime, l_object))
-
         # Generate Starts.
-        n_start: typing.Optional[rdflib.IdentifiedNode] = None
-        for n_value in in_graph.objects(n_action, NS_PROV.qualifiedStart):
-            assert isinstance(n_value, rdflib.term.IdentifiedNode)
-            n_start = n_value
-        if n_start is None:
-            if args.use_deterministic_uuids:
-                start_uuid = str(
-                    uuid.uuid5(action_inherence_uuid, str(NS_PROV.qualifiedStart))
-                )
-            else:
-                start_uuid = case_utils.local_uuid.local_uuid()
-            n_start = NS_KB["Start-" + start_uuid]
-            out_graph.add((n_action, NS_PROV.qualifiedStart, n_start))
-            out_graph.add((n_start, NS_RDF.type, NS_PROV.Start))
+        (n_start, inference_triples) = case_prov.infer_interval_terminus(
+            in_graph,
+            n_action,
+            NS_PROV.qualifiedStart,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
+        )
+        if isinstance(n_start, rdflib.URIRef):
+            out_graph += inference_triples
             for l_object in in_graph.objects(n_action, NS_UCO_ACTION.startTime):
+                assert isinstance(l_object, rdflib.Literal)
                 out_graph.add((n_start, NS_PROV.atTime, l_object))
 
+        # Generate Ends, if there's a sign an end should exist.
+        if case_prov.interval_end_should_exist(in_graph, n_action):
+            (n_end, inference_triples) = case_prov.infer_interval_terminus(
+                in_graph,
+                n_action,
+                NS_PROV.qualifiedEnd,
+                NS_KB,
+                use_deterministic_uuids=use_deterministic_uuids,
+            )
+            if isinstance(n_end, rdflib.URIRef):
+                out_graph += inference_triples
+                for l_object in in_graph.objects(n_action, NS_UCO_ACTION.endTime):
+                    assert isinstance(l_object, rdflib.Literal)
+                    out_graph.add((n_end, NS_PROV.atTime, l_object))
+
+        # Generate Associations.
         qualified_association_uuid_namespace = uuid.uuid5(
             action_inherence_uuid, str(NS_PROV.qualifiedAssociation)
         )
@@ -169,18 +189,34 @@ def main() -> None:
                 assert isinstance(_n_agent, rdflib.URIRef)
                 _n_agents.add(_n_agent)
             for n_agent in sorted(_n_agents):
-                if args.use_deterministic_uuids:
-                    association_uuid = str(
-                        uuid.uuid5(qualified_association_uuid_namespace, str(n_agent))
+                n_association: typing.Optional[rdflib.term.IdentifiedNode] = None
+                # See if Association between this Action and Agent
+                # exists before trying to create one.
+                for n_object in in_graph.objects(
+                    n_action, NS_PROV.qualifiedAssociation
+                ):
+                    assert isinstance(n_object, rdflib.term.IdentifiedNode)
+                    for triple in in_graph.triples((n_object, NS_PROV.agent, n_agent)):
+                        n_association = n_object
+                if n_association is None:
+                    if use_deterministic_uuids:
+                        association_uuid = str(
+                            uuid.uuid5(
+                                qualified_association_uuid_namespace, str(n_agent)
+                            )
+                        )
+                    else:
+                        association_uuid = case_utils.local_uuid.local_uuid()
+                    n_association = NS_KB["Association-" + association_uuid]
+                    out_graph.add(
+                        (n_action, NS_PROV.qualifiedAssociation, n_association)
                     )
-                else:
-                    association_uuid = case_utils.local_uuid.local_uuid()
-                n_association = NS_KB["Association-" + association_uuid]
-                out_graph.add((n_action, NS_PROV.qualifiedAssociation, n_association))
-                out_graph.add((n_association, NS_RDF.type, NS_PROV.Association))
-                out_graph.add((n_association, NS_PROV.agent, n_agent))
+                    out_graph.add((n_association, NS_RDF.type, NS_PROV.Association))
+                    out_graph.add((n_association, NS_PROV.agent, n_agent))
 
-        # A uco-action:Action may have at most one performer, and any number of instruments.
+        # Generate Delegations.
+        # A uco-action:Action may have at most one performer, and any
+        # number of instruments.
         qualified_delegation_uuid_namespace = uuid.uuid5(
             action_inherence_uuid, str(NS_PROV.qualifiedDelegation)
         )
@@ -189,22 +225,40 @@ def main() -> None:
                 qualified_delegation_uuid_namespace, str(n_performer)
             )
             for n_instrument in in_graph.objects(n_action, NS_UCO_ACTION.instrument):
-                if args.use_deterministic_uuids:
-                    delegation_uuid = str(
-                        uuid.uuid5(
-                            delegation_for_performer_uuid_namespace, str(n_instrument)
+                n_delegation: typing.Optional[rdflib.term.IdentifiedNode] = None
+                # See if Delegation between this Instrument and Performer
+                # exists before trying to create one.
+                for n_object in in_graph.objects(
+                    n_instrument, NS_PROV.qualifiedDelegation
+                ):
+                    assert isinstance(n_object, rdflib.term.IdentifiedNode)
+                    for triple0 in in_graph.triples(
+                        (n_object, NS_PROV.agent, n_performer)
+                    ):
+                        for triple1 in in_graph.triples(
+                            (n_object, NS_PROV.hadActivity, n_action)
+                        ):
+                            n_delegation = n_object
+                if n_delegation is None:
+                    if use_deterministic_uuids:
+                        delegation_uuid = str(
+                            uuid.uuid5(
+                                delegation_for_performer_uuid_namespace,
+                                str(n_instrument),
+                            )
                         )
+                    else:
+                        delegation_uuid = case_utils.local_uuid.local_uuid()
+                    n_delegation = NS_KB["Delegation-" + delegation_uuid]
+                    out_graph.add(
+                        (n_instrument, NS_PROV.qualifiedDelegation, n_delegation)
                     )
-                else:
-                    delegation_uuid = case_utils.local_uuid.local_uuid()
-                n_delegation = NS_KB["Delegation-" + delegation_uuid]
-                out_graph.add((n_instrument, NS_PROV.qualifiedDelegation, n_delegation))
-                out_graph.add((n_delegation, NS_RDF.type, NS_PROV.Delegation))
-                out_graph.add((n_delegation, NS_PROV.agent, n_performer))
-                out_graph.add((n_delegation, NS_PROV.hadActivity, n_action))
+                    out_graph.add((n_delegation, NS_RDF.type, NS_PROV.Delegation))
+                    out_graph.add((n_delegation, NS_PROV.agent, n_performer))
+                    out_graph.add((n_delegation, NS_PROV.hadActivity, n_action))
 
-    # Run all supplementing CONSTRUCT queries.
-    tally = 0
+    # Run all entailing CONSTRUCT queries.
+    case_entailment_tally = 0
     for query_filename in query_filenames:
         _logger.debug("Running query in %r." % query_filename)
         construct_query_text = importlib.resources.read_text(queries, query_filename)
@@ -217,25 +271,33 @@ def main() -> None:
         for row_no, row in enumerate(construct_query_result):
             if row_no == 0:
                 _logger.debug("row[0] = %r." % (row,))
-            tally = row_no + 1
+            case_entailment_tally = row_no + 1
             # TODO: Handle type review with implementation to RDFLib Issue 2283.
             # https://github.com/RDFLib/rdflib/issues/2283
             out_graph.add(row)  # type: ignore
-    if tally == 0:
-        if not args.allow_empty_results:
-            raise ValueError("Failed to construct any results.")
 
-    # Run inherent qualification steps that are dependent on PROV-O properties being present.
-    # Store in tmp_triples, to avoid modifying graph while iterating over graph.
-    tmp_triples: typing.Set[
-        typing.Tuple[rdflib.term.Node, rdflib.term.Node, rdflib.term.Node]
-    ] = set()
+    # Run inherent qualification steps that are dependent on PROV-O
+    # properties being present.
+
+    # Use tmp_graph to store the current updated knowledge over
+    # in_graph.  tmp_graph is ephemeral and will not be persisted.
+    tmp_graph = in_graph + out_graph
+
+    # Store further modifications in tmp_triples, to avoid modifying
+    # out_graph while iterating over so-far-updated in_graph and
+    # out_graph.  tmp_triples will only be augmenting the output graph
+    # with durable references.  So, BNodes are excluded via the type
+    # restrictions.
+    tmp_triples: TmpPersistableTriplesType = set()
 
     # Build Attributions.
-    # Modeling assumption over PROV-O: An Attribution inheres in both the Entity and Agent.
-    for triple in sorted(out_graph.triples((None, NS_PROV.wasAttributedTo, None))):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.URIRef)
+    # Modeling assumption over PROV-O: An Attribution inheres in both
+    # the Entity and Agent.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.wasAttributedTo, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
         n_entity = triple[0]
         n_agent = triple[2]
 
@@ -253,7 +315,7 @@ def main() -> None:
             entity_uuid_namespace, str(NS_PROV.qualifiedAttribution)
         )
 
-        if args.use_deterministic_uuids:
+        if use_deterministic_uuids:
             attribution_uuid = str(
                 uuid.uuid5(qualifed_attribution_uuid_namespace, str(n_agent))
             )
@@ -265,152 +327,428 @@ def main() -> None:
         tmp_triples.add((n_attribution, NS_RDF.type, NS_PROV.Attribution))
         tmp_triples.add((n_attribution, NS_PROV.agent, n_agent))
 
+    def _pull_inference_triples(inference_triples: case_prov.TmpTriplesType) -> None:
+        """
+        This subroutine is provided to supplement case_prov.infer_prov_instantaneous_influence_event usage.
+        """
+        nonlocal tmp_triples
+        for inference_triple in inference_triples:
+            if not isinstance(inference_triple[0], rdflib.URIRef):
+                continue
+            assert isinstance(inference_triple[1], rdflib.URIRef)
+            if not isinstance(inference_triple[2], rdflib.URIRef):
+                continue
+            tmp_triples.add(
+                (inference_triple[0], inference_triple[1], inference_triple[2])
+            )
+
     # Build Communications.
-    # Modeling assumption over PROV-O: A Communication inheres in both the informed Activity and informant Activity.
-    for triple in sorted(out_graph.triples((None, NS_PROV.wasInformedBy, None))):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.URIRef)
+    # Modeling assumption over PROV-O: A Communication inheres in both
+    # the informed Activity and informant Activity.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.wasInformedBy, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
         n_informed_activity = triple[0]
         n_informant_activity = triple[2]
 
-        n_communication: typing.Optional[rdflib.term.IdentifiedNode] = None
-        for n_object in in_graph.objects(
-            n_informed_activity, NS_PROV.qualifiedCommunication
-        ):
-            if (n_object, NS_PROV.activity, n_informant_activity) in in_graph:
-                assert isinstance(n_object, rdflib.term.IdentifiedNode)
-                n_communication = n_object
-        if n_communication is not None:
-            # No creation necessary.
-            continue
-
-        informed_activity_uuid_namespace = case_utils.inherent_uuid.inherence_uuid(
-            n_informed_activity
-        )
-        qualifed_communication_uuid_namespace = uuid.uuid5(
-            informed_activity_uuid_namespace, str(NS_PROV.qualifiedCommunication)
+        (
+            n_communication,
+            inference_triples,
+        ) = case_prov.infer_prov_instantaneous_influence_event(
+            tmp_graph,
+            n_informed_activity,
+            NS_PROV.qualifiedCommunication,
+            n_informant_activity,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
         )
 
-        if args.use_deterministic_uuids:
-            communication_uuid = str(
-                uuid.uuid5(
-                    qualifed_communication_uuid_namespace, str(n_informant_activity)
-                )
-            )
-        else:
-            communication_uuid = case_utils.local_uuid.local_uuid()
-
-        n_communication = NS_KB["Communication-" + communication_uuid]
-        tmp_triples.add(
-            (n_informed_activity, NS_PROV.qualifiedCommunication, n_communication)
-        )
-        tmp_triples.add((n_communication, NS_RDF.type, NS_PROV.Communication))
-        tmp_triples.add((n_communication, NS_PROV.activity, n_informant_activity))
+        _pull_inference_triples(inference_triples)
 
     # Build Derivations.
-    # Modeling assumption over PROV-O: A Derivation inheres in both the input Entity and output Entity.
-    for triple in sorted(out_graph.triples((None, NS_PROV.wasDerivedFrom, None))):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.URIRef)
+    # Modeling assumption over PROV-O: A Derivation inheres in both the
+    # input Entity and output Entity.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.wasDerivedFrom, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
         n_action_result = triple[0]
         n_action_object = triple[2]
 
-        n_derivation: typing.Optional[rdflib.term.IdentifiedNode] = None
-        for n_object in in_graph.objects(n_action_result, NS_PROV.qualifiedDerivation):
-            if (n_object, NS_PROV.entity, n_action_object) in in_graph:
-                assert isinstance(n_object, rdflib.term.IdentifiedNode)
-                n_derivation = n_object
-        if n_derivation is not None:
-            # No creation necessary.
-            continue
-
-        action_result_uuid_namespace = case_utils.inherent_uuid.inherence_uuid(
-            n_action_result
-        )
-        qualifed_derivation_uuid_namespace = uuid.uuid5(
-            action_result_uuid_namespace, str(NS_PROV.qualifiedDerivation)
+        (
+            n_derivation,
+            inference_triples,
+        ) = case_prov.infer_prov_instantaneous_influence_event(
+            tmp_graph,
+            n_action_result,
+            NS_PROV.qualifiedDerivation,
+            n_action_object,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
         )
 
-        if args.use_deterministic_uuids:
-            derivation_uuid = str(
-                uuid.uuid5(qualifed_derivation_uuid_namespace, str(n_action_object))
-            )
-        else:
-            derivation_uuid = case_utils.local_uuid.local_uuid()
-
-        n_derivation = NS_KB["Derivation-" + derivation_uuid]
-        tmp_triples.add((n_action_result, NS_PROV.qualifiedDerivation, n_derivation))
-        tmp_triples.add((n_derivation, NS_RDF.type, NS_PROV.Derivation))
-        tmp_triples.add((n_derivation, NS_PROV.entity, n_action_object))
-        for n_object in out_graph.objects(n_action_result, NS_PROV.wasGeneratedBy):
-            tmp_triples.add((n_derivation, NS_PROV.hadActivity, n_object))
+        _pull_inference_triples(inference_triples)
+        if isinstance(n_derivation, rdflib.URIRef):
+            for n_object in tmp_graph.objects(n_action_result, NS_PROV.wasGeneratedBy):
+                if isinstance(n_object, rdflib.URIRef):
+                    tmp_triples.add((n_derivation, NS_PROV.hadActivity, n_object))
 
     # Build Generations.
-    # Modeling assumption over PROV-O: A Generation inheres solely in the Entity.
-    for triple in sorted(out_graph.triples((None, NS_PROV.wasGeneratedBy, None))):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.URIRef)
+    # Modeling assumption over PROV-O: A Generation inheres solely in
+    # the Entity.
+    # Also note that Entities will not be assigned a Generation event,
+    # as they don't necessarily have one.  Take for example the idea
+    # prov:EmptyCollection, as the mathematical abstraction also known
+    # as the empty set.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.wasGeneratedBy, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
         n_entity = triple[0]
         n_activity = triple[2]
 
-        n_generation: typing.Optional[rdflib.term.IdentifiedNode] = None
-        for n_object in in_graph.objects(n_entity, NS_PROV.qualifiedGeneration):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_generation = n_object
-        if n_generation is not None:
-            # No creation necessary.
-            continue
-
-        entity_uuid_namespace = case_utils.inherent_uuid.inherence_uuid(n_entity)
-        qualifed_generation_uuid_namespace = uuid.uuid5(
-            entity_uuid_namespace, str(NS_PROV.qualifiedGeneration)
+        (
+            n_generation,
+            inference_triples,
+        ) = case_prov.infer_prov_instantaneous_influence_event(
+            tmp_graph,
+            n_entity,
+            NS_PROV.qualifiedGeneration,
+            n_activity,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
         )
 
-        if args.use_deterministic_uuids:
-            generation_uuid = str(
-                uuid.uuid5(qualifed_generation_uuid_namespace, str(n_activity))
-            )
-        else:
-            generation_uuid = case_utils.local_uuid.local_uuid()
+        _pull_inference_triples(inference_triples)
 
-        n_generation = NS_KB["Generation-" + generation_uuid]
-        tmp_triples.add((n_entity, NS_PROV.qualifiedGeneration, n_generation))
-        tmp_triples.add((n_generation, NS_RDF.type, NS_PROV.Generation))
-        tmp_triples.add((n_generation, NS_PROV.activity, n_activity))
+    # Build Invalidations.
+    # Modeling assumption over PROV-O: An Invalidation inheres solely in
+    # the Entity.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.wasInvalidatedBy, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
+        n_entity = triple[0]
+        n_activity = triple[2]
+
+        (
+            n_invalidation,
+            inference_triples,
+        ) = case_prov.infer_prov_instantaneous_influence_event(
+            tmp_graph,
+            n_entity,
+            NS_PROV.qualifiedInvalidation,
+            n_activity,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
+        )
+
+        _pull_inference_triples(inference_triples)
 
     # Build Usages.
-    # Modeling assumption over PROV-O: An Attribution inheres in both the Activity and Entity.
-    for triple in sorted(out_graph.triples((None, NS_PROV.used, None))):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.URIRef)
+    # Modeling assumption over PROV-O: A Usage inheres in both the
+    # Activity and Entity.
+    for triple in sorted(tmp_graph.triples((None, NS_PROV.used, None))):
+        if not isinstance(triple[0], rdflib.URIRef):
+            continue
+        if not isinstance(triple[2], rdflib.URIRef):
+            continue
         n_activity = triple[0]
         n_entity = triple[2]
 
-        n_usage: typing.Optional[rdflib.term.IdentifiedNode] = None
-        for n_object in in_graph.objects(n_entity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_usage = n_object
-        if n_usage is not None:
-            # No creation necessary.
-            continue
-
-        activity_uuid_namespace = case_utils.inherent_uuid.inherence_uuid(n_activity)
-        qualifed_usage_uuid_namespace = uuid.uuid5(
-            activity_uuid_namespace, str(NS_PROV.qualifiedUsage)
+        (
+            n_usage,
+            inference_triples,
+        ) = case_prov.infer_prov_instantaneous_influence_event(
+            tmp_graph,
+            n_activity,
+            NS_PROV.qualifiedUsage,
+            n_entity,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
         )
 
-        if args.use_deterministic_uuids:
-            usage_uuid = str(uuid.uuid5(qualifed_usage_uuid_namespace, str(n_entity)))
-        else:
-            usage_uuid = case_utils.local_uuid.local_uuid()
-
-        n_usage = NS_KB["Usage-" + usage_uuid]
-        tmp_triples.add((n_activity, NS_PROV.qualifiedUsage, n_usage))
-        tmp_triples.add((n_usage, NS_RDF.type, NS_PROV.Usage))
-        tmp_triples.add((n_usage, NS_PROV.entity, n_entity))
+        _pull_inference_triples(inference_triples)
 
     for tmp_triple in tmp_triples:
         out_graph.add(tmp_triple)
+        tmp_graph.add(tmp_triple)
+    prov_existential_entailment_tally = len(tmp_triples)
+
+    # Do TIME-PROV entailments.
+
+    tmp_triples = set()
+    time_entailment_tally = 0
+
+    # Some of the entailments require knowledge from the input and
+    # output graphs.
+
+    # Entailments will NOT be performed on blank nodes, due to inability
+    # to associate the new blank node in the serialized graph with the
+    # prior blank node in the input graph without using owl:sameAs.
+
+    # Entail superclasses, which is what RDFS inferencing would devise
+    # with these axioms:
+    #
+    #     prov:Activity
+    #         rdfs:subClassOf time:ProperInterval ;
+    #         .
+    #     prov:InstantaneousEvent
+    #         rdfs:subClassOf time:Instant ;
+    #         .
+    #
+    # Entail interval classes first:
+    n_activities: typing.Set[rdflib.URIRef] = set()
+    n_proper_intervals: typing.Set[rdflib.URIRef] = set()
+    for graph in [in_graph, out_graph]:
+        for n_subject in graph.subjects(NS_RDF.type, NS_PROV.Activity):
+            if isinstance(n_subject, rdflib.URIRef):
+                n_activities.add(n_subject)
+        for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
+            if isinstance(n_subject, rdflib.URIRef):
+                n_proper_intervals.add(n_subject)
+    for n_activity in n_activities:
+        tmp_triples.add((n_activity, NS_RDF.type, NS_TIME.ProperInterval))
+    n_proper_intervals |= n_activities
+
+    # Then entail instant classes:
+    n_instants: typing.Set[rdflib.URIRef] = set()
+    n_instantaneous_events: typing.Set[rdflib.URIRef] = set()
+    for graph in [in_graph, out_graph]:
+        for n_prov_instantaneous_event_class in {
+            NS_PROV.InstantaneousEvent,
+            NS_PROV.End,
+            NS_PROV.Generation,
+            NS_PROV.Invalidation,
+            NS_PROV.Start,
+            NS_PROV.Usage,
+        }:
+            for n_subject in graph.subjects(
+                NS_RDF.type, n_prov_instantaneous_event_class
+            ):
+                if isinstance(n_subject, rdflib.URIRef):
+                    n_instantaneous_events.add(n_subject)
+        for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Instant):
+            if isinstance(n_subject, rdflib.URIRef):
+                n_instants.add(n_subject)
+    for n_instantaneous_event in n_instantaneous_events:
+        tmp_triples.add((n_instantaneous_event, NS_RDF.type, NS_TIME.Instant))
+    n_instants |= n_instantaneous_events
+
+    # Entail superproperties, which is what RDFS inference would devise
+    # with these axioms:
+    #
+    #     prov:qualifiedEnd
+    #         rdfs:subPropertyOf time:hasEnd ;
+    #         .
+    #     prov:qualifiedStart
+    #         rdfs:subPropertyOf time:hasBeginning ;
+    #         .
+    #
+    for graph in [in_graph, out_graph]:
+        for n_activity in n_activities:
+            for n_object in graph.objects(n_activity, NS_PROV.qualifiedEnd):
+                if isinstance(n_object, rdflib.URIRef):
+                    if n_object in n_instants:
+                        tmp_triples.add((n_activity, NS_TIME.hasEnd, n_object))
+            for n_object in graph.objects(n_activity, NS_PROV.qualifiedStart):
+                if isinstance(n_object, rdflib.URIRef):
+                    if n_object in n_instants:
+                        tmp_triples.add((n_activity, NS_TIME.hasBeginning, n_object))
+
+    # Augment out_graph now - further work is centered on TIME and PROV
+    # properties, and might have been inferred in some of the above
+    # loops.
+    for tmp_triple in tmp_triples:
+        out_graph.add(tmp_triple)
+        tmp_graph.add(tmp_triple)
+    time_entailment_tally += len(tmp_triples)
+    tmp_triples = set()
+
+    # Build beginning and ending nodes for all time:ProperIntervals that
+    # lack the bounding instants.
+    for n_proper_interval in sorted(n_proper_intervals):
+        # Generate Ends.
+        (n_time_end, end_graph) = case_prov.infer_interval_terminus(
+            tmp_graph,
+            n_proper_interval,
+            NS_TIME.hasEnd,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
+        )
+        if isinstance(n_time_end, rdflib.URIRef):
+            n_instants.add(n_time_end)
+        _pull_inference_triples(end_graph)
+        del end_graph
+
+        # Generate Beginnings.
+        (n_time_beginning, beginning_graph) = case_prov.infer_interval_terminus(
+            tmp_graph,
+            n_proper_interval,
+            NS_TIME.hasBeginning,
+            NS_KB,
+            use_deterministic_uuids=use_deterministic_uuids,
+        )
+        if isinstance(n_time_beginning, rdflib.URIRef):
+            n_instants.add(n_time_beginning)
+        _pull_inference_triples(beginning_graph)
+        del beginning_graph
+
+    # Augment out_graph now - further work is centered on Instants that
+    # may have just been created.
+    for tmp_triple in tmp_triples:
+        out_graph.add(tmp_triple)
+    time_entailment_tally += len(tmp_triples)
+    tmp_triples = set()
+
+    # Populate time:inXSDDateTimeStamp on all IRI-identified
+    # time:Instants, where data are available.
+    # All of the inferencing in this script should have led to
+    # prov:InstantaneousEvents having the property prov:atTime populated
+    # (whether from data encoded in PROV-O, or data encoded in CASE).
+    # The TIME entailments now let a review happen using TIME and PROV
+    # concepts.
+    for n_instant in n_instants:
+        if not isinstance(n_instant, rdflib.URIRef):
+            continue
+        l_datetime: typing.Optional[rdflib.Literal] = None
+        l_datetimestamp: typing.Optional[rdflib.Literal] = None
+        for graph in [in_graph, out_graph]:
+            for l_value in graph.objects(n_instant, NS_TIME.inXSDDateTimeStamp):
+                assert isinstance(l_value, rdflib.Literal)
+                l_datetimestamp = l_value
+            if l_datetimestamp is not None:
+                break
+            for l_value in graph.objects(n_instant, NS_PROV.atTime):
+                assert isinstance(l_value, rdflib.Literal)
+                l_datetime = l_value
+        if l_datetimestamp is not None:
+            continue
+        if l_datetime is not None:
+            l_datetimestamp = case_prov.xsd_datetime_to_xsd_datetimestamp(l_datetime)
+            if l_datetimestamp is not None:
+                tmp_triples.add(
+                    (
+                        n_instant,
+                        NS_TIME.inXSDDateTimeStamp,
+                        l_datetimestamp,
+                    )
+                )
+
+    # Augment out_graph for timestamps.
+    for tmp_triple in tmp_triples:
+        out_graph.add(tmp_triple)
+    time_entailment_tally += len(tmp_triples)
+
+    # Add time:insides for the qualified PROV Entity events.
+    tmp_triples = set()
+    for graph in [in_graph, out_graph]:
+        for triple in graph.triples((None, NS_PROV.qualifiedGeneration, None)):
+            if not isinstance(triple[0], rdflib.URIRef):
+                continue
+            if not isinstance(triple[2], rdflib.URIRef):
+                continue
+            n_entity = triple[0]
+            n_generation = triple[2]
+            for n_object in graph.objects(n_generation, NS_PROV.activity):
+                if not isinstance(n_object, rdflib.URIRef):
+                    continue
+                n_activity = n_object
+                tmp_triples.add((n_activity, NS_TIME.inside, n_generation))
+        for triple in graph.triples((None, NS_PROV.qualifiedInvalidation, None)):
+            if not isinstance(triple[0], rdflib.URIRef):
+                continue
+            if not isinstance(triple[2], rdflib.URIRef):
+                continue
+            n_entity = triple[0]
+            n_invalidation = triple[2]
+            for n_object in graph.objects(n_invalidation, NS_PROV.activity):
+                if not isinstance(n_object, rdflib.URIRef):
+                    continue
+                n_activity = n_object
+                tmp_triples.add((n_activity, NS_TIME.inside, n_invalidation))
+        for triple in graph.triples((None, NS_PROV.qualifiedUsage, None)):
+            if not isinstance(triple[0], rdflib.URIRef):
+                continue
+            if not isinstance(triple[2], rdflib.URIRef):
+                continue
+            n_activity = triple[0]
+            n_usage = triple[2]
+            tmp_triples.add((n_activity, NS_TIME.inside, n_usage))
+
+    for tmp_triple in tmp_triples:
+        out_graph.add(tmp_triple)
+        tmp_graph.add(tmp_triple)
+    time_entailment_tally += len(tmp_triples)
+
+    # Generally order PROV Generations, Usages, and Invalidations.
+    tmp_triples = set()
+    tmp_graph = in_graph + out_graph
+    for query in [
+        """\
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX time: <http://www.w3.org/2006/time#>
+CONSTRUCT {
+    ?nGeneration time:before ?nUsage .
+}
+WHERE {
+    ?nEntity prov:qualifiedGeneration ?nGeneration .
+    ?nActivity prov:qualifiedUsage ?nUsage .
+    ?nUsage prov:entity ?nEntity .
+}
+""",
+        """\
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX time: <http://www.w3.org/2006/time#>
+CONSTRUCT {
+    ?nGeneration time:before ?nInvalidation .
+}
+WHERE {
+    ?nEntity
+        prov:qualifiedGeneration ?nGeneration ;
+        prov:qualifiedInvalidation ?nInvalidation ;
+        .
+}
+""",
+        """\
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX time: <http://www.w3.org/2006/time#>
+CONSTRUCT {
+    ?nUsage time:before ?nInvalidation .
+}
+WHERE {
+    ?nEntity prov:qualifiedInvalidation ?nInvalidation .
+    ?nActivity prov:qualifiedUsage ?nUsage .
+    ?nUsage prov:entity ?nEntity .
+}
+""",
+    ]:
+        for row in tmp_graph.query(query):
+            assert isinstance(row, tuple)
+            if not isinstance(row[0], rdflib.URIRef):
+                continue
+            assert isinstance(row[1], rdflib.URIRef)
+            if not isinstance(row[2], rdflib.URIRef):
+                continue
+            tmp_triples.add((row[0], row[1], row[2]))
+
+    for tmp_triple in tmp_triples:
+        out_graph.add(tmp_triple)
+    time_entailment_tally += len(tmp_triples)
+    del tmp_triples
+
+    if (
+        case_entailment_tally == 0
+        and prov_existential_entailment_tally == 0
+        and time_entailment_tally == 0
+    ):
+        if not args.allow_empty_results:
+            raise ValueError("Failed to construct any results.")
 
     out_graph.serialize(args.out_file)
 
