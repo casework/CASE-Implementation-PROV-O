@@ -15,7 +15,7 @@
 This script executes CONSTRUCT queries and other data translation, returning a supplemental graph.
 """
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 
 import argparse
 import importlib.resources
