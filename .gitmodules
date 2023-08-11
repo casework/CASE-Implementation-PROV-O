@@ -1,6 +1,11 @@
-[submodule "dependencies/CASE-Examples-QC"]
-	path = dependencies/CASE-Examples-QC
-	url = https://github.com/ajnelson-nist/CASE-Examples-QC.git
+[submodule "dependencies/CASE-Examples"]
+	path = dependencies/CASE-Examples
+	url = https://github.com/casework/CASE-Examples.git
+	branch = master
+[submodule "dependencies/casework.github.io"]
+	path = dependencies/casework.github.io
+	url = https://github.com/casework/casework.github.io.git
+	branch = master
 [submodule "dependencies/prov"]
 	path = dependencies/prov
 	url = https://github.com/trungdong/prov.git
