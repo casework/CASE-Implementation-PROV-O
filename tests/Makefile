@@ -17,8 +17,6 @@ PYTHON3 ?= python3
 
 top_srcdir := $(shell cd .. ; pwd)
 
-qc_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC
-
 all: \
   all-CASE-Examples \
   all-casework.github.io
