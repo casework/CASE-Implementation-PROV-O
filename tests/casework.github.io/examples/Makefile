@@ -15,7 +15,7 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd ../../.. ; pwd)
 
-examples_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC/dependencies/casework.github.io/examples
+examples_srcdir := $(top_srcdir)/dependencies/casework.github.io/examples
 
 exdirs := $(shell find * -maxdepth 0 -type d | sort | egrep -v '^src$$')
 

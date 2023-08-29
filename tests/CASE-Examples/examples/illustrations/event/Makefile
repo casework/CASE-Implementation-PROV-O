@@ -1,3 +1,5 @@
+#!/usr/bin/make -f
+
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
 # of their official duties. Pursuant to title 17 Section 105 of the
@@ -9,17 +11,20 @@
 #
 # We would appreciate acknowledgement if the software is used.
 
-repos:
-  - repo: https://github.com/psf/black
-    rev: 23.7.0
-    hooks:
-      - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-        name: isort (python)
+SHELL := /bin/bash
+
+top_srcdir := $(shell cd ../../../../.. ; pwd)
+
+all:
+	$(MAKE) \
+	  --file ../src/illustration.mk
+
+check:
+	$(MAKE) \
+	  --file ../src/illustration.mk \
+	  check
+
+clean:
+	@$(MAKE) \
+	  --file ../src/illustration.mk \
+	  clean

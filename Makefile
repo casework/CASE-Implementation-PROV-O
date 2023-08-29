@@ -16,8 +16,8 @@ SHELL := /bin/bash
 PYTHON3 ?= python3
 
 all: \
-  .git_submodule_init.done.log \
-  .venv-pre-commit/var/.pre-commit-built.log
+  .venv-pre-commit/var/.pre-commit-built.log \
+  .git_submodule_init-casework.github.io.done.log
 	$(MAKE) \
 	  PYTHON3=$(PYTHON3) \
 	  --directory tests
@@ -32,11 +32,23 @@ all: \
 
 .git_submodule_init.done.log: \
   .gitmodules
-	git submodule init
-	git submodule update
+	git submodule update --init
+	touch $@
+
+.git_submodule_init-CASE-Examples.done.log: \
+  dependencies/CASE-Examples/.gitmodules
 	$(MAKE) \
 	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples-QC \
+	  --directory dependencies/CASE-Examples \
+	  .git_submodule_init.done.log
+	touch $@
+
+.git_submodule_init-casework.github.io.done.log: \
+  .git_submodule_init-CASE-Examples.done.log \
+  dependencies/casework.github.io/.gitmodules
+	$(MAKE) \
+	  PYTHON3=$(PYTHON3) \
+	  --directory dependencies/casework.github.io \
 	  .git_submodule_init.done.log
 	touch $@
 
@@ -64,7 +76,7 @@ all: \
 	touch $@
 
 check: \
-  .git_submodule_init.done.log \
+  .git_submodule_init-casework.github.io.done.log \
   .venv-pre-commit/var/.pre-commit-built.log
 	$(MAKE) \
 	  --directory case_prov/shapes \
@@ -93,9 +105,9 @@ clean: \
 	  --directory case_prov/shapes \
 	  clean
 	@rm -f \
-	  dependencies/CASE-Examples-QC/.git_submodule_init.done.log
-	@rm -f \
-	  .git_submodule_init.done.log
+	  .git_submodule_init.done.log \
+	  dependencies/CASE-Examples/.git_submodule_init.done.log \
+	  dependencies/casework.github.io/.git_submodule_init.done.log
 
 clean-figures:
 	@$(MAKE) \
@@ -106,6 +118,18 @@ clean-tests:
 	@$(MAKE) \
 	  --directory tests \
 	  clean
+
+# This recipe guarantees a timestamp update order, and is otherwise a nop.
+dependencies/CASE-Examples/.gitmodules: \
+  .git_submodule_init.done.log
+	test -r $@
+	touch $@
+
+# This recipe guarantees a timestamp update order, and is otherwise a nop.
+dependencies/casework.github.io/.gitmodules: \
+  .git_submodule_init.done.log
+	test -r $@
+	touch $@
 
 distclean: \
   clean

@@ -17,7 +17,7 @@ top_srcdir := $(shell cd ../../../.. ; pwd)
 
 tests_srcdir := $(top_srcdir)/tests
 
-urgent_evidence_json := $(top_srcdir)/dependencies/CASE-Examples-QC/dependencies/casework.github.io/examples/urgent_evidence/urgent_evidence.json
+urgent_evidence_json := $(top_srcdir)/dependencies/casework.github.io/examples/urgent_evidence/urgent_evidence.json
 
 all:
 	$(MAKE) \

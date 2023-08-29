@@ -17,11 +17,9 @@ top_srcdir := $(shell cd ../../../../.. ; pwd)
 
 subjectdir_basename := $(shell basename $$PWD)
 
-qc_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC
+example_srcdir := $(top_srcdir)/dependencies/CASE-Examples/examples/illustrations/$(subjectdir_basename)
 
-example_srcdir := $(qc_srcdir)/dependencies/CASE-Examples/examples/illustrations/$(subjectdir_basename)
-
-rdf_toolkit_jar := $(qc_srcdir)/dependencies/CASE-Examples/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
+rdf_toolkit_jar := $(top_srcdir)/dependencies/CASE-Examples/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
 
 subject_json := $(example_srcdir)/$(subjectdir_basename).json
 
