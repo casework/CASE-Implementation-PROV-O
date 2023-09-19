@@ -35,16 +35,7 @@ all: \
 	git submodule update --init
 	touch $@
 
-.git_submodule_init-CASE-Examples.done.log: \
-  dependencies/CASE-Examples/.gitmodules
-	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples \
-	  .git_submodule_init.done.log
-	touch $@
-
 .git_submodule_init-casework.github.io.done.log: \
-  .git_submodule_init-CASE-Examples.done.log \
   dependencies/casework.github.io/.gitmodules
 	$(MAKE) \
 	  PYTHON3=$(PYTHON3) \
@@ -106,7 +97,6 @@ clean: \
 	  clean
 	@rm -f \
 	  .git_submodule_init.done.log \
-	  dependencies/CASE-Examples/.git_submodule_init.done.log \
 	  dependencies/casework.github.io/.git_submodule_init.done.log
 
 clean-figures:
@@ -118,12 +108,6 @@ clean-tests:
 	@$(MAKE) \
 	  --directory tests \
 	  clean
-
-# This recipe guarantees a timestamp update order, and is otherwise a nop.
-dependencies/CASE-Examples/.gitmodules: \
-  .git_submodule_init.done.log
-	test -r $@
-	touch $@
 
 # This recipe guarantees a timestamp update order, and is otherwise a nop.
 dependencies/casework.github.io/.gitmodules: \

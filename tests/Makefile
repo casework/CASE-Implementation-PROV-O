@@ -18,16 +18,12 @@ PYTHON3 ?= python3
 top_srcdir := $(shell cd .. ; pwd)
 
 all: \
-  all-CASE-Examples \
   all-casework.github.io
 
 .PHONY: \
-  all-CASE-Examples \
   all-casework.github.io \
-  check-CASE-Examples \
   check-casework.github.io \
   check-mypy \
-  clean-CASE-Examples \
   clean-casework.github.io \
   format
 
@@ -50,11 +46,6 @@ all: \
 	    $(top_srcdir)[testing]
 	touch $@
 
-all-CASE-Examples: \
-  .venv.done.log
-	$(MAKE) \
-	  --directory CASE-Examples/examples/illustrations
-
 all-casework.github.io: \
   .venv.done.log
 	$(MAKE) \
@@ -63,14 +54,7 @@ all-casework.github.io: \
 check: \
   check-mypy \
   check-doctest \
-  check-CASE-Examples \
   check-casework.github.io
-
-check-CASE-Examples: \
-  .venv.done.log
-	$(MAKE) \
-	  --directory CASE-Examples/examples/illustrations \
-	  check
 
 check-casework.github.io: \
   .venv.done.log
@@ -96,17 +80,11 @@ check-mypy: \
 	    .
 
 clean: \
-  clean-CASE-Examples \
   clean-casework.github.io
 	@rm -f \
 	  .venv.done.log
 	@rm -rf \
 	  venv
-
-clean-CASE-Examples:
-	@$(MAKE) \
-	  --directory CASE-Examples/examples/illustrations \
-	  clean
 
 clean-casework.github.io:
 	@$(MAKE) \

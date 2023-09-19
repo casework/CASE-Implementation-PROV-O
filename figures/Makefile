@@ -15,7 +15,7 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd .. ; pwd)
 
-rdf_toolkit_jar := $(top_srcdir)/dependencies/CASE-Examples/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
+rdf_toolkit_jar := $(top_srcdir)/dependencies/casework.github.io/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
 
 all: \
   readme-actions-ordered-by-timestamp-constraints.log \
