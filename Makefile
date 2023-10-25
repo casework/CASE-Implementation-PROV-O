@@ -81,6 +81,7 @@ check: \
 check-supply-chain: \
   check-supply-chain-pre-commit
 
+# This target is scheduled to run as part of prerelease review.
 check-supply-chain-pre-commit: \
   .venv-pre-commit/var/.pre-commit-built.log
 	source .venv-pre-commit/bin/activate \
