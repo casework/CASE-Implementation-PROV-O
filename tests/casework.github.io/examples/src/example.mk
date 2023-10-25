@@ -19,7 +19,7 @@ subjectdir_basename := $(shell basename $$PWD)
 
 example_srcdir := $(top_srcdir)/dependencies/casework.github.io/examples/$(subjectdir_basename)
 
-rdf_toolkit_jar := $(top_srcdir)/dependencies/CASE-Examples/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
+rdf_toolkit_jar := $(top_srcdir)/dependencies/casework.github.io/dependencies/CASE-develop/dependencies/UCO/lib/rdf-toolkit.jar
 
 subject_json := $(example_srcdir)/$(subjectdir_basename).json
 
