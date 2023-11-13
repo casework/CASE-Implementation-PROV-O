@@ -11,7 +11,7 @@
 #
 # We would appreciate acknowledgement if the software is used.
 
-__version__ = "0.9.1"
+__version__ = "0.10.0"
 
 import datetime
 import typing
