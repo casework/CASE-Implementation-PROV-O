@@ -15,7 +15,7 @@
 This script executes CONSTRUCT queries and other data translation, returning a supplemental graph.
 """
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 import argparse
 import importlib.resources
@@ -25,7 +25,7 @@ import typing
 import uuid
 
 import case_utils.inherent_uuid
-import case_utils.local_uuid
+import cdo_local_uuid
 import rdflib.plugins.sparql
 from case_utils.namespace import (
     NS_CASE_INVESTIGATION,
@@ -34,6 +34,7 @@ from case_utils.namespace import (
     NS_UCO_CORE,
     NS_UCO_IDENTITY,
 )
+from cdo_local_uuid import local_uuid
 
 import case_prov
 
@@ -88,7 +89,7 @@ def main() -> None:
 
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
 
-    case_utils.local_uuid.configure()
+    cdo_local_uuid.configure()
 
     in_graph = rdflib.Graph()
     out_graph = rdflib.Graph()
@@ -206,7 +207,7 @@ def main() -> None:
                             )
                         )
                     else:
-                        association_uuid = case_utils.local_uuid.local_uuid()
+                        association_uuid = local_uuid()
                     n_association = NS_KB["Association-" + association_uuid]
                     out_graph.add(
                         (n_action, NS_PROV.qualifiedAssociation, n_association)
@@ -248,7 +249,7 @@ def main() -> None:
                             )
                         )
                     else:
-                        delegation_uuid = case_utils.local_uuid.local_uuid()
+                        delegation_uuid = local_uuid()
                     n_delegation = NS_KB["Delegation-" + delegation_uuid]
                     out_graph.add(
                         (n_instrument, NS_PROV.qualifiedDelegation, n_delegation)
@@ -320,7 +321,7 @@ def main() -> None:
                 uuid.uuid5(qualifed_attribution_uuid_namespace, str(n_agent))
             )
         else:
-            attribution_uuid = case_utils.local_uuid.local_uuid()
+            attribution_uuid = local_uuid()
 
         n_attribution = NS_KB["Attribution-" + attribution_uuid]
         tmp_triples.add((n_entity, NS_PROV.qualifiedAttribution, n_attribution))

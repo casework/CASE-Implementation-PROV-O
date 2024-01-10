@@ -64,7 +64,7 @@ $(subjectdir_basename)-prov.ttl: \
   $(construct_sparql_files) \
   $(tests_srcdir)/.venv.done.log \
   $(top_srcdir)/case_prov/case_prov_rdf.py
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(tests_srcdir)/venv/bin/activate \
 	    && case_prov_rdf \
 	      --allow-empty-results \
