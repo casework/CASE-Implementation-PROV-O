@@ -39,12 +39,14 @@ import textwrap
 import typing
 import uuid
 
-import case_utils.local_uuid
+import case_utils.inherent_uuid
+import cdo_local_uuid
 import prov.constants  # type: ignore
 import prov.dot  # type: ignore
 import pydot  # type: ignore
 import rdflib.plugins.sparql
 from case_utils.namespace import NS_CASE_INVESTIGATION, NS_RDF, NS_RDFS, NS_UCO_CORE
+from cdo_local_uuid import local_uuid
 
 import case_prov
 
@@ -551,7 +553,7 @@ WHERE {
                     uuid_namespace = uuid.uuid5(uuid_namespace, n_thing)
                 node_uuid = str(uuid_namespace)
             else:
-                node_uuid = case_utils.local_uuid.local_uuid()
+                node_uuid = local_uuid()
             n_witness = ns_kb["Instant-" + node_uuid]
         else:
             n_witness = rdflib.BNode()
@@ -674,7 +676,7 @@ def main() -> None:
 
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
 
-    case_utils.local_uuid.configure()
+    cdo_local_uuid.configure()
 
     graph = rdflib.Graph()
     for in_graph_filename in args.in_graph:

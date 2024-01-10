@@ -19,9 +19,9 @@ import uuid
 import warnings
 
 import case_utils.inherent_uuid
-import case_utils.local_uuid
 import rdflib
 from case_utils.namespace import NS_RDF, NS_UCO_ACTION, NS_XSD
+from cdo_local_uuid import local_uuid
 
 NS_PROV = rdflib.PROV
 NS_TIME = rdflib.TIME
@@ -245,7 +245,7 @@ def infer_prov_instantaneous_influence_event(
                     uuid.uuid5(predicated_uuid_namespace, str(n_prov_related_thing))
                 )
             else:
-                node_uuid = case_utils.local_uuid.local_uuid()
+                node_uuid = local_uuid()
             n_instantaneous_event = rdf_namespace[slug + node_uuid]
         else:
             n_instantaneous_event = rdflib.BNode()
@@ -326,7 +326,7 @@ def infer_interval_terminus(
             if use_deterministic_uuids:
                 node_uuid = str(uuid.uuid5(uuid_namespace, str(n_predicate)))
             else:
-                node_uuid = case_utils.local_uuid.local_uuid()
+                node_uuid = local_uuid()
             n_terminus = rdf_namespace[slug + node_uuid]
         else:
             n_terminus = rdflib.BNode()
