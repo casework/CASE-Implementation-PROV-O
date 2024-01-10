@@ -92,7 +92,7 @@ readme-actions-ordered-by-timestamp-expanded.ttl: \
   $(top_srcdir)/case_prov/shapes/prov-shapes.ttl \
   $(top_srcdir)/dependencies/prov-check/provcheck/provconstraints.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_rdf \
 	      __$@ \
@@ -138,7 +138,7 @@ readme-actions-ordered-by-timestamp-invisible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --omit-empty-set \
@@ -173,7 +173,7 @@ readme-actions-ordered-by-timestamp-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --display-time-links \
@@ -188,7 +188,7 @@ readme-activities.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --omit-empty-set \
@@ -202,7 +202,7 @@ readme-activities-related-by-intervals-invisible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -216,7 +216,7 @@ readme-activities-related-by-intervals-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -231,7 +231,7 @@ readme-activities-related-by-intervals-with-intervals.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -246,7 +246,7 @@ readme-activity-vs-proper-interval-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -261,7 +261,7 @@ readme-allen-relations-invisible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -275,7 +275,7 @@ readme-allen-relations-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -290,7 +290,7 @@ readme-attribution.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --dash-unqualified \
@@ -304,7 +304,7 @@ readme-eapi-bounded-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --display-time-links \
@@ -318,7 +318,7 @@ readme-eapi-default-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --display-time-links \
@@ -332,7 +332,7 @@ readme-provenance-records.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --omit-empty-set \
@@ -345,7 +345,7 @@ readme-time-instants-invisible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -359,7 +359,7 @@ readme-time-instants-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --debug \
@@ -378,7 +378,7 @@ readme-two-files-expanded.ttl: \
   $(top_srcdir)/case_prov/case_prov_rdf.py \
   $(top_srcdir)/case_prov/shapes/prov-shapes.ttl \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_rdf \
 	      __$@ \
@@ -420,7 +420,7 @@ readme-two-files-invisible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --omit-empty-set \
@@ -455,7 +455,7 @@ readme-two-files-visible.dot: \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log
-	export CASE_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
+	export CDO_DEMO_NONRANDOM_UUID_BASE="$(top_srcdir)" \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_prov_dot \
 	      --display-time-links \
