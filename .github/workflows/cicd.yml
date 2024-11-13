@@ -56,14 +56,14 @@ jobs:
     # Build the binary wheel as well as the source tar
     - name: Build Objects
       run: |
-        pip install -q twine wheel
-        python setup.py sdist bdist_wheel
+        pip install -q twine build
+        python -m build
     # Ensure the objects were packaged correctly and there wasn't an issue with
     # the compilation or packaging process.
     - name: Check Objects
       run: twine check dist/*
 
-    # Upload the packages on all develop and main pipleines for test consumption
+    # Upload the packages on all develop and main pipelines for test consumption
     - name: Upload HTML Docs
       uses: actions/upload-artifact@v4
       with:
