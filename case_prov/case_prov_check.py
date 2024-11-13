@@ -34,7 +34,7 @@ import os
 import sys
 import typing
 
-import pyshacl  # type: ignore
+import pyshacl
 import rdflib.util
 
 from . import shapes
@@ -135,17 +135,6 @@ def main() -> None:
         shapes_text = importlib.resources.read_text(shapes, shape_filename)
         ontology_graph.parse(data=shapes_text, format="turtle")
 
-    # Determine output format.
-    # pySHACL's determination of output formatting is handled solely
-    # through the -f flag.  Other CASE CLI tools handle format
-    # determination by output file extension.  case_validate deferred
-    # to pySHACL behavior, as other CASE tools don't (at the time of
-    # this writing) have the value "human" as an output format.
-    # case_prov_check continues that pattern.
-    validator_kwargs: typing.Dict[str, str] = dict()
-    if args.format != "human":
-        validator_kwargs["serialize_report_graph"] = args.format
-
     validate_result: typing.Tuple[
         bool, typing.Union[Exception, bytes, str, rdflib.Graph], str
     ]
@@ -158,7 +147,7 @@ def main() -> None:
         allow_warnings=True if args.allow_warnings else False,
         debug=True if args.debug else False,
         do_owl_imports=True if args.imports else False,
-        **validator_kwargs
+        serialize_report_graph=args.format if args.format != "human" else False,
     )
 
     # Relieve RAM of the data graph after validation has run.
