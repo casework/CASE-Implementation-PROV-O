@@ -179,7 +179,7 @@ def expand_prov_activities_with_owl_time(
     debug_graph = rdflib.Graph()
 
     def _dump_augments(
-        tmp_triples: typing.Union[rdflib.Graph, case_prov.TmpTriplesType]
+        tmp_triples: typing.Union[rdflib.Graph, case_prov.TmpTriplesType],
     ) -> None:
         """
         Macro: Copy tmp_triples into graph and debug graph.
