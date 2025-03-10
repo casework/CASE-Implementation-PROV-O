@@ -22,6 +22,9 @@
         "prov:wasGeneratedBy": {
             "@type": "@id"
         },
+        "prov:wasInvalidatedBy": {
+            "@type": "@id"
+        },
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
         "time": "http://www.w3.org/2006/time#",
