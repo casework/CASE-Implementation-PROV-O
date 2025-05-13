@@ -46,7 +46,7 @@ import case_utils.inherent_uuid
 import cdo_local_uuid
 import prov.constants  # type: ignore
 import prov.dot  # type: ignore
-import pydot  # type: ignore
+import pydot
 import rdflib.plugins.sparql
 from case_utils.namespace import NS_CASE_INVESTIGATION, NS_RDF, NS_RDFS, NS_UCO_CORE
 from cdo_local_uuid import local_uuid
@@ -2051,7 +2051,7 @@ WHERE {
     # Build the PROV chain's Pydot Nodes and Edges.
     for n_thing in sorted(n_prov_things_to_display):
         kwargs = n_thing_to_pydot_node_kwargs[n_thing]
-        dot_node = pydot.Node(iri_to_gv_node_id(n_thing), **kwargs)
+        dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
         dot_graph.add_node(dot_node)
     for n_thing_1 in sorted(edges.keys()):
         if n_thing_1 not in n_prov_things_to_display:
@@ -2066,7 +2066,7 @@ WHERE {
                 node_id_1 = iri_to_gv_node_id(n_thing_1)
                 node_id_2 = iri_to_gv_node_id(n_thing_2)
                 kwargs = edges[n_thing_1][n_thing_2][short_edge_label]
-                dot_edge = pydot.Edge(node_id_1, node_id_2, **kwargs)
+                dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
                 dot_graph.add_edge(dot_edge)
 
     # Render time:Instants.
@@ -2090,6 +2090,7 @@ WHERE {
             _logger.debug("Instant did not have tooltips: %r.", n_instant)
         dot_node = pydot.Node(
             node_id,
+            None,
             **instant_kwargs,
         )
         dot_graph.add_node(dot_node)
@@ -2153,10 +2154,10 @@ WHERE {
         # downwards with the case_prov_dot chart directionality.  This
         # is in alignment with the PROV-O edges' directions being in
         # direction of dependency (& thus reverse of time flow).
-        dot_edge = pydot.Edge(node_id_2, node_id_1, **relator_kwargs)
+        dot_edge = pydot.Edge(node_id_2, node_id_1, None, **relator_kwargs)
         dot_graph.add_edge(dot_edge)
 
-    dot_graph.write_raw(args.out_dot)
+    dot_graph.write(args.out_dot)
 
 
 if __name__ == "__main__":
