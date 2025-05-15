@@ -28,7 +28,7 @@ all: \
   readme-activities-related-by-intervals-invisible.svg \
   readme-activities-related-by-intervals-with-intervals.svg \
   readme-activities-related-by-intervals-visible.svg \
-  readme-activity-vs-proper-interval-visible.svg \
+  readme-activity-vs-interval-visible.svg \
   readme-allen-relations-invisible.svg \
   readme-allen-relations-visible.svg \
   readme-attribution.svg \
@@ -48,7 +48,7 @@ all: \
   readme-activities-related-by-intervals-invisible.dot \
   readme-activities-related-by-intervals-with-intervals.dot \
   readme-activities-related-by-intervals-visible.dot \
-  readme-activity-vs-proper-interval-visible.dot \
+  readme-activity-vs-interval-visible.dot \
   readme-allen-relations-invisible.dot \
   readme-allen-relations-visible.dot \
   readme-attribution.dot \
@@ -244,8 +244,8 @@ readme-activities-related-by-intervals-with-intervals.dot: \
 	      $<
 	mv _$@ $@
 
-readme-activity-vs-proper-interval-visible.dot: \
-  readme-activity-vs-proper-interval.ttl \
+readme-activity-vs-interval-visible.dot: \
+  readme-activity-vs-interval.ttl \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log

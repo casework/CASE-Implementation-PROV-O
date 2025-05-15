@@ -198,13 +198,13 @@ The [W3C Time Ontology in OWL](https://www.w3.org/TR/owl-time/) offers an exampl
 
 ![Allen relations with instants visible](figures/readme-allen-relations-visible.svg)
 
-The above figure uses a flag from `case_prov_dot`, `--display-time-links`, to show how `time:ProperInterval` endpoints (the beginning and ending `time:Instant`s) render the `prov:Activity` as 1-dimensional intervals.  The `-i` and `-j` node spellings reflect the illustration excerpted in OWL-Time Figure 2.  The same figure is also available in the default display mode, where time links are rendered invisibly, [here](figures/readme-allen-relations-invisible.svg).
+The above figure uses a flag from `case_prov_dot`, `--display-time-links`, to show how `time:Interval` endpoints (the beginning and ending `time:Instant`s) render the `prov:Activity` as 1-dimensional intervals.  The `-i` and `-j` node spellings reflect the illustration excerpted in OWL-Time Figure 2.  The same figure is also available in the default display mode, where time links are rendered invisibly, [here](figures/readme-allen-relations-invisible.svg).
 
-The above figures use `prov:Activity` coloring for `time:ProperInterval` illustration, using an alignment that includes `prov:Activity rdfs:subClassOf time:ProperInterval`.  Here is how `prov:Activity`s and `time:ProperInterval`s render with `case_prov_dot --display-time-links`:
+The above figures use `prov:Activity` coloring for `time:Interval` illustration, using an alignment that includes `prov:Activity rdfs:subClassOf time:Interval`.  Here is how `prov:Activity`s and `time:Interval`s render with `case_prov_dot --display-time-links`:
 
-![Activity vs proper interval](figures/readme-activity-vs-proper-interval-visible.svg)
+![Activity vs interval](figures/readme-activity-vs-interval-visible.svg)
 
-One effect added by using time sorting is that `prov:Activity` and `time:ProperInterval` beginnings are now always defined with a `time:Instant`.  An interval bar is used to denote that the temporal thing begins at a linked `time:Instant`.  If an end is known to exist for the `uco-action:Action`, `prov:Activity`, `time:ProperInterval`, or `prov:Entity`, an ending `time:Instant` will also be defined.  These instants were found necessary for topologically ordering intervals and `time:Instant`s to be contained within them, such as when a `prov:Activity` is known to contain a `prov:Generation` event (see [the temporal order and timestamp granularity example](#temporal-order-and-timestamp-granularity) below for illustration).
+One effect added by using time sorting is that `prov:Activity` and `time:Interval` beginnings are now always defined with a `time:Instant`.  An interval bar is used to denote that the temporal thing begins at a linked `time:Instant`.  If an end is known to exist for the `uco-action:Action`, `prov:Activity`, `time:Interval`, or `prov:Entity`, an ending `time:Instant` will also be defined.  These instants were found necessary for topologically ordering intervals and `time:Instant`s to be contained within them, such as when a `prov:Activity` is known to contain a `prov:Generation` event (see [the temporal order and timestamp granularity example](#temporal-order-and-timestamp-granularity) below for illustration).
 
 Ending instants are not defined by default, because their existence implies the end of the temporal thing is known.  Also, `prov:Entity`s are not automatically assigned a `prov:Generation` event, because there are some `prov:Entity`s that are atemporal---take for example `prov:EmptyCollection`, the mathematical empty set.  To make this explicit, here are the default expanded inferences, and time-bounded expanded inferences, for activities, entities, and proper intervals.
 
@@ -216,13 +216,13 @@ Ending instants are not defined by default, because their existence implies the 
 
 #### Other temporal entity relators
 
-Other predicates that relate `time:TemporalEntity`s (including `time:Instant`s and `time:ProperInterval`s) are also illustrated, including `time:inside`, `time:before`, and `time:after`.  `case_prov_dot` renders them as shown in this figure (again, click to view the figure as SVG with selectable text):
+Other predicates that relate `time:TemporalEntity`s (including `time:Instant`s and `time:Interval`s) are also illustrated, including `time:inside`, `time:before`, and `time:after`.  `case_prov_dot` renders them as shown in this figure (again, click to view the figure as SVG with selectable text):
 
 ![Relations between intervals and instants](figures/readme-time-instants-visible.svg)
 
 If `--display-time-links` is not requested, [this figure](figures/readme-time-instants-invisible.svg) shows the same items to show that position is preserved even if the temporal items are not colored visibly.
 
-`uco-action:Action`s and `prov:Activity`s can be related using containing `time:ProperInterval`s.  This figure shows two `prov:Activity`s with no timestamps and no direct link to one another, contained within two `time:ProperInterval`s that *do* link to one another.  The left column shows the default display, and the right shows the display with `--display-time-links`.
+`uco-action:Action`s and `prov:Activity`s can be related using containing `time:Interval`s.  This figure shows two `prov:Activity`s with no timestamps and no direct link to one another, contained within two `time:ProperInterval`s that *do* link to one another.  The left column shows the default display, and the right shows the display with `--display-time-links`.
 
 | Default display | Display with time intervals | Display with time links |
 | --- | --- | --- |
