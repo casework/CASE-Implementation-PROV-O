@@ -21,7 +21,7 @@ Any temporal ordering among the visible nodes is included as hidden (unless --di
 
 https://github.com/w3c/sdw/blob/gh-pages/time/rdf/time-prov.ttl
 
-prov:Activities and uco-action:Actions are further assumed to be time:ProperIntervals.
+prov:Activities and uco-action:Actions are further assumed to be time:Intervals.
 """
 
 # TODO - The label adjustment with "ID - " is a hack.  A hyphen forces
@@ -174,7 +174,7 @@ def expand_prov_activities_with_owl_time(
     **kwargs: typing.Any,
 ) -> None:
     """
-    This procedure takes a graph and guarantees all time:ProperIntervals have reified Instant nodes as their beginnings and ends.  Following guidance from the non-normative time-prov alignment, prov:Activities are also inferred to be time:ProperIntervals, and prov:InstantaneousEvents (especially prov:Start and prov:End nodes) are inferred to be time:Instants.  prov:startedAtTime and prov:endedAtTime are used to infer time:Instant nodes as a last fallback.
+    This procedure takes a graph and guarantees all time:Intervals have reified Instant nodes as their beginnings and ends.  Following guidance from the non-normative time-prov alignment, prov:Activities are also inferred to be time:Intervals, and prov:InstantaneousEvents (especially prov:Start and prov:End nodes) are inferred to be time:Instants.  prov:startedAtTime and prov:endedAtTime are used to infer time:Instant nodes as a last fallback.
 
     While most of this is done with SPARQL CONSTRUCT queries, there is a step in converting from xsd:dateTime to xsd:dateTimeStamp that, at this time, appears to require data validation that is more difficult to perform in SPARQL than in Python.
     """
@@ -315,7 +315,7 @@ WHERE {
     # devise with these axioms:
     #
     #     prov:Activity
-    #         rdfs:subClassOf time:ProperInterval ;
+    #         rdfs:subClassOf time:Interval ;
     #         .
     #     prov:InstantaneousEvent
     #         rdfs:subClassOf time:Instant ;
@@ -323,7 +323,7 @@ WHERE {
     #
     query = """\
 CONSTRUCT {
-  ?nActivity a time:ProperInterval .
+  ?nActivity a time:Interval .
 } WHERE {
   ?nActivity a prov:Activity .
 }
@@ -447,17 +447,20 @@ WHERE {
 """
     _build_datetimestamp_augments_from_query(query)
 
-    n_proper_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
+    n_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
+    for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Interval):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_intervals.add(n_subject)
     for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
-        n_proper_intervals.add(n_subject)
+        n_intervals.add(n_subject)
 
-    # For remaining time:ProperIntervals, guarantee they have beginning
+    # For remaining time:Intervals, guarantee they have beginning
     # and, if appropriate, ending nodes.
-    for n_proper_interval in sorted(n_proper_intervals):
+    for n_interval in sorted(n_intervals):
         (_, start_graph) = case_prov.infer_interval_terminus(
             graph,
-            n_proper_interval,
+            n_interval,
             NS_TIME.hasBeginning,
             ns_kb,
             use_deterministic_uuids=use_deterministic_uuids,
@@ -465,10 +468,10 @@ WHERE {
         _dump_augments(start_graph)
         del start_graph
 
-        if case_prov.interval_end_should_exist(graph, n_proper_interval):
+        if case_prov.interval_end_should_exist(graph, n_interval):
             (_, end_graph) = case_prov.infer_interval_terminus(
                 graph,
-                n_proper_interval,
+                n_interval,
                 NS_TIME.hasEnd,
                 ns_kb,
                 use_deterministic_uuids=use_deterministic_uuids,
@@ -616,7 +619,7 @@ def main() -> None:
     parser.add_argument(
         "--display-time-intervals",
         action="store_true",
-        help="Display time:ProperIntervals whether or not they are `prov:Activity`s.  Without this flag, intervals are present for on-canvas sorting, but invisible.",
+        help="Display time:Intervals whether or not they are `prov:Activity`s.  Without this flag, intervals are present for on-canvas sorting, but invisible.",
     )
     parser.add_argument(
         "--display-time-links",
@@ -807,17 +810,17 @@ WHERE {
     # Define the sets of TIME Things.
 
     # Expand the PROV things to also be TIME things.
-    # Infer boundary Instants for time:ProperIntervals.
+    # Infer boundary Instants for time:Intervals.
     expand_prov_activities_with_owl_time(
         graph, NS_KB, use_deterministic_uuids, debug_graph_fh=args.debug_graph
     )
 
     # "Interval" in variable names within this script is shorthand for
-    # time:ProperInterval.
+    # time:Interval.
     n_instants: typing.Set[rdflib.term.IdentifiedNode] = set()
     n_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
 
-    # Some instants are the beginning or end of a time:ProperInterval,
+    # Some instants are the beginning or end of a time:Interval,
     # and will be rendered differently from other instants that will
     # otherwise be inside intervals.
     # Likewise, prov:Entitys will render similarly with their Generation
@@ -828,11 +831,15 @@ WHERE {
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
         n_instants.add(n_subject)
 
+    for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Interval):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_intervals.add(n_subject)
     for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
         n_intervals.add(n_subject)
+    for n_interval in n_intervals:
         for n_predicate in {NS_TIME.hasBeginning, NS_TIME.hasEnd}:
-            for n_object in graph.objects(n_subject, n_predicate):
+            for n_object in graph.objects(n_interval, n_predicate):
                 assert isinstance(n_object, rdflib.term.IdentifiedNode)
                 n_terminus_instants.add(n_object)
 
@@ -1614,9 +1621,10 @@ WHERE {
             time_edge_node_pairs.add((n_usage, n_invalidation))
 
     # time:inside relates Intervals to Instants within them.  Note that
-    # even though an Instant inside an Interval is defined in TIME as
-    # 'intended to include beginnings and ends of intervals,' we can
-    # infer a discrete order between the Interval's starting and ending
+    # Instant inside an Interval is defined in TIME as 'not
+    # intended to include beginnings and ends of intervals.'  If an
+    # Interval is already asserted to be a ProperInterval, this will
+    # induce a discrete order between the Interval's starting and ending
     # Instants and the Instant inside the interval, if the Interval is
     # also a PROV Activity:
     #
@@ -1624,10 +1632,6 @@ WHERE {
     #   or invalidation involving an activity follows the activity's
     #   start."  (And likewise for `prov:End`: those
     #   `prov:InstantaneousEvent`s precede the `prov:End` Instant.)
-    # * A `time:Instant` asserted to be inside this `prov:Activity` is
-    #   consistent with the `prov:Activity` being aligned with
-    #   `time:ProperInterval` (as opposed to `time:Interval`s that can
-    #   be 0-length).
     for triple in graph.triples((None, NS_TIME.inside, None)):
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
         assert isinstance(triple[2], rdflib.term.IdentifiedNode)
@@ -1662,6 +1666,9 @@ WHERE {
             n_type_i = NS_TIME.Instant
         elif (n_entity_i, NS_RDF.type, NS_TIME.ProperInterval) in graph:
             n_type_i = NS_TIME.ProperInterval
+        elif (n_entity_i, NS_RDF.type, NS_TIME.Interval) in graph:
+            # Fall back to Interval after ProperInterval not found.
+            n_type_i = NS_TIME.Interval
         else:
             continue
 
@@ -1669,26 +1676,38 @@ WHERE {
             n_type_j = NS_TIME.Instant
         elif (n_entity_j, NS_RDF.type, NS_TIME.ProperInterval) in graph:
             n_type_j = NS_TIME.ProperInterval
+        elif (n_entity_j, NS_RDF.type, NS_TIME.Interval) in graph:
+            # Fall back to Interval after ProperInterval not found.
+            n_type_j = NS_TIME.Interval
         else:
             continue
 
         if n_type_i == NS_TIME.Instant and n_type_j == NS_TIME.Instant:
             time_edge_node_pairs.add((n_entity_i, n_entity_j))
-        elif n_type_i == NS_TIME.Instant and n_type_j == NS_TIME.ProperInterval:
+        elif n_type_i == NS_TIME.Instant and n_type_j in (
+            NS_TIME.Interval,
+            NS_TIME.ProperInterval,
+        ):
             n_instant = n_entity_i
             n_interval = n_entity_j
             n_interval_bs = get_beginnings(graph, n_interval)
             for n_interval_b in n_interval_bs:
                 time_edge_node_pairs.add((n_instant, n_interval_b))
                 time_edge_node_pairs.add((n_interval_b, n_interval))
-        elif n_type_i == NS_TIME.ProperInterval and n_type_j == NS_TIME.Instant:
+        elif (
+            n_type_i in (NS_TIME.Interval, NS_TIME.ProperInterval)
+            and n_type_j == NS_TIME.Instant
+        ):
             n_instant = n_entity_j
             n_interval = n_entity_i
             n_interval_es = get_ends(graph, n_interval)
             for n_interval_e in n_interval_es:
                 time_edge_node_pairs.add((n_interval_e, n_instant))
                 time_edge_node_pairs.add((n_interval, n_interval_e))
-        elif n_type_i == NS_TIME.ProperInterval and n_type_j == NS_TIME.ProperInterval:
+        elif n_type_i in (NS_TIME.Interval, NS_TIME.ProperInterval) and n_type_j in (
+            NS_TIME.Interval,
+            NS_TIME.ProperInterval,
+        ):
             n_instant_i_bs = get_beginnings(graph, n_entity_i)
             n_instant_i_es = get_ends(graph, n_entity_i)
             n_instant_j_bs = get_beginnings(graph, n_entity_j)
@@ -2097,7 +2116,7 @@ WHERE {
 
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
-    # Render time:ProperIntervals that are not prov:Activities.
+    # Render time:Intervals that are not prov:Activities.
     for n_interval in sorted((n_intervals - n_activities) & n_time_things_to_display):
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
