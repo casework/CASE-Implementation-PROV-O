@@ -71,18 +71,26 @@ all: \
 
 check: \
   .git_submodule_init-casework.github.io.done.log \
-  .venv-pre-commit/var/.pre-commit-built.log
+  check-mypy
 	$(MAKE) \
 	  --directory case_prov/shapes \
 	  check
 	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
 	  --directory tests \
 	  check
 
+check-mypy: \
+  .git_submodule_init.done.log \
+  .venv-pre-commit/var/.pre-commit-built.log
+	$(MAKE) \
+	  PYTHON3=$(PYTHON3) \
+	  --directory tests \
+	  check-mypy
+
 # This target's dependencies potentially modify the working directory's Git state, so it is intentionally not a dependency of check.
 check-supply-chain: \
-  check-supply-chain-pre-commit
+  check-supply-chain-pre-commit \
+  check-mypy
 
 # This target is scheduled to run as part of prerelease review.
 #
