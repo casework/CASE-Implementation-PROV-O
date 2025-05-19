@@ -21,12 +21,16 @@ PYTHON3 ?= python3
 top_srcdir := $(shell cd .. ; pwd)
 
 all: \
-  all-casework.github.io
+  all-casework.github.io \
+  all-Issue-88
 
 .PHONY: \
+  all-Issue-88 \
   all-casework.github.io \
+  check-Issue-88 \
   check-casework.github.io \
   check-mypy \
+  clean-Issue-88 \
   clean-casework.github.io \
   format
 
@@ -49,6 +53,11 @@ all: \
 	    $(top_srcdir)[testing]
 	touch $@
 
+all-Issue-88: \
+  check-Issue-88
+	$(MAKE) \
+	  --directory Issue-88
+
 all-casework.github.io: \
   .venv.done.log
 	$(MAKE) \
@@ -57,7 +66,14 @@ all-casework.github.io: \
 check: \
   check-mypy \
   check-doctest \
-  check-casework.github.io
+  check-casework.github.io \
+  check-Issue-88
+
+check-Issue-88: \
+  .venv.done.log
+	$(MAKE) \
+	  --directory Issue-88 \
+	  check
 
 check-casework.github.io: \
   .venv.done.log
@@ -83,11 +99,17 @@ check-mypy: \
 	    .
 
 clean: \
+  clean-Issue-88 \
   clean-casework.github.io
 	@rm -f \
 	  .venv.done.log
 	@rm -rf \
 	  venv
+
+clean-Issue-88:
+	@$(MAKE) \
+	  --directory Issue-88 \
+	  clean
 
 clean-casework.github.io:
 	@$(MAKE) \
