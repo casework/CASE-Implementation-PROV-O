@@ -1022,7 +1022,10 @@ WHERE {
 
     # Render Entities.
     for n_entity in n_entities:
-        if n_entity in n_collections:
+        if n_entity in n_agents:
+            # Defer styling to Agents (done in loop above).
+            continue
+        elif n_entity in n_collections:
             kwargs = clone_style(PROV_COLLECTION)
         else:
             kwargs = clone_style(prov.constants.PROV_ENTITY)
@@ -1045,7 +1048,14 @@ WHERE {
 
         # _logger.debug("Entity %r.", n_entity)
         n_thing_to_pydot_node_kwargs[n_entity] = kwargs
+    # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
 
+    # Render InstantaneousEvents of Entities.
+    # This is separated from the Entities loop above because Agents and
+    # Entities have separate label and color construction logic, but
+    # share instantaneous events when an Agent is incidentally an
+    # Entity.
+    for n_entity in n_entities:
         # Add to tooltips of associated InstantaneousEvents.
         for n_predicate, template in {
             (NS_PROV.qualifiedGeneration, "Generation of %s"),
@@ -1054,7 +1064,6 @@ WHERE {
             for n_instantaneous_event in graph.objects(n_entity, n_predicate):
                 assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
                 n_instant_to_tooltips[n_instantaneous_event].add(template % n_entity)
-    # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
 
     # Render Activities.
