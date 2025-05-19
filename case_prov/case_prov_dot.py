@@ -1598,26 +1598,60 @@ WHERE {
     # Entities' Usages can also be related to their Generation and
     # Invalidation events.
 
-    for triple in graph.triples((None, NS_PROV.qualifiedGeneration, None)):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.term.IdentifiedNode)
-        n_entity = triple[0]
-        n_generation = triple[2]
+    query = """\
+SELECT ?nEntity ?nGeneration ?nUsage
+WHERE {
+  ?nEntity
+    prov:qualifiedGeneration ?nGeneration ;
+    .
+  OPTIONAL {
+    ?nActivity
+      prov:qualifiedUsage ?nUsage ;
+      .
+    ?nUsage
+      prov:entity ?nEntity ;
+      .
+  }
+}
+"""
+    for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        assert isinstance(result[1], rdflib.term.IdentifiedNode)
+        n_entity = result[0]
+        n_generation = result[1]
         time_edge_node_pairs.add((n_generation, n_entity))
-        for n_object in graph.objects(n_entity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_usage = n_object
+        if result[2] is not None:
+            assert isinstance(result[2], rdflib.term.IdentifiedNode)
+            n_usage = result[2]
             time_edge_node_pairs.add((n_generation, n_usage))
 
-    for triple in graph.triples((None, NS_PROV.qualifiedInvalidation, None)):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.term.IdentifiedNode)
-        n_entity = triple[0]
-        n_invalidation = triple[2]
+    query = """\
+SELECT ?nEntity ?nInvalidation ?nUsage
+WHERE {
+  ?nEntity
+    prov:qualifiedInvalidation ?nInvalidation ;
+    .
+  OPTIONAL {
+    ?nActivity
+      prov:qualifiedUsage ?nUsage ;
+      .
+    ?nUsage
+      prov:entity ?nEntity ;
+      .
+  }
+}
+"""
+    for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        assert isinstance(result[1], rdflib.term.IdentifiedNode)
+        n_entity = result[0]
+        n_invalidation = result[1]
         time_edge_node_pairs.add((n_entity, n_invalidation))
-        for n_object in graph.objects(n_entity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_usage = n_object
+        if result[2] is not None:
+            assert isinstance(result[2], rdflib.term.IdentifiedNode)
+            n_usage = result[2]
             time_edge_node_pairs.add((n_usage, n_invalidation))
 
     # time:inside relates Intervals to Instants within them.  Note that
