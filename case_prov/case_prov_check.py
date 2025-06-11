@@ -49,9 +49,11 @@ def main() -> None:
     # could be an error raised before the construction of the argument
     # parser.
     logging.basicConfig(
-        level=logging.DEBUG
-        if ("--debug" in sys.argv or "-d" in sys.argv)
-        else logging.INFO
+        level=(
+            logging.DEBUG
+            if ("--debug" in sys.argv or "-d" in sys.argv)
+            else logging.INFO
+        )
     )
 
     # Add arguments specific to case_prov_check.
