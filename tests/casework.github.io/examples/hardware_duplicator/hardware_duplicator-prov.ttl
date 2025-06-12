@@ -1187,7 +1187,7 @@ kb:file-fb00a9cd-17e1-438f-9b28-ca5d7149f9c7
 
 kb:investigativeAction-414ef4e5-0a1f-43d9-9e93-002bc2a28de4
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-d5e15040-d947-5aa4-9a12-86ed97c67b6b ;

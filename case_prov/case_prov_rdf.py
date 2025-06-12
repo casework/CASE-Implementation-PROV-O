@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
@@ -497,7 +500,7 @@ def main() -> None:
     # with these axioms:
     #
     #     prov:Activity
-    #         rdfs:subClassOf time:ProperInterval ;
+    #         rdfs:subClassOf time:Interval ;
     #         .
     #     prov:InstantaneousEvent
     #         rdfs:subClassOf time:Instant ;
@@ -505,17 +508,20 @@ def main() -> None:
     #
     # Entail interval classes first:
     n_activities: typing.Set[rdflib.URIRef] = set()
-    n_proper_intervals: typing.Set[rdflib.URIRef] = set()
+    n_intervals: typing.Set[rdflib.URIRef] = set()
     for graph in [in_graph, out_graph]:
         for n_subject in graph.subjects(NS_RDF.type, NS_PROV.Activity):
             if isinstance(n_subject, rdflib.URIRef):
                 n_activities.add(n_subject)
+        for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Interval):
+            if isinstance(n_subject, rdflib.URIRef):
+                n_intervals.add(n_subject)
         for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
             if isinstance(n_subject, rdflib.URIRef):
-                n_proper_intervals.add(n_subject)
+                n_intervals.add(n_subject)
     for n_activity in n_activities:
-        tmp_triples.add((n_activity, NS_RDF.type, NS_TIME.ProperInterval))
-    n_proper_intervals |= n_activities
+        tmp_triples.add((n_activity, NS_RDF.type, NS_TIME.Interval))
+    n_intervals |= n_activities
 
     # Then entail instant classes:
     n_instants: typing.Set[rdflib.URIRef] = set()
@@ -571,13 +577,13 @@ def main() -> None:
     time_entailment_tally += len(tmp_triples)
     tmp_triples = set()
 
-    # Build beginning and ending nodes for all time:ProperIntervals that
-    # lack the bounding instants.
-    for n_proper_interval in sorted(n_proper_intervals):
+    # Build beginning and ending nodes for all time:Intervals that lack
+    # the bounding instants.
+    for n_interval in sorted(n_intervals):
         # Generate Ends.
         (n_time_end, end_graph) = case_prov.infer_interval_terminus(
             tmp_graph,
-            n_proper_interval,
+            n_interval,
             NS_TIME.hasEnd,
             NS_KB,
             use_deterministic_uuids=use_deterministic_uuids,
@@ -590,7 +596,7 @@ def main() -> None:
         # Generate Beginnings.
         (n_time_beginning, beginning_graph) = case_prov.infer_interval_terminus(
             tmp_graph,
-            n_proper_interval,
+            n_interval,
             NS_TIME.hasBeginning,
             NS_KB,
             use_deterministic_uuids=use_deterministic_uuids,

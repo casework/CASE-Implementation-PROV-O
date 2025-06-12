@@ -13,7 +13,7 @@ kb:activity-earlier
 
 kb:activity-later
 	a prov:Activity ;
-	rdfs:label "An Activity that occurs earlier."@en ;
+	rdfs:label "An Activity that occurs later."@en ;
 	.
 
 kb:interval-earlier

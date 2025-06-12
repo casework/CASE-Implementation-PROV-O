@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
@@ -34,7 +37,7 @@ import os
 import sys
 import typing
 
-import pyshacl  # type: ignore
+import pyshacl
 import rdflib.util
 
 from . import shapes
@@ -135,17 +138,6 @@ def main() -> None:
         shapes_text = importlib.resources.read_text(shapes, shape_filename)
         ontology_graph.parse(data=shapes_text, format="turtle")
 
-    # Determine output format.
-    # pySHACL's determination of output formatting is handled solely
-    # through the -f flag.  Other CASE CLI tools handle format
-    # determination by output file extension.  case_validate deferred
-    # to pySHACL behavior, as other CASE tools don't (at the time of
-    # this writing) have the value "human" as an output format.
-    # case_prov_check continues that pattern.
-    validator_kwargs: typing.Dict[str, str] = dict()
-    if args.format != "human":
-        validator_kwargs["serialize_report_graph"] = args.format
-
     validate_result: typing.Tuple[
         bool, typing.Union[Exception, bytes, str, rdflib.Graph], str
     ]
@@ -158,7 +150,7 @@ def main() -> None:
         allow_warnings=True if args.allow_warnings else False,
         debug=True if args.debug else False,
         do_owl_imports=True if args.imports else False,
-        **validator_kwargs
+        serialize_report_graph=args.format if args.format != "human" else False,
     )
 
     # Relieve RAM of the data graph after validation has run.
