@@ -126,7 +126,7 @@ kb:f3fd304e-ef6c-4cbd-94cb-425880f82748
 
 kb:investigative-action-4d3778d9-8376-4277-9852-8e6bf926a5d1
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-d4f48397-5ce5-52b9-b407-a3aa95af7743 ;

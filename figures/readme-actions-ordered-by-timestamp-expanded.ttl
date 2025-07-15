@@ -8,7 +8,7 @@
 
 kb:Action-417af923-6ff4-48da-b7a7-177cb5f3d6f3
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-adfc2e9d-7cbc-52a5-abb6-17ffec3657cc ;
@@ -21,7 +21,7 @@ kb:Action-417af923-6ff4-48da-b7a7-177cb5f3d6f3
 
 kb:Action-60dddd50-07ac-4177-930d-7954c56f49b9
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-c99941dc-5be0-5095-a74d-f85359f6c869 ;
@@ -37,7 +37,7 @@ kb:Action-60dddd50-07ac-4177-930d-7954c56f49b9
 
 kb:Action-e9f1edc9-4e0c-43c3-a1c4-891143e3fa86
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-30a5ef5a-e33f-5a68-8ce1-946dfb30eb37 ;

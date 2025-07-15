@@ -1,0 +1,200 @@
+@prefix kb: <http://example.org/kb/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69
+	a
+		time:Interval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-bed46c4e-1d92-54e4-91e4-60503bba8370 ;
+	time:inside
+		kb:Generation-635f014d-39e5-5a6b-a612-5c3eeca1146c ,
+		kb:Generation-66d3ba2d-e325-59de-b634-5ebc2b4e5fc9 ,
+		kb:Usage-99a49455-fb8f-5718-97a9-88f08a7e67b4
+		;
+	prov:qualifiedStart kb:Start-bed46c4e-1d92-54e4-91e4-60503bba8370 ;
+	prov:qualifiedUsage kb:Usage-99a49455-fb8f-5718-97a9-88f08a7e67b4 ;
+	prov:used prov:EmptyCollection ;
+	uco-core:description "Build tool" ;
+	.
+
+kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0
+	a
+		time:Interval ,
+		prov:Activity
+		;
+	time:hasBeginning kb:Start-46a27590-e34d-5aef-8076-71662d26cd08 ;
+	time:inside
+		kb:Generation-689b0c13-25f9-5708-849b-86cde8314609 ,
+		kb:Usage-3daec8ab-ba49-5f84-924f-cfd2d3a234ae ,
+		kb:Usage-bb56c4cf-3333-5d44-b9a6-7bd4a7a0742f
+		;
+	prov:qualifiedAssociation kb:Association-ff686c3c-da5a-511f-9501-2925b90ebfab ;
+	prov:qualifiedCommunication kb:Communication-b8186c6a-1cdc-5995-a296-3ab3b35dff64 ;
+	prov:qualifiedStart kb:Start-46a27590-e34d-5aef-8076-71662d26cd08 ;
+	prov:qualifiedUsage
+		kb:Usage-3daec8ab-ba49-5f84-924f-cfd2d3a234ae ,
+		kb:Usage-bb56c4cf-3333-5d44-b9a6-7bd4a7a0742f
+		;
+	prov:used
+		kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ,
+		kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+		;
+	prov:wasAssociatedWith kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	prov:wasInformedBy kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	uco-core:description "Use tool" ;
+	.
+
+kb:Association-ff686c3c-da5a-511f-9501-2925b90ebfab
+	a prov:Association ;
+	prov:agent kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	.
+
+kb:Attribution-de03ef18-6f46-5494-a6e1-8d5bf6f74cf5
+	a prov:Attribution ;
+	prov:agent kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	.
+
+kb:Communication-b8186c6a-1cdc-5995-a296-3ab3b35dff64
+	a prov:Communication ;
+	prov:activity kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Derivation-1437af74-1b79-5e52-b9ff-0da6f6635b0f
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Derivation-4d4bfe7b-f231-519a-952a-275bc7ffcf0b
+	a prov:Derivation ;
+	prov:entity kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	prov:hadActivity kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0 ;
+	.
+
+kb:Derivation-6b7539d0-a03a-5ceb-a10a-0757b44c5256
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Derivation-8f44b1d3-5743-5d56-a3e4-e5fc81d49c3d
+	a prov:Derivation ;
+	prov:entity kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ;
+	prov:hadActivity kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0 ;
+	.
+
+kb:Generation-635f014d-39e5-5a6b-a612-5c3eeca1146c
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-3daec8ab-ba49-5f84-924f-cfd2d3a234ae ;
+	prov:activity kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Generation-66d3ba2d-e325-59de-b634-5ebc2b4e5fc9
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	time:before kb:Usage-bb56c4cf-3333-5d44-b9a6-7bd4a7a0742f ;
+	prov:activity kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Generation-689b0c13-25f9-5708-849b-86cde8314609
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	prov:activity kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0 ;
+	.
+
+kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728
+	a
+		prov:Collection ,
+		prov:Entity
+		;
+	prov:hadMember kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	prov:qualifiedDerivation kb:Derivation-1437af74-1b79-5e52-b9ff-0da6f6635b0f ;
+	prov:qualifiedGeneration kb:Generation-635f014d-39e5-5a6b-a612-5c3eeca1146c ;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:ProvenanceRecord-131bd792-a0dc-4f14-aafd-0343b4a19537
+	a
+		prov:Collection ,
+		prov:Entity
+		;
+	prov:hadMember kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	prov:qualifiedAttribution kb:Attribution-de03ef18-6f46-5494-a6e1-8d5bf6f74cf5 ;
+	prov:qualifiedDerivation
+		kb:Derivation-4d4bfe7b-f231-519a-952a-275bc7ffcf0b ,
+		kb:Derivation-8f44b1d3-5743-5d56-a3e4-e5fc81d49c3d
+		;
+	prov:qualifiedGeneration kb:Generation-689b0c13-25f9-5708-849b-86cde8314609 ;
+	prov:wasAttributedTo kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	prov:wasDerivedFrom
+		kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ,
+		kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+		;
+	prov:wasGeneratedBy kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0 ;
+	.
+
+kb:Start-46a27590-e34d-5aef-8076-71662d26cd08
+	a
+		time:Instant ,
+		prov:Start
+		;
+	.
+
+kb:Start-bed46c4e-1d92-54e4-91e4-60503bba8370
+	a
+		time:Instant ,
+		prov:Start
+		;
+	.
+
+kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+	a
+		prov:Agent ,
+		prov:Entity ,
+		prov:SoftwareAgent
+		;
+	prov:qualifiedDerivation kb:Derivation-6b7539d0-a03a-5ceb-a10a-0757b44c5256 ;
+	prov:qualifiedGeneration kb:Generation-66d3ba2d-e325-59de-b634-5ebc2b4e5fc9 ;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69 ;
+	.
+
+kb:Usage-3daec8ab-ba49-5f84-924f-cfd2d3a234ae
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ;
+	.
+
+kb:Usage-99a49455-fb8f-5718-97a9-88f08a7e67b4
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity prov:EmptyCollection ;
+	.
+
+kb:Usage-bb56c4cf-3333-5d44-b9a6-7bd4a7a0742f
+	a
+		time:Instant ,
+		prov:Usage
+		;
+	prov:entity kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	.
+

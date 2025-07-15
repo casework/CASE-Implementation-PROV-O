@@ -11,8 +11,8 @@ kb:Activity-1
 	rdfs:label "A prov:Activity."@en ;
 	.
 
-kb:ProperInterval-1
-	a time:ProperInterval ;
-	rdfs:label "A time:ProperInterval."@en ;
+kb:Interval-1
+	a time:Interval ;
+	rdfs:label "A time:Interval."@en ;
 	.
 

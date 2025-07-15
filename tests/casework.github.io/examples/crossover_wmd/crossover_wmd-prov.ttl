@@ -247,7 +247,7 @@ kb:forensicimage-f3fd304e-ef6c-4cbd-94cb-425880f82748
 
 kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-57113518-385d-5389-b33d-b75b3fe502f9 ;
@@ -276,7 +276,7 @@ kb:investigative-action-99a5c94f-e6cd-4b7c-b189-ea998ee0b31f
 
 kb:investigativeaction-b4b0805e-84ec-4553-98c2-6f0454829c30
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-88a525a4-8451-511d-bb5c-3c4fc5be7f48 ;

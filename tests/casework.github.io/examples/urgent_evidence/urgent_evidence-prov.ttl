@@ -1227,7 +1227,7 @@ kb:Usage-f5c18d5b-87cf-55bd-beb4-6d916c59c3dc
 
 kb:action-uuid-1
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-cef68541-ac3a-595f-9fca-d702e97730b3 ;
@@ -1249,7 +1249,7 @@ kb:action-uuid-1
 
 kb:action-uuid-10
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-bd7bd16e-6386-5df2-b70f-c008b548eec1 ;
@@ -1293,7 +1293,7 @@ kb:action-uuid-10
 
 kb:action-uuid-11
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-1f191753-8f2b-5471-908c-663b4f61f691 ;
@@ -1311,7 +1311,7 @@ kb:action-uuid-11
 
 kb:action-uuid-12
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-1c90956c-e17a-5f22-938d-2479a75c110c ;
@@ -1342,7 +1342,7 @@ kb:action-uuid-12
 
 kb:action-uuid-13
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-612062f6-fd54-5f33-bb41-1d1a2768d685 ;
@@ -1373,7 +1373,7 @@ kb:action-uuid-13
 
 kb:action-uuid-2
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-65db0fc4-690b-582d-b2e9-cbc9aa75ce70 ;
@@ -1405,7 +1405,7 @@ kb:action-uuid-2
 
 kb:action-uuid-3
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-8ea56a88-720f-5697-8d2e-89d68cc930f1 ;
@@ -1436,7 +1436,7 @@ kb:action-uuid-3
 
 kb:action-uuid-4
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-f01440ac-45dd-50ba-8a87-5bd932f64fbe ;
@@ -1473,7 +1473,7 @@ kb:action-uuid-4
 
 kb:action-uuid-5
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-bcfe441e-db6b-543f-ab6a-59da5df89ab9 ;
@@ -1491,7 +1491,7 @@ kb:action-uuid-5
 
 kb:action-uuid-6
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-d230e5cd-4594-54f9-88f1-fca4639aa0a2 ;
@@ -1528,7 +1528,7 @@ kb:action-uuid-6
 
 kb:action-uuid-7
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-9e3ee06d-8708-5a08-8a8f-ccc8f8d1bdfa ;
@@ -1567,7 +1567,7 @@ kb:action-uuid-7
 
 kb:action-uuid-8
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-81f4d9c6-b4df-54f7-8403-cd90a0136923 ;
@@ -1585,7 +1585,7 @@ kb:action-uuid-8
 
 kb:action-uuid-9
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-db2694df-de4d-5dd2-a923-797a49f4c1b2 ;

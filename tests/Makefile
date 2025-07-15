@@ -1,13 +1,16 @@
 #!/usr/bin/make -f
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
@@ -18,12 +21,16 @@ PYTHON3 ?= python3
 top_srcdir := $(shell cd .. ; pwd)
 
 all: \
-  all-casework.github.io
+  all-casework.github.io \
+  all-Issue-88
 
 .PHONY: \
+  all-Issue-88 \
   all-casework.github.io \
+  check-Issue-88 \
   check-casework.github.io \
   check-mypy \
+  clean-Issue-88 \
   clean-casework.github.io \
   format
 
@@ -46,6 +53,11 @@ all: \
 	    $(top_srcdir)[testing]
 	touch $@
 
+all-Issue-88: \
+  check-Issue-88
+	$(MAKE) \
+	  --directory Issue-88
+
 all-casework.github.io: \
   .venv.done.log
 	$(MAKE) \
@@ -54,7 +66,14 @@ all-casework.github.io: \
 check: \
   check-mypy \
   check-doctest \
-  check-casework.github.io
+  check-casework.github.io \
+  check-Issue-88
+
+check-Issue-88: \
+  .venv.done.log
+	$(MAKE) \
+	  --directory Issue-88 \
+	  check
 
 check-casework.github.io: \
   .venv.done.log
@@ -80,11 +99,17 @@ check-mypy: \
 	    .
 
 clean: \
+  clean-Issue-88 \
   clean-casework.github.io
 	@rm -f \
 	  .venv.done.log
 	@rm -rf \
 	  venv
+
+clean-Issue-88:
+	@$(MAKE) \
+	  --directory Issue-88 \
+	  clean
 
 clean-casework.github.io:
 	@$(MAKE) \

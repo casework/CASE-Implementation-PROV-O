@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
-__version__ = "0.12.2"
+__version__ = "0.13.0"
 
 import datetime
 import typing
@@ -51,7 +54,7 @@ def interval_end_should_exist(
 ) -> typing.Optional[bool]:
     """
     This function reviews the input graph to see if the requested interval uses a property that indicates an end is known to exist, such as a DatatypeProperty recording an ending timestamp, or a relationship with another interval that depends on a defined end.  Inverse relationships are also reviewed.
-    :param n_interval: A RDFLib Node (URIRef or Blank Node) that represents a time:ProperInterval, prov:Activity, or uco-action:Action.
+    :param n_interval: A RDFLib Node (URIRef or Blank Node) that represents a time:Interval, prov:Activity, or uco-action:Action.
     :returns: Returns True if an interval end is implied to exist.  Returns None if existence can't be inferred with the information in the graph.  In accordance with the Open World assumption, False is not currently returned.
 
     >>> g = rdflib.Graph()
@@ -84,11 +87,10 @@ def interval_end_should_exist(
     >>> # The general time:after relator implies the existence of an
     >>> # ending instant when any temporal entity comes after an
     >>> # interval.
-    >>> # Be aware that it is somewhat out of scope of this function to
-    >>> # determine if the nodes being related with time:before and
-    >>> # time:after are time:ProperIntervals.  This information might
-    >>> # not always be available (e.g. it might require RDFS or OWL
-    >>> # inferencing first).
+    >>> # Be aware that it is out of scope of this function to determine
+    >>> # if the nodes being related with time:before and time:after are
+    >>> # time:ProperIntervals.  This information might not always be
+    >>> # available (e.g. it might require inferencing first).
     >>> i = rdflib.BNode()
     >>> j = rdflib.BNode()
     >>> _ = g.add((i, rdflib.RDF.type, rdflib.TIME.ProperInterval))
@@ -291,7 +293,7 @@ def infer_prov_instantaneous_influence_event(
 
 def infer_interval_terminus(
     in_graph: rdflib.Graph,
-    n_proper_interval: rdflib.term.IdentifiedNode,
+    n_interval: rdflib.term.IdentifiedNode,
     n_predicate: rdflib.URIRef,
     rdf_namespace: rdflib.Namespace,
     *args: typing.Any,
@@ -299,7 +301,7 @@ def infer_interval_terminus(
     **kwargs: typing.Any,
 ) -> typing.Tuple[typing.Optional[rdflib.term.IdentifiedNode], TmpTriplesType]:
     """
-    :returns: Returns a node N matching the pattern 'n_proper_interval n_predicate N', as well as a supplemental set of triples.  If a node N is not found in the graph, and a node should exist (which is relevant when considering ends), a node is created and linked in the supplemental triples; hence the length of the supplemental triples being >0 can be used as an indicator that the node was created.  If the requested property indicates a search for an end, the graph is first reviewed to see if an end should exist.
+    :returns: Returns a node N matching the pattern 'n_interval n_predicate N', as well as a supplemental set of triples.  If a node N is not found in the graph, and a node should exist (which is relevant when considering ends), a node is created and linked in the supplemental triples; hence the length of the supplemental triples being >0 can be used as an indicator that the node was created.  If the requested property indicates a search for an end, the graph is first reviewed to see if an end should exist.
     """
     slug = {
         NS_PROV.qualifiedEnd: "End-",
@@ -310,19 +312,19 @@ def infer_interval_terminus(
 
     # See if we should even check for an end.
     if n_predicate in {NS_PROV.qualifiedEnd, NS_TIME.hasEnd}:
-        if not interval_end_should_exist(in_graph, n_proper_interval):
+        if not interval_end_should_exist(in_graph, n_interval):
             return (None, set())
 
     ret_triples: TmpTriplesType = set()
     n_terminus: typing.Optional[rdflib.IdentifiedNode] = None
-    for n_value in in_graph.objects(n_proper_interval, n_predicate):
+    for n_value in in_graph.objects(n_interval, n_predicate):
         assert isinstance(n_value, rdflib.term.IdentifiedNode)
         n_terminus = n_value
         break
     if n_terminus is None:
         # Define instant node.
-        if isinstance(n_proper_interval, rdflib.URIRef):
-            uuid_namespace = case_utils.inherent_uuid.inherence_uuid(n_proper_interval)
+        if isinstance(n_interval, rdflib.URIRef):
+            uuid_namespace = case_utils.inherent_uuid.inherence_uuid(n_interval)
             if use_deterministic_uuids:
                 node_uuid = str(uuid.uuid5(uuid_namespace, str(n_predicate)))
             else:
@@ -331,7 +333,7 @@ def infer_interval_terminus(
         else:
             n_terminus = rdflib.BNode()
         # Link instant node.
-        ret_triples.add((n_proper_interval, n_predicate, n_terminus))
+        ret_triples.add((n_interval, n_predicate, n_terminus))
         # Type instant node.
         n_instant_type = {
             NS_PROV.qualifiedEnd: NS_PROV.End,

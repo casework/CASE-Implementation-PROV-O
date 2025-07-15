@@ -9,7 +9,7 @@
 
 kb:Action-1
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-41c7fd66-75d7-55b5-9e06-ba2b050a92f6 ;

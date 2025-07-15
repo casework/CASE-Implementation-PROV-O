@@ -99,7 +99,7 @@ kb:Generation-9641ef8d-df3c-5b17-9109-41799e563f19
 
 kb:InvestigativeAction-e019ed92-af10-4a9f-a914-7a9ba539807c
 	a
-		time:ProperInterval ,
+		time:Interval ,
 		prov:Activity
 		;
 	time:hasBeginning kb:Start-0f4342fc-ff40-5bdb-a93f-7814693401ea ;
