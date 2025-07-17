@@ -2122,11 +2122,18 @@ WHERE {
 
     dot_graph = pydot.Dot("PROV-O render", graph_type="digraph", rankdir="BT")
 
+    n_things_to_display = n_prov_things_to_display | n_time_things_to_display
+    n_things_displayed: typing.Set[rdflib.term.IdentifiedNode] = set()
+
     # Build the PROV chain's Pydot Nodes and Edges.
     for n_thing in sorted(n_prov_things_to_display):
         kwargs = n_thing_to_pydot_node_kwargs[n_thing]
         dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
         dot_graph.add_node(dot_node)
+
+        # Transfer from to-display set.
+        n_things_displayed.add(n_thing)
+        n_things_to_display.remove(n_thing)
     for n_thing_1 in sorted(edges.keys()):
         if n_thing_1 not in n_prov_things_to_display:
             continue
@@ -2165,6 +2172,10 @@ WHERE {
         )
         dot_graph.add_node(dot_node)
 
+        # Transfer from to-display set.
+        n_things_displayed.add(n_instant)
+        n_things_to_display.remove(n_instant)
+
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
     # Render time:Intervals that are not prov:Activities.
@@ -2188,19 +2199,26 @@ WHERE {
         )
         dot_graph.add_node(dot_node)
 
+        # Transfer from to-display set.
+        n_things_displayed.add(n_interval)
+        n_things_to_display.remove(n_interval)
+
+    if len(n_things_to_display) > 0:
+        _logger.warning("Some things planned to be displayed weren't rendered:")
+        for n_thing in sorted(n_things_to_display):
+            _logger.warning("* %s" % str(n_thing))
+
     # Use union of PROV and TIME things to display to determine which
     # strictly-temporal edges will be rendered.  This covers cases where
     # e.g. a PROV Entity is display-sequenced after its Generation event.
-    n_things_to_display = n_prov_things_to_display | n_time_things_to_display
-
-    n_time_boundable_things = (n_intervals | n_entities) & n_things_to_display
+    n_time_boundable_things = (n_intervals | n_entities) & n_things_displayed
 
     # _logger.debug("len(time_edge_node_pairs) = %d.", len(time_edge_node_pairs))
     # _logger.debug("time_edge_node_pairs = %s.", pprint.pformat(time_edge_node_pairs))
     for time_edge_node_pair in sorted(time_edge_node_pairs):
-        if time_edge_node_pair[0] not in n_things_to_display:
+        if time_edge_node_pair[0] not in n_things_displayed:
             continue
-        if time_edge_node_pair[1] not in n_things_to_display:
+        if time_edge_node_pair[1] not in n_things_displayed:
             continue
         node_id_1 = iri_to_gv_node_id(time_edge_node_pair[0])
         node_id_2 = iri_to_gv_node_id(time_edge_node_pair[1])
