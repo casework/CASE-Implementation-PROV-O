@@ -619,6 +619,43 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
         return str(n_thing)
 
 
+def get_instantaneous_perdurant_timestamp(
+    n_instantaneous_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[rdflib.Literal]:
+    """
+    :param n_instantaneous_perdurant: A graph node that bears in the graph a `rdf:type` of `prov:InstantaneousEvent`, `time:Instant`, and/or some subclass of those.
+    """
+    for l_value in graph.objects(n_instantaneous_perdurant, NS_PROV.atTime):
+        assert isinstance(l_value, rdflib.Literal)
+        return l_value
+    # Note: inXSDDateTime is deprecated.
+    for n_time_direct_property in [
+        NS_TIME.inXSDDateTimeStamp,
+        NS_TIME.inXSDDateTime,
+    ]:
+        for l_value in graph.objects(n_instantaneous_perdurant, n_time_direct_property):
+            assert isinstance(l_value, rdflib.Literal)
+            return l_value
+    return None
+
+
+def n_instantaneous_perdurant_to_timestamp_string(
+    n_instantaneous_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[str]:
+    """
+    :param n_instantaneous_perdurant: A graph node that bears in the graph a `rdf:type` of `prov:InstantaneousEvent`, `time:Instant`, and/or some subclass of those.
+    """
+    l_timestamp = get_instantaneous_perdurant_timestamp(
+        n_instantaneous_perdurant, graph
+    )
+    if l_timestamp is None:
+        return None
+    else:
+        return str(l_timestamp)
+
+
 def annotate_thing(
     n_thing: rdflib.term.IdentifiedNode,
     graph: rdflib.Graph,
@@ -674,6 +711,44 @@ def annotate_thing(
         label_parts.append("")
         label_part = "\n".join(wrapper.wrap(str(l_comment)))
         label_parts.append(label_part)
+
+
+def _n_thing_to_pydot_node_kwargs(
+    n_thing: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+    n_class_for_style: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
+    wrapper: textwrap.TextWrapper,
+    *args: typing.Any,
+    early_label_parts: list[str] = [],
+    style: typing.Optional[str] = None,
+    tooltip_parts: list[str] = [],
+    **kwargs: typing.Any,
+) -> typing.Dict[str, str]:
+    kwargs = clone_style(n_class_for_style)
+
+    if style is not None:
+        kwargs["style"] = style
+
+    # Build label parts and tooltip parts.
+    dot_label_parts = ["ID - " + qname(graph, n_thing)]
+    dot_label_parts.extend(early_label_parts)
+    _tooltip_parts: list[str] = ["ID - " + str(n_thing)]
+    _tooltip_parts.extend(tooltip_parts)
+
+    # Extend label or tooltip with descriptive graph parts; which gets
+    # extended depends on whether the shape supports text.  (The point
+    # shape used for instantaneous perdurants doesn't.)
+    if n_class_for_style in {NS_TIME.Instant}:
+        _parts_list = _tooltip_parts
+    else:
+        _parts_list = dot_label_parts
+
+    annotate_thing(n_thing, graph, wrapper, _parts_list)
+
+    kwargs["label"] = "\n".join(dot_label_parts)
+    kwargs["tooltip"] = "\n".join(_tooltip_parts)
+
+    return kwargs
 
 
 def main() -> None:
@@ -2112,32 +2187,6 @@ WHERE {
                 dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
                 dot_graph.add_edge(dot_edge)
 
-    # Render time:Instants.
-    for n_instant in sorted(n_instants & n_time_things_to_display):
-        node_id = iri_to_gv_node_id(n_instant)
-        # _logger.debug("%r -> %r", n_instant, node_id)
-        instant_kwargs = clone_style(NS_TIME.Instant)
-        style = "filled" if args.display_time_links else "invis"
-        instant_kwargs["style"] = style
-        if n_instant in n_instant_to_tooltips:
-            instant_kwargs["tooltip"] = " ;\n".join(
-                sorted(n_instant_to_tooltips[n_instant])
-            )
-        else:
-            # This will only occur for time:Instants in the input that
-            # aren't related to the provenance chains.
-            _logger.debug("Instant did not have tooltips: %r.", n_instant)
-        dot_node = pydot.Node(
-            node_id,
-            None,
-            **instant_kwargs,
-        )
-        dot_graph.add_node(dot_node)
-
-        # Transfer from to-display set.
-        n_things_displayed.add(n_instant)
-        n_things_to_display.remove(n_instant)
-
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
     # Render time:Intervals that are not prov:Activities.
@@ -2161,6 +2210,52 @@ WHERE {
         # Transfer from to-display set.
         n_things_displayed.add(n_interval)
         n_things_to_display.remove(n_interval)
+
+    for thing_set, n_class_for_style in [
+        (n_instants, NS_TIME.Instant),
+    ]:
+        for n_thing in sorted(thing_set):
+            if n_thing not in n_things_to_display:
+                continue
+
+            early_label_parts: list[str] = []
+            tooltip_parts: list[str] = []
+            if n_class_for_style in {NS_TIME.Instant}:
+                if n_thing in n_instant_to_tooltips:
+                    timestamp_string = n_instantaneous_perdurant_to_timestamp_string(
+                        n_thing, graph
+                    )
+                    if timestamp_string is not None:
+                        tooltip_parts.append("")
+                        tooltip_parts.append(timestamp_string)
+                    tooltip_parts.append("")
+                    tooltip_parts.append(
+                        " ;\n".join(sorted(n_instant_to_tooltips[n_thing]))
+                    )
+                else:
+                    # This will only occur for time:Instants in the input that
+                    # aren't related to the provenance chains.
+                    _logger.debug("Instant did not have tooltips: %r.", n_thing)
+
+            style: typing.Optional[str] = None
+            if n_class_for_style == NS_TIME.Instant:
+                style = "filled" if args.display_time_links else "invis"
+
+            kwargs = _n_thing_to_pydot_node_kwargs(
+                n_thing,
+                graph,
+                n_class_for_style,
+                wrapper,
+                early_label_parts=early_label_parts,
+                style=style,
+                tooltip_parts=tooltip_parts,
+            )
+            dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
+            dot_graph.add_node(dot_node)
+
+            # Transfer from to-display set.
+            n_things_displayed.add(n_thing)
+            n_things_to_display.remove(n_thing)
 
     if len(n_things_to_display) > 0:
         _logger.warning("Some things planned to be displayed weren't rendered:")
