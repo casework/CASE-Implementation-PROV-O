@@ -46,6 +46,7 @@ import case_utils.inherent_uuid
 import cdo_local_uuid
 import prov.constants  # type: ignore
 import prov.dot  # type: ignore
+import prov.identifier  # type: ignore
 import pydot
 import rdflib.plugins.sparql
 from case_utils.namespace import NS_CASE_INVESTIGATION, NS_RDF, NS_RDFS, NS_UCO_CORE
@@ -59,19 +60,20 @@ NS_EPHEMERAL = rdflib.Namespace("urn:example:ephemeral:")
 NS_PROV = rdflib.PROV
 NS_TIME = rdflib.TIME
 
-# This one isn't among the prov constants.
-PROV_COLLECTION = NS_PROV.Collection
 
-
-def clone_style(prov_constant: rdflib.URIRef) -> typing.Dict[str, str]:
+def clone_style(
+    prov_constant: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
+) -> typing.Dict[str, str]:
     retval: typing.Dict[str, str]
-    if prov_constant == PROV_COLLECTION:
+    if prov_constant == NS_PROV.Collection:
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov.constants.PROV_ENTITY])
-    else:
+    elif isinstance(prov_constant, prov.identifier.QualifiedName):
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov_constant])
+    else:
+        raise NotImplementedError(repr(prov_constant))
 
     # Adjust shapes and colors.
-    if prov_constant == PROV_COLLECTION:
+    if prov_constant == NS_PROV.Collection:
         retval["shape"] = "folder"
         retval["fillcolor"] = "khaki3"
     elif prov_constant == prov.constants.PROV_ENTITY:
@@ -1026,7 +1028,7 @@ WHERE {
             # Defer styling to Agents (done in loop above).
             continue
         elif n_entity in n_collections:
-            kwargs = clone_style(PROV_COLLECTION)
+            kwargs = clone_style(NS_PROV.Collection)
         else:
             kwargs = clone_style(prov.constants.PROV_ENTITY)
         kwargs["tooltip"] = "ID - " + str(n_entity)
