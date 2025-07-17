@@ -619,15 +619,53 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
         return str(n_thing)
 
 
-def annotate_comments(
+def annotate_thing(
     n_thing: rdflib.term.IdentifiedNode,
     graph: rdflib.Graph,
     wrapper: textwrap.TextWrapper,
     label_parts: typing.List[str],
 ) -> None:
     """
-    Render `rdfs:comment`s.
+    Pull in general object descriptive strings: Name, labels, descriptions, and comments.
     """
+
+    # Render `uco-core:name`.
+    # SHACL constraints on UCO will mean there will be only one name.
+    l_uco_names: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_UCO_CORE.name, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_uco_names.add(triple[2])
+    if len(l_uco_names) > 0:
+        for l_uco_name in l_uco_names:
+            label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
+            label_parts.append(label_part)
+
+    # Render `rdfs:label`s.
+    # Unlike `rdfs:comment`s and `uco-core:description`s, labels don't
+    # have a blank line separating them.  This is just a design choice
+    # to keep what might be shorter string annotations together.
+    l_labels: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_RDFS.label, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_labels.add(triple[2])
+    if len(l_labels) > 0:
+        label_parts.append("")
+        for l_label in sorted(l_labels):
+            label_part = "\n".join(wrapper.wrap(str(l_label)))
+            label_parts.append(label_part)
+
+    # Render `uco-core:description`s.
+    l_uco_descriptions: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_UCO_CORE.description, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_uco_descriptions.add(triple[2])
+    # logging.debug("len(l_uco_descriptions) = %d.", len(l_uco_descriptions))
+    for l_uco_description in sorted(l_uco_descriptions):
+        label_parts.append("")
+        label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
+        label_parts.append(label_part)
+
+    # Render `rdfs:comment`s.
     l_comments: typing.Set[rdflib.Literal] = set()
     for triple in graph.triples((n_thing, NS_RDFS.comment, None)):
         assert isinstance(triple[2], rdflib.Literal)
@@ -884,36 +922,17 @@ WHERE {
     _logger.debug("len(n_terminus_instants) = %d.", len(n_terminus_instants))
 
     # S3.
-    # Define dicts to hold 1-to-manies of various string Literals -
-    # comments, labels, names, descriptions, and exhibit numbers.  These
-    # Literals will be rendered into the Dot label string.
+    # Define a dict to hold 1-to-manies of string Literals - exhibit
+    # numbers.  These Literals will be rendered into the Dot label string.
     AnnoMapType = typing.DefaultDict[
         rdflib.term.IdentifiedNode, typing.Set[rdflib.Literal]
     ]
-    n_thing_to_l_labels: AnnoMapType = collections.defaultdict(set)
     n_provenance_record_to_l_exhibit_numbers: AnnoMapType = collections.defaultdict(set)
-    n_uco_object_to_l_uco_descriptions: AnnoMapType = collections.defaultdict(set)
-    n_uco_object_to_l_uco_name: AnnoMapType = collections.defaultdict(set)
-
-    for triple in graph.triples((None, NS_RDFS.label, None)):
-        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_thing_to_l_labels[triple[0]].add(triple[2])
 
     for triple in graph.triples((None, NS_CASE_INVESTIGATION.exhibitNumber, None)):
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
         assert isinstance(triple[2], rdflib.Literal)
         n_provenance_record_to_l_exhibit_numbers[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_UCO_CORE.description, None)):
-        assert isinstance(triple[0], rdflib.term.URIRef)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_uco_object_to_l_uco_descriptions[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_UCO_CORE.name, None)):
-        assert isinstance(triple[0], rdflib.term.URIRef)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_uco_object_to_l_uco_name[triple[0]].add(triple[2])
 
     # S3.1.
     # Stash display data for PROV Things.
@@ -968,52 +987,6 @@ WHERE {
         width=args.wrap_comment,
     )
 
-    # Add some general-purpose subroutines for augmenting Dot node labels.
-
-    def _annotate_descriptions(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `uco-core:description`s.
-        """
-        if n_thing in n_uco_object_to_l_uco_descriptions:
-            for l_uco_description in sorted(
-                n_uco_object_to_l_uco_descriptions[n_thing]
-            ):
-                label_parts.append("\n")
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
-                label_parts.append(label_part)
-
-    def _annotate_name(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `uco-core:name`.
-
-        SHACL constraints on UCO will mean there will be only one name.
-        """
-        if n_thing in n_uco_object_to_l_uco_name:
-            label_parts.append("\n")
-            for l_uco_name in sorted(n_uco_object_to_l_uco_name[n_thing]):
-                label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
-                label_parts.append(label_part)
-
-    def _annotate_labels(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `rdfs:label`s.
-
-        Unlike `rdfs:comment`s and `uco-core:description`s, labels don't have a blank line separating them.  This is just a design choice to keep what might be shorter string annotations together.
-        """
-        if n_thing in n_thing_to_l_labels:
-            label_parts.append("\n")
-            for l_label in sorted(n_thing_to_l_labels[n_thing]):
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_label)))
-                label_parts.append(label_part)
-
     # Render Agents.
     for n_agent in n_agents:
         kwargs = clone_style(prov.constants.PROV_AGENT)
@@ -1021,11 +994,8 @@ WHERE {
 
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_agent)]
-        _annotate_name(n_agent, dot_label_parts)
-        _annotate_labels(n_agent, dot_label_parts)
-        _annotate_descriptions(n_agent, dot_label_parts)
-        annotate_comments(n_agent, graph, wrapper, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
+        annotate_thing(n_agent, graph, wrapper, dot_label_parts)
+        dot_label = "\n".join(dot_label_parts)
         kwargs["label"] = dot_label
 
         # _logger.debug("Agent %r.", n_agent)
@@ -1049,13 +1019,9 @@ WHERE {
             for l_exhibit_number in sorted(
                 n_provenance_record_to_l_exhibit_numbers[n_entity]
             ):
-                dot_label_parts.append("\n")
                 dot_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
-        _annotate_name(n_entity, dot_label_parts)
-        _annotate_labels(n_entity, dot_label_parts)
-        _annotate_descriptions(n_entity, dot_label_parts)
-        annotate_comments(n_entity, graph, wrapper, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
+        annotate_thing(n_entity, graph, wrapper, dot_label_parts)
+        dot_label = "\n".join(dot_label_parts)
         kwargs["label"] = dot_label
 
         # _logger.debug("Entity %r.", n_entity)
@@ -1107,7 +1073,6 @@ WHERE {
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_activity)]
         if l_start_time is not None or l_end_time is not None:
-            dot_label_parts.append("\n")
             section_parts = []
             if l_start_time is None:
                 section_parts.append("(...")
@@ -1118,11 +1083,8 @@ WHERE {
             else:
                 section_parts.append("%s]" % l_end_time)
             dot_label_parts.append(", ".join(section_parts))
-        _annotate_name(n_activity, dot_label_parts)
-        _annotate_labels(n_activity, dot_label_parts)
-        _annotate_descriptions(n_activity, dot_label_parts)
-        annotate_comments(n_activity, graph, wrapper, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
+        annotate_thing(n_activity, graph, wrapper, dot_label_parts)
+        dot_label = "\n".join(dot_label_parts)
         kwargs["label"] = dot_label
 
         # _logger.debug("Activity %r.", n_activity)
@@ -2184,11 +2146,8 @@ WHERE {
 
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
-        _annotate_name(n_interval, dot_label_parts)
-        _annotate_labels(n_interval, dot_label_parts)
-        _annotate_descriptions(n_interval, dot_label_parts)
-        annotate_comments(n_interval, graph, wrapper, dot_label_parts)
-        kwargs["label"] = "".join(dot_label_parts)
+        annotate_thing(n_interval, graph, wrapper, dot_label_parts)
+        kwargs["label"] = "\n".join(dot_label_parts)
 
         kwargs["style"] = "dotted" if display_time_intervals else "invis"
         kwargs["tooltip"] = "ID - " + str(n_interval)
