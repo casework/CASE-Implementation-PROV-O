@@ -1119,7 +1119,15 @@ WHERE {
                 n_instant_to_tooltips[n_instantaneous_event].add(template % n_entity)
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
 
-    # Render Activities.
+    # Build set of usages in two steps, one in Activities loop, one on
+    # solely type-review.  (A Usage could appear independent of an
+    # Activity.)
+    n_usages: typing.Set[rdflib.term.IdentifiedNode] = set()
+    for n_subject in graph.subjects(NS_RDF.type, NS_PROV.Usage):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_usages.add(n_subject)
+
+    # Render Activities, and collect Usages.
     for n_activity in n_activities:
         kwargs = clone_style(prov.constants.PROV_ACTIVITY)
         kwargs["tooltip"] = "ID - " + str(n_activity)
@@ -1173,13 +1181,38 @@ WHERE {
             for n_instantaneous_event in graph.objects(n_activity, n_predicate):
                 assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
                 n_instant_to_tooltips[n_instantaneous_event].add(template % n_activity)
-        for n_instantaneous_event in graph.objects(n_activity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
-            for n_object in graph.objects(n_instantaneous_event, NS_PROV.entity):
-                assert isinstance(n_object, rdflib.term.IdentifiedNode)
-                n_instant_to_tooltips[n_instantaneous_event].add(
-                    "Usage of %s in %s" % (n_object, n_activity)
-                )
+        for n_object in graph.objects(n_activity, NS_PROV.qualifiedUsage):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_usages.add(n_object)
+
+    for n_usage in n_usages:
+        # To populate the tooltip text's first description, the entity
+        # and activity of the Usage should be determined, if known.
+        n_entity_of_usage: typing.Optional[rdflib.term.IdentifiedNode] = None
+        for n_object in graph.objects(n_usage, NS_PROV.entity):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_entity_of_usage = n_object
+        n_activity_of_usage: typing.Optional[rdflib.term.IdentifiedNode] = None
+        for n_subject in graph.subjects(NS_PROV.qualifiedUsage, n_usage):
+            assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+            n_activity_of_usage = n_subject
+        if n_activity_of_usage is None and n_entity_of_usage is None:
+            first_description_string = "Usage of some entity in some activity"
+        elif n_activity_of_usage is None:
+            first_description_string = (
+                "Usage of %s in some activity" % n_entity_of_usage
+            )
+        elif n_entity_of_usage is None:
+            first_description_string = (
+                "Usage of some entity in %s" % n_activity_of_usage
+            )
+        else:
+            # Both known.
+            first_description_string = "Usage of %s in %s" % (
+                n_entity_of_usage,
+                n_activity_of_usage,
+            )
+        n_instant_to_tooltips[n_usage].add(first_description_string)
 
     # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
