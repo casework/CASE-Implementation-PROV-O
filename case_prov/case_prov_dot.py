@@ -67,6 +67,16 @@ def clone_style(
     retval: typing.Dict[str, str]
     if prov_constant == NS_PROV.Collection:
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov.constants.PROV_ENTITY])
+    elif prov_constant == NS_TIME.Instant:
+        retval = dict()
+        retval["color"] = "dimgray"
+        retval["fillcolor"] = "lightgray"
+        retval["shape"] = "point"
+    elif prov_constant == NS_TIME.Interval:
+        retval = dict()
+        retval["color"] = "dimgray"
+        retval["fillcolor"] = "lightgray"
+        retval["shape"] = "box"
     elif isinstance(prov_constant, prov.identifier.QualifiedName):
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov_constant])
     else:
@@ -2137,13 +2147,9 @@ WHERE {
     for n_instant in sorted(n_instants & n_time_things_to_display):
         node_id = iri_to_gv_node_id(n_instant)
         # _logger.debug("%r -> %r", n_instant, node_id)
+        instant_kwargs = clone_style(NS_TIME.Instant)
         style = "filled" if args.display_time_links else "invis"
-        instant_kwargs = {
-            "color": "dimgray",
-            "fillcolor": "lightgray",
-            "shape": "point",
-            "style": style,
-        }
+        instant_kwargs["style"] = style
         if n_instant in n_instant_to_tooltips:
             instant_kwargs["tooltip"] = " ;\n".join(
                 sorted(n_instant_to_tooltips[n_instant])
@@ -2163,23 +2169,22 @@ WHERE {
 
     # Render time:Intervals that are not prov:Activities.
     for n_interval in sorted((n_intervals - n_activities) & n_time_things_to_display):
+        kwargs = clone_style(NS_TIME.Interval)
+
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
         _annotate_name(n_interval, dot_label_parts)
         _annotate_labels(n_interval, dot_label_parts)
         _annotate_descriptions(n_interval, dot_label_parts)
         _annotate_comments(n_interval, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
+        kwargs["label"] = "".join(dot_label_parts)
 
-        style = "dotted" if display_time_intervals else "invis"
+        kwargs["style"] = "dotted" if display_time_intervals else "invis"
+        kwargs["tooltip"] = "ID - " + str(n_interval)
         dot_node = pydot.Node(
             iri_to_gv_node_id(n_interval),
-            color="dimgray",
-            fillcolor="lightgray",
-            label=dot_label,
-            shape="box",
-            style=style,
-            tooltip="ID - " + str(n_interval),
+            None,
+            **kwargs,
         )
         dot_graph.add_node(dot_node)
 
