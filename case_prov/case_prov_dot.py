@@ -619,6 +619,25 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
         return str(n_thing)
 
 
+def annotate_comments(
+    n_thing: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+    wrapper: textwrap.TextWrapper,
+    label_parts: typing.List[str],
+) -> None:
+    """
+    Render `rdfs:comment`s.
+    """
+    l_comments: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_RDFS.comment, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_comments.add(triple[2])
+    for l_comment in sorted(l_comments):
+        label_parts.append("")
+        label_part = "\n".join(wrapper.wrap(str(l_comment)))
+        label_parts.append(label_part)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true")
@@ -871,16 +890,10 @@ WHERE {
     AnnoMapType = typing.DefaultDict[
         rdflib.term.IdentifiedNode, typing.Set[rdflib.Literal]
     ]
-    n_thing_to_l_comments: AnnoMapType = collections.defaultdict(set)
     n_thing_to_l_labels: AnnoMapType = collections.defaultdict(set)
     n_provenance_record_to_l_exhibit_numbers: AnnoMapType = collections.defaultdict(set)
     n_uco_object_to_l_uco_descriptions: AnnoMapType = collections.defaultdict(set)
     n_uco_object_to_l_uco_name: AnnoMapType = collections.defaultdict(set)
-
-    for triple in graph.triples((None, NS_RDFS.comment, None)):
-        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_thing_to_l_comments[triple[0]].add(triple[2])
 
     for triple in graph.triples((None, NS_RDFS.label, None)):
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
@@ -957,19 +970,6 @@ WHERE {
 
     # Add some general-purpose subroutines for augmenting Dot node labels.
 
-    def _annotate_comments(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `rdfs:comment`s.
-        """
-        if n_thing in n_thing_to_l_comments:
-            for l_comment in sorted(n_thing_to_l_comments[n_thing]):
-                label_parts.append("\n")
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_comment)))
-                label_parts.append(label_part)
-
     def _annotate_descriptions(
         n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
     ) -> None:
@@ -1024,7 +1024,7 @@ WHERE {
         _annotate_name(n_agent, dot_label_parts)
         _annotate_labels(n_agent, dot_label_parts)
         _annotate_descriptions(n_agent, dot_label_parts)
-        _annotate_comments(n_agent, dot_label_parts)
+        annotate_comments(n_agent, graph, wrapper, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
 
@@ -1054,7 +1054,7 @@ WHERE {
         _annotate_name(n_entity, dot_label_parts)
         _annotate_labels(n_entity, dot_label_parts)
         _annotate_descriptions(n_entity, dot_label_parts)
-        _annotate_comments(n_entity, dot_label_parts)
+        annotate_comments(n_entity, graph, wrapper, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
 
@@ -1121,7 +1121,7 @@ WHERE {
         _annotate_name(n_activity, dot_label_parts)
         _annotate_labels(n_activity, dot_label_parts)
         _annotate_descriptions(n_activity, dot_label_parts)
-        _annotate_comments(n_activity, dot_label_parts)
+        annotate_comments(n_activity, graph, wrapper, dot_label_parts)
         dot_label = "".join(dot_label_parts)
         kwargs["label"] = dot_label
 
@@ -2187,7 +2187,7 @@ WHERE {
         _annotate_name(n_interval, dot_label_parts)
         _annotate_labels(n_interval, dot_label_parts)
         _annotate_descriptions(n_interval, dot_label_parts)
-        _annotate_comments(n_interval, dot_label_parts)
+        annotate_comments(n_interval, graph, wrapper, dot_label_parts)
         kwargs["label"] = "".join(dot_label_parts)
 
         kwargs["style"] = "dotted" if display_time_intervals else "invis"
