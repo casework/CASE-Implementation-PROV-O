@@ -67,7 +67,7 @@ def clone_style(
     retval: typing.Dict[str, str]
     if prov_constant == NS_PROV.Collection:
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov.constants.PROV_ENTITY])
-    elif prov_constant == NS_TIME.Instant:
+    elif prov_constant in (NS_PROV.InstantaneousEvent, NS_TIME.Instant):
         retval = dict()
         retval["color"] = "dimgray"
         retval["fillcolor"] = "lightgray"
@@ -815,7 +815,7 @@ def _n_thing_to_pydot_node_kwargs(
     # Extend label or tooltip with descriptive graph parts; which gets
     # extended depends on whether the shape supports text.  (The point
     # shape used for instantaneous perdurants doesn't.)
-    if n_class_for_style in {NS_TIME.Instant}:
+    if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
         _parts_list = _tooltip_parts
     else:
         _parts_list = dot_label_parts
@@ -1038,6 +1038,7 @@ WHERE {
 
     # "Interval" in variable names within this script is shorthand for
     # time:Interval.
+    n_instantaneous_events: typing.Set[rdflib.term.IdentifiedNode] = set()
     n_instants: typing.Set[rdflib.term.IdentifiedNode] = set()
     n_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
 
@@ -1265,6 +1266,20 @@ WHERE {
                 n_activity_of_usage,
             )
         n_instant_to_tooltips[n_usage].add(first_description_string)
+
+    n_instantaneous_events |= n_usages
+    for n_instantaneous_event_type, n_qualification_property in [
+        (NS_PROV.Start, NS_PROV.qualifiedStart),
+        (NS_PROV.End, NS_PROV.qualifiedEnd),
+        (NS_PROV.Generation, NS_PROV.qualifiedGeneration),
+        (NS_PROV.Invalidation, NS_PROV.qualifiedInvalidation),
+    ]:
+        for n_subject in graph.subjects(NS_RDF.type, n_instantaneous_event_type):
+            assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+            n_instantaneous_events.add(n_subject)
+        for n_object in graph.objects(None, n_qualification_property):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_instantaneous_events.add(n_object)
 
     # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
@@ -2276,6 +2291,7 @@ WHERE {
 
     for thing_set, n_class_for_style in [
         (n_intervals, NS_TIME.Interval),
+        (n_instantaneous_events, NS_PROV.InstantaneousEvent),
         (n_instants, NS_TIME.Instant),
     ]:
         for n_thing in sorted(thing_set):
@@ -2290,7 +2306,7 @@ WHERE {
                 )
                 if maybe_interval_string is not None:
                     early_label_parts.append(maybe_interval_string)
-            elif n_class_for_style in {NS_TIME.Instant}:
+            elif n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
                 if n_thing in n_instant_to_tooltips:
                     timestamp_string = n_instantaneous_perdurant_to_timestamp_string(
                         n_thing, graph
@@ -2308,7 +2324,7 @@ WHERE {
                     _logger.debug("Instant did not have tooltips: %r.", n_thing)
 
             style: typing.Optional[str] = None
-            if n_class_for_style == NS_TIME.Instant:
+            if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
                 style = "filled" if args.display_time_links else "invis"
             elif n_class_for_style == NS_TIME.Interval:
                 style = "dotted" if display_time_intervals else "invis"
