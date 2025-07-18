@@ -2262,7 +2262,7 @@ WHERE {
     n_things_to_display = n_prov_things_to_display | n_time_things_to_display
     n_things_displayed: typing.Set[rdflib.term.IdentifiedNode] = set()
 
-    # Build the PROV chain's Pydot Nodes and Edges.
+    # Build the PROV chain's Pydot Nodes.
     for n_thing in sorted(n_prov_things_to_display):
         kwargs = n_thing_to_pydot_node_kwargs[n_thing]
         dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
@@ -2271,21 +2271,6 @@ WHERE {
         # Transfer from to-display set.
         n_things_displayed.add(n_thing)
         n_things_to_display.remove(n_thing)
-    for n_thing_1 in sorted(edges.keys()):
-        if n_thing_1 not in n_prov_things_to_display:
-            continue
-        for n_thing_2 in sorted(edges[n_thing_1].keys()):
-            if n_thing_2 not in n_prov_things_to_display:
-                continue
-            for short_edge_label in sorted(edges[n_thing_1][n_thing_2]):
-                # short_edge_label is intentionally not used aside from
-                # as a selector.  Edge labelling was already handled as
-                # the edge kwargs were being constructed.
-                node_id_1 = iri_to_gv_node_id(n_thing_1)
-                node_id_2 = iri_to_gv_node_id(n_thing_2)
-                kwargs = edges[n_thing_1][n_thing_2][short_edge_label]
-                dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
-                dot_graph.add_edge(dot_edge)
 
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
@@ -2349,6 +2334,23 @@ WHERE {
         _logger.warning("Some things planned to be displayed weren't rendered:")
         for n_thing in sorted(n_things_to_display):
             _logger.warning("* %s" % str(n_thing))
+
+    # Build the PROV chain's Pydot Edges.
+    for n_thing_1 in sorted(edges.keys()):
+        if n_thing_1 not in n_prov_things_to_display:
+            continue
+        for n_thing_2 in sorted(edges[n_thing_1].keys()):
+            if n_thing_2 not in n_prov_things_to_display:
+                continue
+            for short_edge_label in sorted(edges[n_thing_1][n_thing_2]):
+                # short_edge_label is intentionally not used aside from
+                # as a selector.  Edge labelling was already handled as
+                # the edge kwargs were being constructed.
+                node_id_1 = iri_to_gv_node_id(n_thing_1)
+                node_id_2 = iri_to_gv_node_id(n_thing_2)
+                kwargs = edges[n_thing_1][n_thing_2][short_edge_label]
+                dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
+                dot_graph.add_edge(dot_edge)
 
     # Use union of PROV and TIME things to display to determine which
     # strictly-temporal edges will be rendered.  This covers cases where
