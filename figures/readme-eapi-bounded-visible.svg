@@ -20,9 +20,9 @@
 </g>
 </g>
 <!-- _e8ec3441e147149ea107b69dc1c1fcbb9a932defa7e221433a425c35b337c522 -->
-<g id="node4" class="node">
+<g id="node5" class="node">
 <title>_e8ec3441e147149ea107b69dc1c1fcbb9a932defa7e221433a425c35b337c522</title>
-<g id="a_node4"><a xlink:title="Start of urn:example:Activity&#45;Bounded">
+<g id="a_node5"><a xlink:title="ID &#45; urn:example:Activity&#45;Bounded&#45;Start&#10;&#10;Start of urn:example:Activity&#45;Bounded">
 <ellipse fill="lightgray" stroke="dimgray" cx="92" cy="-166.4" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -45,9 +45,9 @@
 </g>
 </g>
 <!-- _8ab97ee53009c8b6ba1e0ac34459da4c4b10056481287a1a7b14bf0485c951b7 -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>_8ab97ee53009c8b6ba1e0ac34459da4c4b10056481287a1a7b14bf0485c951b7</title>
-<g id="a_node5"><a xlink:title="Generation of urn:example:Entity&#45;Bounded">
+<g id="a_node6"><a xlink:title="ID &#45; urn:example:Entity&#45;Bounded&#45;Generation&#10;&#10;Generation of urn:example:Entity&#45;Bounded">
 <ellipse fill="lightgray" stroke="dimgray" cx="324" cy="-166.4" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -59,10 +59,35 @@
 <polygon fill="dimgray" stroke="dimgray" points="329,-163.25 319,-163.25 319,-161.25 329,-161.25 329,-163.25"/>
 <polyline fill="none" stroke="dimgray" points="324,-164.25 324,-159.25"/>
 </g>
-<!-- _379e9538757e4b23891e0e0072cd4155531411afd24aa8f10fe7e92674eb4e96 -->
+<!-- _43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89 -->
 <g id="node3" class="node">
+<title>_43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89</title>
+<g id="a_node3"><a xlink:title="ID &#45; urn:example:ProperInterval&#45;Bounded">
+<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="682.25,-128.6 463.75,-128.6 463.75,-39.6 682.25,-39.6 682.25,-128.6"/>
+<text text-anchor="middle" x="573" y="-111.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:ProperInterval&#45;Bounded</text>
+<text text-anchor="middle" x="573" y="-46.8" font-family="Times,serif" font-size="14.00">A time&#45;bounded time:ProperInterval.</text>
+</a>
+</g>
+</g>
+<!-- _4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990 -->
+<g id="node8" class="node">
+<title>_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990</title>
+<g id="a_node8"><a xlink:title="ID &#45; urn:example:ProperInterval&#45;Bounded&#45;Beginning&#10;&#10;Beginning of urn:example:ProperInterval&#45;Bounded">
+<ellipse fill="lightgray" stroke="dimgray" cx="573" cy="-166.4" rx="1.8" ry="1.8"/>
+</a>
+</g>
+</g>
+<!-- _43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89&#45;&gt;_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990 -->
+<g id="edge6" class="edge">
+<title>_43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89&#45;&gt;_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M573,-129.01C573,-141.12 573,-152.77 573,-159.5"/>
+<polygon fill="dimgray" stroke="dimgray" points="578,-163.17 568,-163.17 568,-161.17 578,-161.17 578,-163.17"/>
+<polyline fill="none" stroke="dimgray" points="573,-164.17 573,-159.17"/>
+</g>
+<!-- _379e9538757e4b23891e0e0072cd4155531411afd24aa8f10fe7e92674eb4e96 -->
+<g id="node4" class="node">
 <title>_379e9538757e4b23891e0e0072cd4155531411afd24aa8f10fe7e92674eb4e96</title>
-<g id="a_node3"><a xlink:title="End of urn:example:Activity&#45;Bounded">
+<g id="a_node4"><a xlink:title="ID &#45; urn:example:Activity&#45;Bounded&#45;End&#10;&#10;End of urn:example:Activity&#45;Bounded">
 <ellipse fill="lightgray" stroke="dimgray" cx="92" cy="-1.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -75,9 +100,9 @@
 <polyline fill="none" stroke="dimgray" points="92,-3.94 92,-8.94"/>
 </g>
 <!-- _2746d2fb15d9aacee7bc5bb93e1647311a3ff906084e7f6da5789360e595866d -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>_2746d2fb15d9aacee7bc5bb93e1647311a3ff906084e7f6da5789360e595866d</title>
-<g id="a_node6"><a xlink:title="Invalidation of urn:example:Entity&#45;Bounded">
+<g id="a_node7"><a xlink:title="ID &#45; urn:example:Entity&#45;Bounded&#45;Invalidation&#10;&#10;Invalidation of urn:example:Entity&#45;Bounded">
 <ellipse fill="lightgray" stroke="dimgray" cx="324" cy="-1.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -89,29 +114,11 @@
 <polygon fill="dimgray" stroke="dimgray" points="319,-4.94 329,-4.94 329,-6.94 319,-6.94 319,-4.94"/>
 <polyline fill="none" stroke="dimgray" points="324,-3.94 324,-8.94"/>
 </g>
-<!-- _4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990 -->
-<g id="node7" class="node">
-<title>_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990</title>
-<g id="a_node7"><a xlink:title="Beginning of urn:example:ProperInterval&#45;Bounded">
-<ellipse fill="lightgray" stroke="dimgray" cx="573" cy="-166.4" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
 <!-- _f84c92260ab2d2315cd50c2b113ccacfea5d163151c39340226181aa24fc16fa -->
-<g id="node8" class="node">
-<title>_f84c92260ab2d2315cd50c2b113ccacfea5d163151c39340226181aa24fc16fa</title>
-<g id="a_node8"><a xlink:title="End of urn:example:ProperInterval&#45;Bounded">
-<ellipse fill="lightgray" stroke="dimgray" cx="573" cy="-1.8" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89 -->
 <g id="node9" class="node">
-<title>_43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89</title>
-<g id="a_node9"><a xlink:title="ID &#45; urn:example:ProperInterval&#45;Bounded">
-<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="682.25,-128.6 463.75,-128.6 463.75,-39.6 682.25,-39.6 682.25,-128.6"/>
-<text text-anchor="middle" x="573" y="-111.3" font-family="Times,serif" font-size="14.00">ID &#45; kb:ProperInterval&#45;Bounded</text>
-<text text-anchor="middle" x="573" y="-46.8" font-family="Times,serif" font-size="14.00">A time&#45;bounded time:ProperInterval.</text>
+<title>_f84c92260ab2d2315cd50c2b113ccacfea5d163151c39340226181aa24fc16fa</title>
+<g id="a_node9"><a xlink:title="ID &#45; urn:example:ProperInterval&#45;Bounded&#45;End&#10;&#10;End of urn:example:ProperInterval&#45;Bounded">
+<ellipse fill="lightgray" stroke="dimgray" cx="573" cy="-1.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
 </g>
@@ -121,13 +128,6 @@
 <path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M573,-8.57C573,-15.3 573,-27.08 573,-39.32"/>
 <polygon fill="dimgray" stroke="dimgray" points="568,-4.94 578,-4.94 578,-6.94 568,-6.94 568,-4.94"/>
 <polyline fill="none" stroke="dimgray" points="573,-3.94 573,-8.94"/>
-</g>
-<!-- _43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89&#45;&gt;_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990 -->
-<g id="edge6" class="edge">
-<title>_43916420533cee1c06220413ee7374c33b47c1a489cc6c9927eecdbb81435b89&#45;&gt;_4615c7064914601f5709c4c407b3f768beb0b048528a4cc8c1b5cbbddaa3c990</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M573,-129.01C573,-141.12 573,-152.77 573,-159.5"/>
-<polygon fill="dimgray" stroke="dimgray" points="578,-163.17 568,-163.17 568,-161.17 578,-161.17 578,-163.17"/>
-<polyline fill="none" stroke="dimgray" points="573,-164.17 573,-159.17"/>
 </g>
 </g>
 </svg>

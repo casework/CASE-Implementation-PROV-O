@@ -24,7 +24,7 @@
 <!-- _514c766e8ad290ece0d24234da5a9b8eb7670f9ce283ceb205b50140adb3e499 -->
 <g id="node10" class="node">
 <title>_514c766e8ad290ece0d24234da5a9b8eb7670f9ce283ceb205b50140adb3e499</title>
-<g id="a_node10"><a xlink:title="Start of urn:example:Action&#45;1">
+<g id="a_node10"><a xlink:title="ID &#45; urn:example:Start&#45;41c7fd66&#45;75d7&#45;55b5&#45;9e06&#45;ba2b050a92f6&#10;&#10;2020&#45;01&#45;02T12:00:30+00:00&#10;&#10;Start of urn:example:Action&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="183.85" cy="-423.16" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -56,7 +56,7 @@
 <!-- _dc2c3059d5723d253760829c5b4f905b22224ac4f7d513addb4f7b86c7836acc -->
 <g id="node6" class="node">
 <title>_dc2c3059d5723d253760829c5b4f905b22224ac4f7d513addb4f7b86c7836acc</title>
-<g id="a_node6"><a xlink:title="Generation of urn:example:File&#45;1">
+<g id="a_node6"><a xlink:title="ID &#45; urn:example:Generation&#45;1&#10;&#10;2020&#45;01&#45;02T12:00:30.1234Z&#10;&#10;Generation of urn:example:File&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="146.85" cy="-339.36" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -94,7 +94,7 @@
 <!-- _a9f4db6f08a81e39998fabcaa4512886980dacb58450084db6489297d95be817 -->
 <g id="node7" class="node">
 <title>_a9f4db6f08a81e39998fabcaa4512886980dacb58450084db6489297d95be817</title>
-<g id="a_node7"><a xlink:title="Generation of urn:example:File&#45;2">
+<g id="a_node7"><a xlink:title="ID &#45; urn:example:Generation&#45;2&#10;&#10;2020&#45;01&#45;02T12:00:30.3456Z&#10;&#10;Generation of urn:example:File&#45;2">
 <ellipse fill="lightgray" stroke="dimgray" cx="151.85" cy="-206.81" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -132,7 +132,7 @@
 <!-- _23be2b5a9126a05fc364be23b3cce6cc8a2047529d85c0d5f83230b0beb6989d -->
 <g id="node8" class="node">
 <title>_23be2b5a9126a05fc364be23b3cce6cc8a2047529d85c0d5f83230b0beb6989d</title>
-<g id="a_node8"><a xlink:title="Generation of urn:example:ProvenanceRecord&#45;1">
+<g id="a_node8"><a xlink:title="ID &#45; urn:example:Generation&#45;a299d02f&#45;ea4f&#45;5340&#45;b0ac&#45;2643ec68fb1e&#10;&#10;Generation of urn:example:ProvenanceRecord&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="440.85" cy="-101.25" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <!-- _54434fa471843f268f65936af598f29c80e1cd71a44ac3fe2194bb1246df4716 -->
 <g id="node5" class="node">
 <title>_54434fa471843f268f65936af598f29c80e1cd71a44ac3fe2194bb1246df4716</title>
-<g id="a_node5"><a xlink:title="End of urn:example:Action&#45;1">
+<g id="a_node5"><a xlink:title="ID &#45; urn:example:End&#45;a276875e&#45;d3e3&#45;5bba&#45;a77f&#45;ee26ca3b0810&#10;&#10;2020&#45;01&#45;02T12:00:30+00:00&#10;&#10;End of urn:example:Action&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="178.85" cy="-18" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -180,7 +180,7 @@
 <!-- _63cda21336994dbffd49f66c4968008eb32cb02814baf1932499e916bd5c7bb1 -->
 <g id="node9" class="node">
 <title>_63cda21336994dbffd49f66c4968008eb32cb02814baf1932499e916bd5c7bb1</title>
-<g id="a_node9"><a xlink:title="Invalidation of urn:example:File&#45;1">
+<g id="a_node9"><a xlink:title="ID &#45; urn:example:Invalidation&#45;1&#10;&#10;2020&#45;01&#45;02T12:00:30.5678Z&#10;&#10;Invalidation of urn:example:File&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="146.85" cy="-101.25" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -194,7 +194,7 @@
 <!-- _7623d2a56cea53d05f990c68f634df08aeb7a7bb968f902c673e42e42b22b479 -->
 <g id="node11" class="node">
 <title>_7623d2a56cea53d05f990c68f634df08aeb7a7bb968f902c673e42e42b22b479</title>
-<g id="a_node11"><a xlink:title="Usage of http://www.w3.org/ns/prov#EmptyCollection in urn:example:Action&#45;1">
+<g id="a_node11"><a xlink:title="ID &#45; urn:example:Usage&#45;69a26cdf&#45;cfbb&#45;56de&#45;9073&#45;739a256f8c08&#10;&#10;Usage of http://www.w3.org/ns/prov#EmptyCollection in urn:example:Action&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="7.85" cy="-142.88" rx="1.8" ry="1.8"/>
 </a>
 </g>

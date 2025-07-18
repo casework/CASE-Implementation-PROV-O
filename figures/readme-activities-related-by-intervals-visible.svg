@@ -13,186 +13,186 @@
 <g id="node1" class="node">
 <title>_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814</title>
 <g id="a_node1"><a xlink:title="ID &#45; urn:example:activity&#45;earlier">
-<polygon fill="#9fb1fc" stroke="#0000ff" points="184,-513.75 0,-513.75 0,-456.75 184,-456.75 184,-513.75"/>
-<text text-anchor="middle" x="92" y="-496.45" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;earlier</text>
-<text text-anchor="middle" x="92" y="-463.95" font-family="Times,serif" font-size="14.00">An Activity that occurs earlier.</text>
+<polygon fill="#9fb1fc" stroke="#0000ff" points="533.88,-513.75 349.88,-513.75 349.88,-456.75 533.88,-456.75 533.88,-513.75"/>
+<text text-anchor="middle" x="441.88" y="-496.45" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;earlier</text>
+<text text-anchor="middle" x="441.88" y="-463.95" font-family="Times,serif" font-size="14.00">An Activity that occurs earlier.</text>
 </a>
 </g>
 </g>
 <!-- _63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4 -->
-<g id="node10" class="node">
+<g id="node12" class="node">
 <title>_63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4</title>
-<g id="a_node10"><a xlink:title="Start of urn:example:activity&#45;earlier">
-<ellipse fill="lightgray" stroke="dimgray" cx="215" cy="-575.8" rx="1.8" ry="1.8"/>
+<g id="a_node12"><a xlink:title="ID &#45; urn:example:Start&#45;c90225ab&#45;ee4a&#45;5ff1&#45;a4e0&#45;21084901c66b&#10;&#10;Start of urn:example:activity&#45;earlier">
+<ellipse fill="lightgray" stroke="dimgray" cx="379.88" cy="-575.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
 </g>
 <!-- _a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814&#45;&gt;_63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4 -->
 <g id="edge9" class="edge">
 <title>_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814&#45;&gt;_63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M130.58,-514.02C159.7,-534.98 196.81,-561.7 210.04,-571.23"/>
-<polygon fill="dimgray" stroke="dimgray" points="215.88,-569.28 210.04,-577.39 208.42,-576.22 214.26,-568.11 215.88,-569.28"/>
-<polyline fill="none" stroke="dimgray" points="213.78,-573.92 209.72,-571"/>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M422.6,-513.78C408.55,-533.84 390.74,-559.28 383.34,-569.85"/>
+<polygon fill="dimgray" stroke="dimgray" points="385.17,-575.96 376.97,-570.23 378.12,-568.59 386.31,-574.32 385.17,-575.96"/>
+<polyline fill="none" stroke="dimgray" points="380.5,-573.91 383.36,-569.82"/>
 </g>
 <!-- _2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a -->
 <g id="node2" class="node">
 <title>_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a</title>
 <g id="a_node2"><a xlink:title="ID &#45; urn:example:activity&#45;later">
-<polygon fill="#9fb1fc" stroke="#0000ff" points="225.75,-136.2 52.25,-136.2 52.25,-79.2 225.75,-79.2 225.75,-136.2"/>
-<text text-anchor="middle" x="139" y="-118.9" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;later</text>
-<text text-anchor="middle" x="139" y="-86.4" font-family="Times,serif" font-size="14.00">An Activity that occurs later.</text>
+<polygon fill="#9fb1fc" stroke="#0000ff" points="481.62,-136.2 308.12,-136.2 308.12,-79.2 481.62,-79.2 481.62,-136.2"/>
+<text text-anchor="middle" x="394.88" y="-118.9" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;later</text>
+<text text-anchor="middle" x="394.88" y="-86.4" font-family="Times,serif" font-size="14.00">An Activity that occurs later.</text>
 </a>
 </g>
 </g>
 <!-- _9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083 -->
-<g id="node9" class="node">
+<g id="node11" class="node">
 <title>_9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083</title>
-<g id="a_node9"><a xlink:title="Start of urn:example:activity&#45;later">
-<ellipse fill="lightgray" stroke="dimgray" cx="139" cy="-224.95" rx="1.8" ry="1.8"/>
+<g id="a_node11"><a xlink:title="ID &#45; urn:example:Start&#45;0e6774fc&#45;b0bf&#45;5c3c&#45;9c95&#45;a05318758bd4&#10;&#10;Start of urn:example:activity&#45;later">
+<ellipse fill="lightgray" stroke="dimgray" cx="394.88" cy="-224.95" rx="1.8" ry="1.8"/>
 </a>
 </g>
 </g>
 <!-- _2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a&#45;&gt;_9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083 -->
 <g id="edge8" class="edge">
 <title>_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a&#45;&gt;_9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M139,-136.6C139,-163.87 139,-203.36 139,-218.11"/>
-<polygon fill="dimgray" stroke="dimgray" points="144,-222.01 134,-222.01 134,-220.01 144,-220.01 144,-222.01"/>
-<polyline fill="none" stroke="dimgray" points="139,-223.01 139,-218.01"/>
-</g>
-<!-- _d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120 -->
-<g id="node3" class="node">
-<title>_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120</title>
-<g id="a_node3"><a xlink:title="End of urn:example:activity&#45;earlier">
-<ellipse fill="lightgray" stroke="dimgray" cx="215" cy="-394.7" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120&#45;&gt;_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814 -->
-<g id="edge10" class="edge">
-<title>_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120&#45;&gt;_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M210.17,-399.18C197.08,-408.6 159.96,-435.33 130.78,-456.33"/>
-<polygon fill="dimgray" stroke="dimgray" points="210.48,-392.79 216.32,-400.91 214.7,-402.08 208.86,-393.96 210.48,-392.79"/>
-<polyline fill="none" stroke="dimgray" points="214.21,-396.27 210.16,-399.19"/>
-</g>
-<!-- _09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563 -->
-<g id="node4" class="node">
-<title>_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563</title>
-<g id="a_node4"><a xlink:title="End of urn:example:activity&#45;later">
-<ellipse fill="lightgray" stroke="dimgray" cx="139" cy="-41.4" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563&#45;&gt;_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a -->
-<g id="edge11" class="edge">
-<title>_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563&#45;&gt;_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M139,-48.35C139,-55.39 139,-67.57 139,-79"/>
-<polygon fill="dimgray" stroke="dimgray" points="134,-44.52 144,-44.52 144,-46.52 134,-46.52 134,-44.52"/>
-<polyline fill="none" stroke="dimgray" points="139,-43.52 139,-48.52"/>
-</g>
-<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452 -->
-<g id="node5" class="node">
-<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452</title>
-<g id="a_node5"><a xlink:title="End of urn:example:interval&#45;earlier">
-<ellipse fill="lightgray" stroke="dimgray" cx="230" cy="-355.1" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120 -->
-<g id="edge1" class="edge">
-<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M229.63,-357.03C228.24,-360.51 223.22,-373.09 219.45,-382.54"/>
-<polygon fill="dimgray" stroke="dimgray" points="216.32,-380.94 215.87,-391.53 222.82,-383.53 216.32,-380.94"/>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M394.88,-136.6C394.88,-163.87 394.88,-203.36 394.88,-218.11"/>
+<polygon fill="dimgray" stroke="dimgray" points="399.88,-222.01 389.88,-222.01 389.88,-220.01 399.88,-220.01 399.88,-222.01"/>
+<polyline fill="none" stroke="dimgray" points="394.88,-223.01 394.88,-218.01"/>
 </g>
 <!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
-<g id="node11" class="node">
+<g id="node3" class="node">
 <title>_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c</title>
-<g id="a_node11"><a xlink:title="ID &#45; urn:example:interval&#45;earlier">
-<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="533.88,-538 202.12,-538 202.12,-432.5 533.88,-432.5 533.88,-538"/>
-<text text-anchor="middle" x="368" y="-520.7" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;earlier</text>
-<text text-anchor="middle" x="368" y="-456.2" font-family="Times,serif" font-size="14.00">A Proper Interval that starts and ends earlier, and contains</text>
-<text text-anchor="middle" x="368" y="-439.7" font-family="Times,serif" font-size="14.00"> the earlier activity.</text>
+<g id="a_node3"><a xlink:title="ID &#45; urn:example:interval&#45;earlier">
+<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="331.75,-538 0,-538 0,-432.5 331.75,-432.5 331.75,-538"/>
+<text text-anchor="middle" x="165.88" y="-520.7" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;earlier</text>
+<text text-anchor="middle" x="165.88" y="-456.2" font-family="Times,serif" font-size="14.00">A Proper Interval that starts and ends earlier, and contains</text>
+<text text-anchor="middle" x="165.88" y="-439.7" font-family="Times,serif" font-size="14.00"> the earlier activity.</text>
 </a>
 </g>
-</g>
-<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
-<g id="edge12" class="edge">
-<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M234.43,-360.21C246.46,-371.39 280.96,-403.42 311.88,-432.13"/>
-<polygon fill="dimgray" stroke="dimgray" points="228.21,-361.26 235.02,-353.93 236.48,-355.3 229.68,-362.62 228.21,-361.26"/>
-<polyline fill="none" stroke="dimgray" points="230.88,-356.92 234.55,-360.32"/>
-</g>
-<!-- _e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b -->
-<g id="node6" class="node">
-<title>_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b</title>
-<g id="a_node6"><a xlink:title="Beginning of urn:example:interval&#45;later">
-<ellipse fill="lightgray" stroke="dimgray" cx="230" cy="-315.5" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b&#45;&gt;_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452 -->
-<g id="edge3" class="edge">
-<title>_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b&#45;&gt;_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M230,-317.75C230,-321.41 230,-332.39 230,-341.33"/>
-<polygon fill="dimgray" stroke="dimgray" points="226.5,-341.29 230,-351.29 233.5,-341.29 226.5,-341.29"/>
 </g>
 <!-- _912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff -->
-<g id="node7" class="node">
+<g id="node9" class="node">
 <title>_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff</title>
-<g id="a_node7"><a xlink:title="Beginning of urn:example:interval&#45;earlier">
-<ellipse fill="lightgray" stroke="dimgray" cx="230" cy="-615.4" rx="1.8" ry="1.8"/>
+<g id="a_node9"><a xlink:title="ID &#45; urn:example:Instant&#45;946dfb3c&#45;78c6&#45;5077&#45;b085&#45;a2f8480de15c&#10;&#10;Beginning of urn:example:interval&#45;earlier">
+<ellipse fill="lightgray" stroke="dimgray" cx="303.88" cy="-615.4" rx="1.8" ry="1.8"/>
 </a>
 </g>
-</g>
-<!-- _a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd -->
-<g id="node8" class="node">
-<title>_a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd</title>
-<g id="a_node8"><a xlink:title="Instant in urn:example:interval&#45;later known to follow urn:example:End&#45;f78a8e66&#45;65a9&#45;531d&#45;b538&#45;3b1cb6201406.">
-<ellipse fill="lightgray" stroke="dimgray" cx="139" cy="-1.8" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
-<!-- _a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd&#45;&gt;_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563 -->
-<g id="edge2" class="edge">
-<title>_a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd&#45;&gt;_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M139,-4.05C139,-7.71 139,-18.69 139,-27.63"/>
-<polygon fill="dimgray" stroke="dimgray" points="135.5,-27.59 139,-37.59 142.5,-27.59 135.5,-27.59"/>
-</g>
-<!-- _9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b -->
-<g id="edge4" class="edge">
-<title>_9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M138.92,-226.79C138.47,-232.08 136.69,-261.06 150,-277.7 167.01,-298.97 199.08,-308.46 217.02,-312.26"/>
-<polygon fill="dimgray" stroke="dimgray" points="216.17,-315.66 226.63,-313.99 217.41,-308.77 216.17,-315.66"/>
-</g>
-<!-- _63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff -->
-<g id="edge6" class="edge">
-<title>_63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M215.37,-577.73C216.76,-581.21 221.78,-593.79 225.55,-603.24"/>
-<polygon fill="dimgray" stroke="dimgray" points="222.18,-604.23 229.13,-612.23 228.68,-601.64 222.18,-604.23"/>
 </g>
 <!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff -->
 <g id="edge7" class="edge">
 <title>_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M311.87,-538.37C280.78,-567.25 246.07,-599.48 234.22,-610.48"/>
-<polygon fill="dimgray" stroke="dimgray" points="234.91,-616.66 228.11,-609.33 229.57,-607.97 236.38,-615.3 234.91,-616.66"/>
-<polyline fill="none" stroke="dimgray" points="230.78,-613.68 234.44,-610.28"/>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M222,-538.37C253.1,-567.25 287.81,-599.48 299.65,-610.48"/>
+<polygon fill="dimgray" stroke="dimgray" points="305.77,-609.33 298.96,-616.66 297.5,-615.3 304.3,-607.97 305.77,-609.33"/>
+<polyline fill="none" stroke="dimgray" points="303.1,-613.68 299.44,-610.28"/>
 </g>
 <!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d -->
-<g id="node12" class="node">
+<g id="node4" class="node">
 <title>_4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d</title>
-<g id="a_node12"><a xlink:title="ID &#45; urn:example:interval&#45;later">
-<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="482.75,-277.7 159.25,-277.7 159.25,-172.2 482.75,-172.2 482.75,-277.7"/>
-<text text-anchor="middle" x="321" y="-260.4" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;later</text>
-<text text-anchor="middle" x="321" y="-195.9" font-family="Times,serif" font-size="14.00">A Proper Interval that starts later, comes after the earlier</text>
-<text text-anchor="middle" x="321" y="-179.4" font-family="Times,serif" font-size="14.00"> interval, and contains the later activity.</text>
+<g id="a_node4"><a xlink:title="ID &#45; urn:example:interval&#45;later">
+<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="374.62,-277.7 51.12,-277.7 51.12,-172.2 374.62,-172.2 374.62,-277.7"/>
+<text text-anchor="middle" x="212.88" y="-260.4" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;later</text>
+<text text-anchor="middle" x="212.88" y="-195.9" font-family="Times,serif" font-size="14.00">A Proper Interval that starts later, comes after the earlier</text>
+<text text-anchor="middle" x="212.88" y="-179.4" font-family="Times,serif" font-size="14.00"> interval, and contains the later activity.</text>
+</a>
+</g>
+</g>
+<!-- _e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b -->
+<g id="node8" class="node">
+<title>_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b</title>
+<g id="a_node8"><a xlink:title="ID &#45; urn:example:Instant&#45;2ee99bd6&#45;6b59&#45;5f88&#45;b8de&#45;465f67eae647&#10;&#10;Beginning of urn:example:interval&#45;later">
+<ellipse fill="lightgray" stroke="dimgray" cx="303.88" cy="-315.5" rx="1.8" ry="1.8"/>
 </a>
 </g>
 </g>
 <!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b -->
 <g id="edge5" class="edge">
 <title>_4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b</title>
-<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M267.54,-277.97C253.71,-291.43 240.89,-303.9 234.41,-310.21"/>
-<polygon fill="dimgray" stroke="dimgray" points="235.21,-316.4 228.24,-309.24 229.67,-307.84 236.65,-315.01 235.21,-316.4"/>
-<polyline fill="none" stroke="dimgray" points="231.01,-313.52 234.59,-310.03"/>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M266.34,-277.97C280.17,-291.43 292.99,-303.9 299.46,-310.21"/>
+<polygon fill="dimgray" stroke="dimgray" points="305.64,-309.24 298.66,-316.4 297.23,-315.01 304.2,-307.84 305.64,-309.24"/>
+<polyline fill="none" stroke="dimgray" points="302.87,-313.52 299.28,-310.03"/>
+</g>
+<!-- _d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120 -->
+<g id="node5" class="node">
+<title>_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120</title>
+<g id="a_node5"><a xlink:title="ID &#45; urn:example:End&#45;af42a6f8&#45;a9f9&#45;5c15&#45;a495&#45;7e560ecf4c3e&#10;&#10;End of urn:example:activity&#45;earlier">
+<ellipse fill="lightgray" stroke="dimgray" cx="379.88" cy="-394.7" rx="1.8" ry="1.8"/>
+</a>
+</g>
+</g>
+<!-- _d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120&#45;&gt;_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814 -->
+<g id="edge10" class="edge">
+<title>_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120&#45;&gt;_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M383.26,-400.54C390.58,-410.98 408.32,-436.33 422.39,-456.41"/>
+<polygon fill="dimgray" stroke="dimgray" points="377.05,-400.38 385.24,-394.65 386.39,-396.28 378.2,-402.02 377.05,-400.38"/>
+<polyline fill="none" stroke="dimgray" points="380.57,-396.69 383.44,-400.79"/>
+</g>
+<!-- _09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563 -->
+<g id="node6" class="node">
+<title>_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563</title>
+<g id="a_node6"><a xlink:title="ID &#45; urn:example:End&#45;f78a8e66&#45;65a9&#45;531d&#45;b538&#45;3b1cb6201406&#10;&#10;End of urn:example:activity&#45;later">
+<ellipse fill="lightgray" stroke="dimgray" cx="394.88" cy="-41.4" rx="1.8" ry="1.8"/>
+</a>
+</g>
+</g>
+<!-- _09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563&#45;&gt;_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a -->
+<g id="edge11" class="edge">
+<title>_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563&#45;&gt;_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M394.88,-48.35C394.88,-55.39 394.88,-67.57 394.88,-79"/>
+<polygon fill="dimgray" stroke="dimgray" points="389.88,-44.52 399.88,-44.52 399.88,-46.52 389.88,-46.52 389.88,-44.52"/>
+<polyline fill="none" stroke="dimgray" points="394.88,-43.52 394.88,-48.52"/>
+</g>
+<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452 -->
+<g id="node7" class="node">
+<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452</title>
+<g id="a_node7"><a xlink:title="ID &#45; urn:example:Instant&#45;13077d91&#45;b0e8&#45;5ecc&#45;b0be&#45;3ab6bec7dd91&#10;&#10;End of urn:example:interval&#45;earlier">
+<ellipse fill="lightgray" stroke="dimgray" cx="303.88" cy="-355.1" rx="1.8" ry="1.8"/>
+</a>
+</g>
+</g>
+<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
+<g id="edge12" class="edge">
+<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M299.45,-360.21C287.41,-371.39 252.92,-403.42 222,-432.13"/>
+<polygon fill="dimgray" stroke="dimgray" points="298.86,-353.93 305.66,-361.26 304.2,-362.62 297.39,-355.3 298.86,-353.93"/>
+<polyline fill="none" stroke="dimgray" points="302.99,-356.92 299.33,-360.32"/>
+</g>
+<!-- _ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120 -->
+<g id="edge1" class="edge">
+<title>_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452&#45;&gt;_d2f44d173cbb977fb6b45000c150733034f5c0397b9a79bc73eca26dc597d120</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M305.19,-356.75C312.61,-360.42 349.43,-378.64 368.45,-388.05"/>
+<polygon fill="dimgray" stroke="dimgray" points="366.88,-391.17 377.39,-392.47 369.98,-384.9 366.88,-391.17"/>
+</g>
+<!-- _e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b&#45;&gt;_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452 -->
+<g id="edge3" class="edge">
+<title>_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b&#45;&gt;_ab79264e888a96ca5ca405bc9e4e509c3f52fd88400bd34ddda3459e3d4e2452</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M303.88,-317.75C303.88,-321.41 303.88,-332.39 303.88,-341.33"/>
+<polygon fill="dimgray" stroke="dimgray" points="300.38,-341.29 303.88,-351.29 307.38,-341.29 300.38,-341.29"/>
+</g>
+<!-- _a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd -->
+<g id="node10" class="node">
+<title>_a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd</title>
+<g id="a_node10"><a xlink:title="ID &#45; urn:example:Instant&#45;e26358b6&#45;6c5b&#45;54c0&#45;b695&#45;59df922a609f&#10;&#10;Instant in urn:example:interval&#45;later known to follow urn:example:End&#45;f78a8e66&#45;65a9&#45;531d&#45;b538&#45;3b1cb6201406.">
+<ellipse fill="lightgray" stroke="dimgray" cx="394.88" cy="-1.8" rx="1.8" ry="1.8"/>
+</a>
+</g>
+</g>
+<!-- _a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd&#45;&gt;_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563 -->
+<g id="edge2" class="edge">
+<title>_a1f253e17c6af14be30f57554e95c42e55cc778fb6467f7e085e9c7c2ee71cfd&#45;&gt;_09d8e758000f961bd4077fdcc1db8b86dc50cddd93167578f2fff45cd658b563</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M394.88,-4.05C394.88,-7.71 394.88,-18.69 394.88,-27.63"/>
+<polygon fill="dimgray" stroke="dimgray" points="391.38,-27.59 394.88,-37.59 398.38,-27.59 391.38,-27.59"/>
+</g>
+<!-- _9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b -->
+<g id="edge4" class="edge">
+<title>_9361ab5023e4f1b97b2e2c40a9e55a2d67cd74ad632620629e210d770d99a083&#45;&gt;_e10288bd323c8a6a06209183404f5993e625c566e2b44f3e4a436ff02b0aa49b</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M394.95,-226.79C395.4,-232.08 397.18,-261.06 383.88,-277.7 366.87,-298.97 334.8,-308.46 316.86,-312.26"/>
+<polygon fill="dimgray" stroke="dimgray" points="316.47,-308.77 307.25,-313.99 317.71,-315.66 316.47,-308.77"/>
+</g>
+<!-- _63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff -->
+<g id="edge6" class="edge">
+<title>_63d0c0e6579a3f803c84f8f5ff2a82e43a6c0478f344bfdce4a164cf15a8c2e4&#45;&gt;_912839800cdec8378a11309264203c7d1fff7e7530472bf38e25dc977682b7ff</title>
+<path fill="none" stroke="dimgray" stroke-dasharray="1,5" d="M378.56,-577.45C371.14,-581.12 334.32,-599.34 315.3,-608.75"/>
+<polygon fill="dimgray" stroke="dimgray" points="313.77,-605.6 306.36,-613.17 316.87,-611.87 313.77,-605.6"/>
 </g>
 </g>
 </svg>

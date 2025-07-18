@@ -13,9 +13,9 @@
 <g id="node1" class="node">
 <title>_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814</title>
 <g id="a_node1"><a xlink:title="ID &#45; urn:example:activity&#45;earlier">
-<polygon fill="#9fb1fc" stroke="#0000ff" points="184,-513.75 0,-513.75 0,-456.75 184,-456.75 184,-513.75"/>
-<text text-anchor="middle" x="92" y="-496.45" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;earlier</text>
-<text text-anchor="middle" x="92" y="-463.95" font-family="Times,serif" font-size="14.00">An Activity that occurs earlier.</text>
+<polygon fill="#9fb1fc" stroke="#0000ff" points="533.88,-513.75 349.88,-513.75 349.88,-456.75 533.88,-456.75 533.88,-513.75"/>
+<text text-anchor="middle" x="441.88" y="-496.45" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;earlier</text>
+<text text-anchor="middle" x="441.88" y="-463.95" font-family="Times,serif" font-size="14.00">An Activity that occurs earlier.</text>
 </a>
 </g>
 </g>
@@ -25,51 +25,51 @@
 <g id="node2" class="node">
 <title>_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a</title>
 <g id="a_node2"><a xlink:title="ID &#45; urn:example:activity&#45;later">
-<polygon fill="#9fb1fc" stroke="#0000ff" points="225.75,-136.2 52.25,-136.2 52.25,-79.2 225.75,-79.2 225.75,-136.2"/>
-<text text-anchor="middle" x="139" y="-118.9" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;later</text>
-<text text-anchor="middle" x="139" y="-86.4" font-family="Times,serif" font-size="14.00">An Activity that occurs later.</text>
+<polygon fill="#9fb1fc" stroke="#0000ff" points="481.62,-136.2 308.12,-136.2 308.12,-79.2 481.62,-79.2 481.62,-136.2"/>
+<text text-anchor="middle" x="394.88" y="-118.9" font-family="Times,serif" font-size="14.00">ID &#45; kb:activity&#45;later</text>
+<text text-anchor="middle" x="394.88" y="-86.4" font-family="Times,serif" font-size="14.00">An Activity that occurs later.</text>
 </a>
 </g>
 </g>
 <!-- _99f44a7b91cdd329288509bd2e4c0269d484c2afb7597f4b91afbcbc4ef966c2 -->
 <!-- _2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a&#45;&gt;_99f44a7b91cdd329288509bd2e4c0269d484c2afb7597f4b91afbcbc4ef966c2 -->
+<!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
+<g id="node3" class="node">
+<title>_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c</title>
+<g id="a_node3"><a xlink:title="ID &#45; urn:example:interval&#45;earlier">
+<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="331.75,-538 0,-538 0,-432.5 331.75,-432.5 331.75,-538"/>
+<text text-anchor="middle" x="165.88" y="-520.7" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;earlier</text>
+<text text-anchor="middle" x="165.88" y="-456.2" font-family="Times,serif" font-size="14.00">A Proper Interval that starts and ends earlier, and contains</text>
+<text text-anchor="middle" x="165.88" y="-439.7" font-family="Times,serif" font-size="14.00"> the earlier activity.</text>
+</a>
+</g>
+</g>
+<!-- _d23c7a83fde13c9e0966d235c7a786802bf839850f3d7617c46b71ab3c65a76b -->
+<!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c&#45;&gt;_d23c7a83fde13c9e0966d235c7a786802bf839850f3d7617c46b71ab3c65a76b -->
+<!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d -->
+<g id="node4" class="node">
+<title>_4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d</title>
+<g id="a_node4"><a xlink:title="ID &#45; urn:example:interval&#45;later">
+<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="374.62,-277.7 51.12,-277.7 51.12,-172.2 374.62,-172.2 374.62,-277.7"/>
+<text text-anchor="middle" x="212.88" y="-260.4" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;later</text>
+<text text-anchor="middle" x="212.88" y="-195.9" font-family="Times,serif" font-size="14.00">A Proper Interval that starts later, comes after the earlier</text>
+<text text-anchor="middle" x="212.88" y="-179.4" font-family="Times,serif" font-size="14.00"> interval, and contains the later activity.</text>
+</a>
+</g>
+</g>
+<!-- _1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5 -->
+<!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d&#45;&gt;_1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5 -->
 <!-- _663780ee43c37a862a69278a90721dbe916162dad1ffbd4a827b4fac5b81aa1f -->
 <!-- _663780ee43c37a862a69278a90721dbe916162dad1ffbd4a827b4fac5b81aa1f&#45;&gt;_2c0fb15bfaf33092647d83ba04deda2ad8a92315d346a3a8dc62dcd902e1b43a -->
 <!-- _7af12196e2f5a3e6be14909a8350ed4c7d92239015e1526120da59dacbffe74b -->
 <!-- _7af12196e2f5a3e6be14909a8350ed4c7d92239015e1526120da59dacbffe74b&#45;&gt;_a805d85dc8e9a8cd5bfeeff18cd6e09ed010304f16e0ea69040df86362d57814 -->
-<!-- _d23c7a83fde13c9e0966d235c7a786802bf839850f3d7617c46b71ab3c65a76b -->
-<!-- _1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5 -->
 <!-- _b07b652417ad18d97bf84d817c7118a7a9e97d87d46816bc9aa0a7b4cfe38c49 -->
 <!-- _1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5&#45;&gt;_b07b652417ad18d97bf84d817c7118a7a9e97d87d46816bc9aa0a7b4cfe38c49 -->
 <!-- _51c21cb691cc75dfb06470b439d3f159183ab0f971abc91e71eaf0cd46f51cfb -->
 <!-- _51c21cb691cc75dfb06470b439d3f159183ab0f971abc91e71eaf0cd46f51cfb&#45;&gt;_663780ee43c37a862a69278a90721dbe916162dad1ffbd4a827b4fac5b81aa1f -->
-<!-- _b07b652417ad18d97bf84d817c7118a7a9e97d87d46816bc9aa0a7b4cfe38c49&#45;&gt;_7af12196e2f5a3e6be14909a8350ed4c7d92239015e1526120da59dacbffe74b -->
-<!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
-<g id="node11" class="node">
-<title>_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c</title>
-<g id="a_node11"><a xlink:title="ID &#45; urn:example:interval&#45;earlier">
-<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="533.88,-538 202.12,-538 202.12,-432.5 533.88,-432.5 533.88,-538"/>
-<text text-anchor="middle" x="368" y="-520.7" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;earlier</text>
-<text text-anchor="middle" x="368" y="-456.2" font-family="Times,serif" font-size="14.00">A Proper Interval that starts and ends earlier, and contains</text>
-<text text-anchor="middle" x="368" y="-439.7" font-family="Times,serif" font-size="14.00"> the earlier activity.</text>
-</a>
-</g>
-</g>
 <!-- _b07b652417ad18d97bf84d817c7118a7a9e97d87d46816bc9aa0a7b4cfe38c49&#45;&gt;_9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c -->
+<!-- _b07b652417ad18d97bf84d817c7118a7a9e97d87d46816bc9aa0a7b4cfe38c49&#45;&gt;_7af12196e2f5a3e6be14909a8350ed4c7d92239015e1526120da59dacbffe74b -->
 <!-- _99f44a7b91cdd329288509bd2e4c0269d484c2afb7597f4b91afbcbc4ef966c2&#45;&gt;_1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5 -->
 <!-- _ccbc5db31e3a6a5b538a78f02442442cb0d3bac284bfcee1fb7fa6f771eb6490&#45;&gt;_d23c7a83fde13c9e0966d235c7a786802bf839850f3d7617c46b71ab3c65a76b -->
-<!-- _9e8912e62d6dd653f96e6d6801a33e48bc610e90ed2ef1f8bde777eeda52150c&#45;&gt;_d23c7a83fde13c9e0966d235c7a786802bf839850f3d7617c46b71ab3c65a76b -->
-<!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d -->
-<g id="node12" class="node">
-<title>_4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d</title>
-<g id="a_node12"><a xlink:title="ID &#45; urn:example:interval&#45;later">
-<polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="482.75,-277.7 159.25,-277.7 159.25,-172.2 482.75,-172.2 482.75,-277.7"/>
-<text text-anchor="middle" x="321" y="-260.4" font-family="Times,serif" font-size="14.00">ID &#45; kb:interval&#45;later</text>
-<text text-anchor="middle" x="321" y="-195.9" font-family="Times,serif" font-size="14.00">A Proper Interval that starts later, comes after the earlier</text>
-<text text-anchor="middle" x="321" y="-179.4" font-family="Times,serif" font-size="14.00"> interval, and contains the later activity.</text>
-</a>
-</g>
-</g>
-<!-- _4bca873673d304621bcd6c81ad9327797dab3892c71ef23fe5d4617ddd92619d&#45;&gt;_1465e9a308986576edde921313ed77f03be3d5ca6185d9b521c9745af41c3fc5 -->
 </g>
 </svg>

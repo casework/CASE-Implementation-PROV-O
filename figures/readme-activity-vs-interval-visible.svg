@@ -20,9 +20,9 @@
 </g>
 </g>
 <!-- _e3b7da7c43c7e9a599605efaabf7f6b38f1e90afcfe77cac1c50c1dee66fa077 -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>_e3b7da7c43c7e9a599605efaabf7f6b38f1e90afcfe77cac1c50c1dee66fa077</title>
-<g id="a_node3"><a xlink:title="Start of urn:example:Activity&#45;1">
+<g id="a_node4"><a xlink:title="ID &#45; urn:example:Start&#45;5667bb97&#45;207a&#45;5c47&#45;8040&#45;4fc666ad88f1&#10;&#10;Start of urn:example:Activity&#45;1">
 <ellipse fill="lightgray" stroke="dimgray" cx="57.5" cy="-126.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
@@ -34,21 +34,21 @@
 <polygon fill="dimgray" stroke="dimgray" points="62.5,-124.05 52.5,-124.05 52.5,-122.05 62.5,-122.05 62.5,-124.05"/>
 <polyline fill="none" stroke="dimgray" points="57.5,-125.05 57.5,-120.05"/>
 </g>
-<!-- _217bffed872648b6837690e183dc681fb19660803a4d6ef30e16df31f2da12d0 -->
-<g id="node2" class="node">
-<title>_217bffed872648b6837690e183dc681fb19660803a4d6ef30e16df31f2da12d0</title>
-<g id="a_node2"><a xlink:title="Beginning of urn:example:Interval&#45;1">
-<ellipse fill="lightgray" stroke="dimgray" cx="189.5" cy="-126.8" rx="1.8" ry="1.8"/>
-</a>
-</g>
-</g>
 <!-- _09b7888078e777ee3357bafe8a5d907f79599f52ae04195842dd7a36fcef5657 -->
-<g id="node4" class="node">
+<g id="node2" class="node">
 <title>_09b7888078e777ee3357bafe8a5d907f79599f52ae04195842dd7a36fcef5657</title>
-<g id="a_node4"><a xlink:title="ID &#45; urn:example:Interval&#45;1">
+<g id="a_node2"><a xlink:title="ID &#45; urn:example:Interval&#45;1">
 <polygon fill="none" stroke="dimgray" stroke-dasharray="1,5" points="245.88,-89 133.12,-89 133.12,0 245.88,0 245.88,-89"/>
 <text text-anchor="middle" x="189.5" y="-71.7" font-family="Times,serif" font-size="14.00">ID &#45; kb:Interval&#45;1</text>
 <text text-anchor="middle" x="189.5" y="-7.2" font-family="Times,serif" font-size="14.00">A time:Interval.</text>
+</a>
+</g>
+</g>
+<!-- _217bffed872648b6837690e183dc681fb19660803a4d6ef30e16df31f2da12d0 -->
+<g id="node3" class="node">
+<title>_217bffed872648b6837690e183dc681fb19660803a4d6ef30e16df31f2da12d0</title>
+<g id="a_node3"><a xlink:title="ID &#45; urn:example:Instant&#45;80be19b6&#45;a56e&#45;5526&#45;83ce&#45;f1e0b3c1eb5d&#10;&#10;Beginning of urn:example:Interval&#45;1">
+<ellipse fill="lightgray" stroke="dimgray" cx="189.5" cy="-126.8" rx="1.8" ry="1.8"/>
 </a>
 </g>
 </g>
