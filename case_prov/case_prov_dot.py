@@ -640,6 +640,50 @@ def get_instantaneous_perdurant_timestamp(
     return None
 
 
+def get_intervalic_perdurant_boundary_timestamp(
+    n_intervalic_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+    initial: bool,
+) -> typing.Optional[rdflib.Literal]:
+    """
+    This function retrieves the boundary timestamp-literal from either:
+    * The unqualified form (directly-attached timestamp Literal)
+    * The qualified form (timestamp Literal attached to reified instantaneous perdurant)
+    Vocabulary for PROV-O and OWL-Time are used.
+
+    :param initial: If True, the starting timestamp; if False, the ending.
+    """
+    if initial:
+        n_prov_direct_property = NS_PROV.startedAtTime
+        n_prov_qualified_node_property = NS_PROV.qualifiedStart
+        n_time_qualified_node_property = NS_TIME.hasBeginning
+    else:
+        n_prov_direct_property = NS_PROV.endedAtTime
+        n_prov_qualified_node_property = NS_PROV.qualifiedEnd
+        n_time_qualified_node_property = NS_TIME.hasEnd
+
+    # Try unqualified PROV-O form.
+    for l_value in graph.objects(n_intervalic_perdurant, n_prov_direct_property):
+        assert isinstance(l_value, rdflib.Literal)
+        return l_value
+
+    # Try qualified PROV-O form.
+    for n_instantaneous_event in graph.objects(
+        n_intervalic_perdurant, n_prov_qualified_node_property
+    ):
+        assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
+        return get_instantaneous_perdurant_timestamp(n_instantaneous_event, graph)
+
+    # Try qualified OWL-Time form.
+    for n_instant in graph.objects(
+        n_intervalic_perdurant, n_time_qualified_node_property
+    ):
+        assert isinstance(n_instant, rdflib.term.IdentifiedNode)
+        return get_instantaneous_perdurant_timestamp(n_instant, graph)
+
+    return None
+
+
 def n_instantaneous_perdurant_to_timestamp_string(
     n_instantaneous_perdurant: rdflib.term.IdentifiedNode,
     graph: rdflib.Graph,
@@ -654,6 +698,39 @@ def n_instantaneous_perdurant_to_timestamp_string(
         return None
     else:
         return str(l_timestamp)
+
+
+def n_intervalic_perdurant_to_interval_string(
+    n_intervalic_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[str]:
+    """
+    This function renders the start and end times from either:
+    * The unqualified forms (directly-attached timestamp Literals)
+    * The qualified forms (timestamp Literals attached to reified instantaneous perdurants)
+    Vocabulary for PROV-O and OWL-Time are used.
+    """
+    l_start_time = get_intervalic_perdurant_boundary_timestamp(
+        n_intervalic_perdurant, graph, True
+    )
+    l_end_time = get_intervalic_perdurant_boundary_timestamp(
+        n_intervalic_perdurant, graph, False
+    )
+
+    if l_start_time is None and l_end_time is None:
+        return None
+
+    # Build interval-string.
+    section_parts = []
+    if l_start_time is None:
+        section_parts.append("(...")
+    else:
+        section_parts.append("[%s" % l_start_time)
+    if l_end_time is None:
+        section_parts.append("...)")
+    else:
+        section_parts.append("%s]" % l_end_time)
+    return ", ".join(section_parts)
 
 
 def annotate_thing(
@@ -1132,40 +1209,15 @@ WHERE {
         kwargs = clone_style(prov.constants.PROV_ACTIVITY)
         kwargs["tooltip"] = "ID - " + str(n_activity)
 
-        # Retrieve start and end times from either their unqualified
-        # forms or from the qualified Start/End objects.
-        l_start_time: typing.Optional[rdflib.Literal] = None
-        l_end_time: typing.Optional[rdflib.Literal] = None
-        for l_value in graph.objects(n_activity, NS_PROV.startedAtTime):
-            assert isinstance(l_value, rdflib.Literal)
-            l_start_time = l_value
-        if l_start_time is None:
-            for n_start in graph.objects(n_activity, NS_PROV.qualifiedStart):
-                for l_value in graph.objects(n_start, NS_PROV.atTime):
-                    assert isinstance(l_value, rdflib.Literal)
-                    l_start_time = l_value
-        for l_value in graph.objects(n_activity, NS_PROV.endedAtTime):
-            assert isinstance(l_value, rdflib.Literal)
-            l_end_time = l_value
-        if l_end_time is None:
-            for n_end in graph.objects(n_activity, NS_PROV.qualifiedEnd):
-                for l_value in graph.objects(n_end, NS_PROV.atTime):
-                    assert isinstance(l_value, rdflib.Literal)
-                    l_end_time = l_value
-
         # Build label.
         dot_label_parts = ["ID - " + qname(graph, n_activity)]
-        if l_start_time is not None or l_end_time is not None:
-            section_parts = []
-            if l_start_time is None:
-                section_parts.append("(...")
-            else:
-                section_parts.append("[%s" % l_start_time)
-            if l_end_time is None:
-                section_parts.append("...)")
-            else:
-                section_parts.append("%s]" % l_end_time)
-            dot_label_parts.append(", ".join(section_parts))
+
+        maybe_interval_string = n_intervalic_perdurant_to_interval_string(
+            n_activity, graph
+        )
+        if maybe_interval_string is not None:
+            dot_label_parts.append(maybe_interval_string)
+
         annotate_thing(n_activity, graph, wrapper, dot_label_parts)
         dot_label = "\n".join(dot_label_parts)
         kwargs["label"] = dot_label
