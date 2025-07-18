@@ -2274,29 +2274,8 @@ WHERE {
 
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
-    # Render time:Intervals that are not prov:Activities.
-    for n_interval in sorted((n_intervals - n_activities) & n_time_things_to_display):
-        kwargs = clone_style(NS_TIME.Interval)
-
-        # Build label.
-        dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
-        annotate_thing(n_interval, graph, wrapper, dot_label_parts)
-        kwargs["label"] = "\n".join(dot_label_parts)
-
-        kwargs["style"] = "dotted" if display_time_intervals else "invis"
-        kwargs["tooltip"] = "ID - " + str(n_interval)
-        dot_node = pydot.Node(
-            iri_to_gv_node_id(n_interval),
-            None,
-            **kwargs,
-        )
-        dot_graph.add_node(dot_node)
-
-        # Transfer from to-display set.
-        n_things_displayed.add(n_interval)
-        n_things_to_display.remove(n_interval)
-
     for thing_set, n_class_for_style in [
+        (n_intervals, NS_TIME.Interval),
         (n_instants, NS_TIME.Instant),
     ]:
         for n_thing in sorted(thing_set):
@@ -2305,7 +2284,13 @@ WHERE {
 
             early_label_parts: list[str] = []
             tooltip_parts: list[str] = []
-            if n_class_for_style in {NS_TIME.Instant}:
+            if n_class_for_style in {NS_TIME.Interval}:
+                maybe_interval_string = n_intervalic_perdurant_to_interval_string(
+                    n_thing, graph
+                )
+                if maybe_interval_string is not None:
+                    early_label_parts.append(maybe_interval_string)
+            elif n_class_for_style in {NS_TIME.Instant}:
                 if n_thing in n_instant_to_tooltips:
                     timestamp_string = n_instantaneous_perdurant_to_timestamp_string(
                         n_thing, graph
@@ -2325,6 +2310,8 @@ WHERE {
             style: typing.Optional[str] = None
             if n_class_for_style == NS_TIME.Instant:
                 style = "filled" if args.display_time_links else "invis"
+            elif n_class_for_style == NS_TIME.Interval:
+                style = "dotted" if display_time_intervals else "invis"
 
             kwargs = _n_thing_to_pydot_node_kwargs(
                 n_thing,
