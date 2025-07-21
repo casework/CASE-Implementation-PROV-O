@@ -1,13 +1,16 @@
 #!/usr/bin/make -f
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
@@ -25,7 +28,7 @@ all: \
   readme-activities-related-by-intervals-invisible.svg \
   readme-activities-related-by-intervals-with-intervals.svg \
   readme-activities-related-by-intervals-visible.svg \
-  readme-activity-vs-proper-interval-visible.svg \
+  readme-activity-vs-interval-visible.svg \
   readme-allen-relations-invisible.svg \
   readme-allen-relations-visible.svg \
   readme-attribution.svg \
@@ -45,7 +48,7 @@ all: \
   readme-activities-related-by-intervals-invisible.dot \
   readme-activities-related-by-intervals-with-intervals.dot \
   readme-activities-related-by-intervals-visible.dot \
-  readme-activity-vs-proper-interval-visible.dot \
+  readme-activity-vs-interval-visible.dot \
   readme-allen-relations-invisible.dot \
   readme-allen-relations-visible.dot \
   readme-attribution.dot \
@@ -241,8 +244,8 @@ readme-activities-related-by-intervals-with-intervals.dot: \
 	      $<
 	mv _$@ $@
 
-readme-activity-vs-proper-interval-visible.dot: \
-  readme-activity-vs-proper-interval.ttl \
+readme-activity-vs-interval-visible.dot: \
+  readme-activity-vs-interval.ttl \
   $(top_srcdir)/case_prov/__init__.py \
   $(top_srcdir)/case_prov/case_prov_dot.py \
   $(top_srcdir)/tests/.venv.done.log

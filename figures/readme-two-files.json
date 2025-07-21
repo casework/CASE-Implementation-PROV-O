@@ -22,6 +22,9 @@
         "prov:wasGeneratedBy": {
             "@type": "@id"
         },
+        "prov:wasInvalidatedBy": {
+            "@type": "@id"
+        },
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
         "time": "http://www.w3.org/2006/time#",
@@ -97,7 +100,6 @@
             "prov:activity": "kb:Action-1",
             "time:inXSDDateTimeStamp": "2020-01-02T12:00:30.5678Z"
         },
-
         {
             "@id": "kb:ProvenanceRecord-1",
             "@type": "case-investigation:ProvenanceRecord",

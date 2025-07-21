@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
+# Portions of this file contributed by NIST are governed by the
+# following statement:
+#
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
-# of their official duties. Pursuant to title 17 Section 105 of the
-# United States Code this software is not subject to copyright
-# protection and is in the public domain. NIST assumes no
-# responsibility whatsoever for its use by other parties, and makes
-# no guarantees, expressed or implied, about its quality,
-# reliability, or any other characteristic.
+# of their official duties. Pursuant to Title 17 Section 105 of the
+# United States Code, this software is not subject to copyright
+# protection within the United States. NIST assumes no responsibility
+# whatsoever for its use by other parties, and makes no guarantees,
+# expressed or implied, about its quality, reliability, or any other
+# characteristic.
 #
 # We would appreciate acknowledgement if the software is used.
 
@@ -18,7 +21,7 @@ Any temporal ordering among the visible nodes is included as hidden (unless --di
 
 https://github.com/w3c/sdw/blob/gh-pages/time/rdf/time-prov.ttl
 
-prov:Activities and uco-action:Actions are further assumed to be time:ProperIntervals.
+prov:Activities and uco-action:Actions are further assumed to be time:Intervals.
 """
 
 # TODO - The label adjustment with "ID - " is a hack.  A hyphen forces
@@ -27,7 +30,7 @@ prov:Activities and uco-action:Actions are further assumed to be time:ProperInte
 # get quoted.  This turns out to be a dot syntax error.  Need to report
 # this upstream to pydot.
 
-__version__ = "0.5.2"
+__version__ = "0.6.0"
 
 import argparse
 import collections
@@ -43,7 +46,8 @@ import case_utils.inherent_uuid
 import cdo_local_uuid
 import prov.constants  # type: ignore
 import prov.dot  # type: ignore
-import pydot  # type: ignore
+import prov.identifier  # type: ignore
+import pydot
 import rdflib.plugins.sparql
 from case_utils.namespace import NS_CASE_INVESTIGATION, NS_RDF, NS_RDFS, NS_UCO_CORE
 from cdo_local_uuid import local_uuid
@@ -56,19 +60,30 @@ NS_EPHEMERAL = rdflib.Namespace("urn:example:ephemeral:")
 NS_PROV = rdflib.PROV
 NS_TIME = rdflib.TIME
 
-# This one isn't among the prov constants.
-PROV_COLLECTION = NS_PROV.Collection
 
-
-def clone_style(prov_constant: rdflib.URIRef) -> typing.Dict[str, str]:
+def clone_style(
+    prov_constant: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
+) -> typing.Dict[str, str]:
     retval: typing.Dict[str, str]
-    if prov_constant == PROV_COLLECTION:
+    if prov_constant == NS_PROV.Collection:
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov.constants.PROV_ENTITY])
-    else:
+    elif prov_constant in (NS_PROV.InstantaneousEvent, NS_TIME.Instant):
+        retval = dict()
+        retval["color"] = "dimgray"
+        retval["fillcolor"] = "lightgray"
+        retval["shape"] = "point"
+    elif prov_constant == NS_TIME.Interval:
+        retval = dict()
+        retval["color"] = "dimgray"
+        retval["fillcolor"] = "lightgray"
+        retval["shape"] = "box"
+    elif isinstance(prov_constant, prov.identifier.QualifiedName):
         retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov_constant])
+    else:
+        raise NotImplementedError(repr(prov_constant))
 
     # Adjust shapes and colors.
-    if prov_constant == PROV_COLLECTION:
+    if prov_constant == NS_PROV.Collection:
         retval["shape"] = "folder"
         retval["fillcolor"] = "khaki3"
     elif prov_constant == prov.constants.PROV_ENTITY:
@@ -171,7 +186,7 @@ def expand_prov_activities_with_owl_time(
     **kwargs: typing.Any,
 ) -> None:
     """
-    This procedure takes a graph and guarantees all time:ProperIntervals have reified Instant nodes as their beginnings and ends.  Following guidance from the non-normative time-prov alignment, prov:Activities are also inferred to be time:ProperIntervals, and prov:InstantaneousEvents (especially prov:Start and prov:End nodes) are inferred to be time:Instants.  prov:startedAtTime and prov:endedAtTime are used to infer time:Instant nodes as a last fallback.
+    This procedure takes a graph and guarantees all time:Intervals have reified Instant nodes as their beginnings and ends.  Following guidance from the non-normative time-prov alignment, prov:Activities are also inferred to be time:Intervals, and prov:InstantaneousEvents (especially prov:Start and prov:End nodes) are inferred to be time:Instants.  prov:startedAtTime and prov:endedAtTime are used to infer time:Instant nodes as a last fallback.
 
     While most of this is done with SPARQL CONSTRUCT queries, there is a step in converting from xsd:dateTime to xsd:dateTimeStamp that, at this time, appears to require data validation that is more difficult to perform in SPARQL than in Python.
     """
@@ -312,7 +327,7 @@ WHERE {
     # devise with these axioms:
     #
     #     prov:Activity
-    #         rdfs:subClassOf time:ProperInterval ;
+    #         rdfs:subClassOf time:Interval ;
     #         .
     #     prov:InstantaneousEvent
     #         rdfs:subClassOf time:Instant ;
@@ -320,7 +335,7 @@ WHERE {
     #
     query = """\
 CONSTRUCT {
-  ?nActivity a time:ProperInterval .
+  ?nActivity a time:Interval .
 } WHERE {
   ?nActivity a prov:Activity .
 }
@@ -444,17 +459,20 @@ WHERE {
 """
     _build_datetimestamp_augments_from_query(query)
 
-    n_proper_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
+    n_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
+    for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Interval):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_intervals.add(n_subject)
     for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
-        n_proper_intervals.add(n_subject)
+        n_intervals.add(n_subject)
 
-    # For remaining time:ProperIntervals, guarantee they have beginning
+    # For remaining time:Intervals, guarantee they have beginning
     # and, if appropriate, ending nodes.
-    for n_proper_interval in sorted(n_proper_intervals):
+    for n_interval in sorted(n_intervals):
         (_, start_graph) = case_prov.infer_interval_terminus(
             graph,
-            n_proper_interval,
+            n_interval,
             NS_TIME.hasBeginning,
             ns_kb,
             use_deterministic_uuids=use_deterministic_uuids,
@@ -462,10 +480,10 @@ WHERE {
         _dump_augments(start_graph)
         del start_graph
 
-        if case_prov.interval_end_should_exist(graph, n_proper_interval):
+        if case_prov.interval_end_should_exist(graph, n_interval):
             (_, end_graph) = case_prov.infer_interval_terminus(
                 graph,
-                n_proper_interval,
+                n_interval,
                 NS_TIME.hasEnd,
                 ns_kb,
                 use_deterministic_uuids=use_deterministic_uuids,
@@ -601,6 +619,205 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
         return str(n_thing)
 
 
+def get_instantaneous_perdurant_timestamp(
+    n_instantaneous_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[rdflib.Literal]:
+    """
+    :param n_instantaneous_perdurant: A graph node that bears in the graph a `rdf:type` of `prov:InstantaneousEvent`, `time:Instant`, and/or some subclass of those.
+    """
+    for l_value in graph.objects(n_instantaneous_perdurant, NS_PROV.atTime):
+        assert isinstance(l_value, rdflib.Literal)
+        return l_value
+    # Note: inXSDDateTime is deprecated.
+    for n_time_direct_property in [
+        NS_TIME.inXSDDateTimeStamp,
+        NS_TIME.inXSDDateTime,
+    ]:
+        for l_value in graph.objects(n_instantaneous_perdurant, n_time_direct_property):
+            assert isinstance(l_value, rdflib.Literal)
+            return l_value
+    return None
+
+
+def get_intervalic_perdurant_boundary_timestamp(
+    n_intervalic_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+    initial: bool,
+) -> typing.Optional[rdflib.Literal]:
+    """
+    This function retrieves the boundary timestamp-literal from either:
+    * The unqualified form (directly-attached timestamp Literal)
+    * The qualified form (timestamp Literal attached to reified instantaneous perdurant)
+    Vocabulary for PROV-O and OWL-Time are used.
+
+    :param initial: If True, the starting timestamp; if False, the ending.
+    """
+    if initial:
+        n_prov_direct_property = NS_PROV.startedAtTime
+        n_prov_qualified_node_property = NS_PROV.qualifiedStart
+        n_time_qualified_node_property = NS_TIME.hasBeginning
+    else:
+        n_prov_direct_property = NS_PROV.endedAtTime
+        n_prov_qualified_node_property = NS_PROV.qualifiedEnd
+        n_time_qualified_node_property = NS_TIME.hasEnd
+
+    # Try unqualified PROV-O form.
+    for l_value in graph.objects(n_intervalic_perdurant, n_prov_direct_property):
+        assert isinstance(l_value, rdflib.Literal)
+        return l_value
+
+    # Try qualified PROV-O form.
+    for n_instantaneous_event in graph.objects(
+        n_intervalic_perdurant, n_prov_qualified_node_property
+    ):
+        assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
+        return get_instantaneous_perdurant_timestamp(n_instantaneous_event, graph)
+
+    # Try qualified OWL-Time form.
+    for n_instant in graph.objects(
+        n_intervalic_perdurant, n_time_qualified_node_property
+    ):
+        assert isinstance(n_instant, rdflib.term.IdentifiedNode)
+        return get_instantaneous_perdurant_timestamp(n_instant, graph)
+
+    return None
+
+
+def n_instantaneous_perdurant_to_timestamp_string(
+    n_instantaneous_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[str]:
+    """
+    :param n_instantaneous_perdurant: A graph node that bears in the graph a `rdf:type` of `prov:InstantaneousEvent`, `time:Instant`, and/or some subclass of those.
+    """
+    l_timestamp = get_instantaneous_perdurant_timestamp(
+        n_instantaneous_perdurant, graph
+    )
+    if l_timestamp is None:
+        return None
+    else:
+        return str(l_timestamp)
+
+
+def n_intervalic_perdurant_to_interval_string(
+    n_intervalic_perdurant: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+) -> typing.Optional[str]:
+    """
+    This function renders the start and end times from either:
+    * The unqualified forms (directly-attached timestamp Literals)
+    * The qualified forms (timestamp Literals attached to reified instantaneous perdurants)
+    Vocabulary for PROV-O and OWL-Time are used.
+    """
+    l_start_time = get_intervalic_perdurant_boundary_timestamp(
+        n_intervalic_perdurant, graph, True
+    )
+    l_end_time = get_intervalic_perdurant_boundary_timestamp(
+        n_intervalic_perdurant, graph, False
+    )
+
+    if l_start_time is None and l_end_time is None:
+        return None
+
+    # Build interval-string.
+    section_parts = []
+    if l_start_time is None:
+        section_parts.append("(...")
+    else:
+        section_parts.append("[%s" % l_start_time)
+    if l_end_time is None:
+        section_parts.append("...)")
+    else:
+        section_parts.append("%s]" % l_end_time)
+    return ", ".join(section_parts)
+
+
+def n_thing_to_pydot_node_kwargs(
+    n_thing: rdflib.term.IdentifiedNode,
+    graph: rdflib.Graph,
+    n_class_for_style: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
+    wrapper: textwrap.TextWrapper,
+    *args: typing.Any,
+    early_label_parts: list[str] = [],
+    style: typing.Optional[str] = None,
+    tooltip_parts: list[str] = [],
+    **kwargs: typing.Any,
+) -> typing.Dict[str, str]:
+    """
+    Pull in general object descriptive strings: Name, labels, descriptions, and comments.
+    """
+    kwargs = clone_style(n_class_for_style)
+
+    if style is not None:
+        kwargs["style"] = style
+
+    # Build label parts and tooltip parts.
+    dot_label_parts = ["ID - " + qname(graph, n_thing)]
+    dot_label_parts.extend(early_label_parts)
+    _tooltip_parts: list[str] = ["ID - " + str(n_thing)]
+    _tooltip_parts.extend(tooltip_parts)
+
+    # Extend label or tooltip with descriptive graph parts; which gets
+    # extended depends on whether the shape supports text.  (The point
+    # shape used for instantaneous perdurants doesn't.)
+    if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
+        _parts_list = _tooltip_parts
+    else:
+        _parts_list = dot_label_parts
+
+    # Render `uco-core:name`.
+    # SHACL constraints on UCO will mean there will be only one name.
+    l_uco_names: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_UCO_CORE.name, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_uco_names.add(triple[2])
+    if len(l_uco_names) > 0:
+        for l_uco_name in l_uco_names:
+            label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
+            _parts_list.append(label_part)
+
+    # Render `rdfs:label`s.
+    # Unlike `rdfs:comment`s and `uco-core:description`s, labels don't
+    # have a blank line separating them.  This is just a design choice
+    # to keep what might be shorter string annotations together.
+    l_labels: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_RDFS.label, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_labels.add(triple[2])
+    if len(l_labels) > 0:
+        _parts_list.append("")
+        for l_label in sorted(l_labels):
+            label_part = "\n".join(wrapper.wrap(str(l_label)))
+            _parts_list.append(label_part)
+
+    # Render `uco-core:description`s.
+    l_uco_descriptions: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_UCO_CORE.description, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_uco_descriptions.add(triple[2])
+    # logging.debug("len(l_uco_descriptions) = %d.", len(l_uco_descriptions))
+    for l_uco_description in sorted(l_uco_descriptions):
+        _parts_list.append("")
+        label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
+        _parts_list.append(label_part)
+
+    # Render `rdfs:comment`s.
+    l_comments: typing.Set[rdflib.Literal] = set()
+    for triple in graph.triples((n_thing, NS_RDFS.comment, None)):
+        assert isinstance(triple[2], rdflib.Literal)
+        l_comments.add(triple[2])
+    for l_comment in sorted(l_comments):
+        _parts_list.append("")
+        label_part = "\n".join(wrapper.wrap(str(l_comment)))
+        _parts_list.append(label_part)
+
+    kwargs["label"] = "\n".join(dot_label_parts)
+    kwargs["tooltip"] = "\n".join(_tooltip_parts)
+
+    return kwargs
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true")
@@ -613,7 +830,7 @@ def main() -> None:
     parser.add_argument(
         "--display-time-intervals",
         action="store_true",
-        help="Display time:ProperIntervals whether or not they are `prov:Activity`s.  Without this flag, intervals are present for on-canvas sorting, but invisible.",
+        help="Display time:Intervals whether or not they are `prov:Activity`s.  Without this flag, intervals are present for on-canvas sorting, but invisible.",
     )
     parser.add_argument(
         "--display-time-links",
@@ -804,17 +1021,18 @@ WHERE {
     # Define the sets of TIME Things.
 
     # Expand the PROV things to also be TIME things.
-    # Infer boundary Instants for time:ProperIntervals.
+    # Infer boundary Instants for time:Intervals.
     expand_prov_activities_with_owl_time(
         graph, NS_KB, use_deterministic_uuids, debug_graph_fh=args.debug_graph
     )
 
     # "Interval" in variable names within this script is shorthand for
-    # time:ProperInterval.
+    # time:Interval.
+    n_instantaneous_events: typing.Set[rdflib.term.IdentifiedNode] = set()
     n_instants: typing.Set[rdflib.term.IdentifiedNode] = set()
     n_intervals: typing.Set[rdflib.term.IdentifiedNode] = set()
 
-    # Some instants are the beginning or end of a time:ProperInterval,
+    # Some instants are the beginning or end of a time:Interval,
     # and will be rendered differently from other instants that will
     # otherwise be inside intervals.
     # Likewise, prov:Entitys will render similarly with their Generation
@@ -825,11 +1043,15 @@ WHERE {
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
         n_instants.add(n_subject)
 
+    for n_subject in graph.subjects(NS_RDF.type, NS_TIME.Interval):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_intervals.add(n_subject)
     for n_subject in graph.subjects(NS_RDF.type, NS_TIME.ProperInterval):
         assert isinstance(n_subject, rdflib.term.IdentifiedNode)
         n_intervals.add(n_subject)
+    for n_interval in n_intervals:
         for n_predicate in {NS_TIME.hasBeginning, NS_TIME.hasEnd}:
-            for n_object in graph.objects(n_subject, n_predicate):
+            for n_object in graph.objects(n_interval, n_predicate):
                 assert isinstance(n_object, rdflib.term.IdentifiedNode)
                 n_terminus_instants.add(n_object)
 
@@ -843,42 +1065,6 @@ WHERE {
     _logger.debug("len(n_terminus_instants) = %d.", len(n_terminus_instants))
 
     # S3.
-    # Define dicts to hold 1-to-manies of various string Literals -
-    # comments, labels, names, descriptions, and exhibit numbers.  These
-    # Literals will be rendered into the Dot label string.
-    AnnoMapType = typing.DefaultDict[
-        rdflib.term.IdentifiedNode, typing.Set[rdflib.Literal]
-    ]
-    n_thing_to_l_comments: AnnoMapType = collections.defaultdict(set)
-    n_thing_to_l_labels: AnnoMapType = collections.defaultdict(set)
-    n_provenance_record_to_l_exhibit_numbers: AnnoMapType = collections.defaultdict(set)
-    n_uco_object_to_l_uco_descriptions: AnnoMapType = collections.defaultdict(set)
-    n_uco_object_to_l_uco_name: AnnoMapType = collections.defaultdict(set)
-
-    for triple in graph.triples((None, NS_RDFS.comment, None)):
-        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_thing_to_l_comments[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_RDFS.label, None)):
-        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_thing_to_l_labels[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_CASE_INVESTIGATION.exhibitNumber, None)):
-        assert isinstance(triple[0], rdflib.term.IdentifiedNode)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_provenance_record_to_l_exhibit_numbers[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_UCO_CORE.description, None)):
-        assert isinstance(triple[0], rdflib.term.URIRef)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_uco_object_to_l_uco_descriptions[triple[0]].add(triple[2])
-
-    for triple in graph.triples((None, NS_UCO_CORE.name, None)):
-        assert isinstance(triple[0], rdflib.term.URIRef)
-        assert isinstance(triple[2], rdflib.Literal)
-        n_uco_object_to_l_uco_name[triple[0]].add(triple[2])
 
     # S3.1.
     # Stash display data for PROV Things.
@@ -892,11 +1078,6 @@ WHERE {
     # not constructed objects.  There is a hidden dependency for edges
     # of a parent graph object not available until after some filtering
     # decisions are made.
-
-    # IdentifiedNode -> pydot.Node's kwargs
-    n_thing_to_pydot_node_kwargs: typing.Dict[
-        rdflib.term.IdentifiedNode, typing.Dict[str, typing.Any]
-    ] = dict()
 
     n_instant_to_tooltips: typing.DefaultDict[
         rdflib.term.IdentifiedNode, typing.Set[str]
@@ -933,109 +1114,8 @@ WHERE {
         width=args.wrap_comment,
     )
 
-    # Add some general-purpose subroutines for augmenting Dot node labels.
-
-    def _annotate_comments(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `rdfs:comment`s.
-        """
-        if n_thing in n_thing_to_l_comments:
-            for l_comment in sorted(n_thing_to_l_comments[n_thing]):
-                label_parts.append("\n")
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_comment)))
-                label_parts.append(label_part)
-
-    def _annotate_descriptions(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `uco-core:description`s.
-        """
-        if n_thing in n_uco_object_to_l_uco_descriptions:
-            for l_uco_description in sorted(
-                n_uco_object_to_l_uco_descriptions[n_thing]
-            ):
-                label_parts.append("\n")
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
-                label_parts.append(label_part)
-
-    def _annotate_name(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `uco-core:name`.
-
-        SHACL constraints on UCO will mean there will be only one name.
-        """
-        if n_thing in n_uco_object_to_l_uco_name:
-            label_parts.append("\n")
-            for l_uco_name in sorted(n_uco_object_to_l_uco_name[n_thing]):
-                label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
-                label_parts.append(label_part)
-
-    def _annotate_labels(
-        n_thing: rdflib.term.IdentifiedNode, label_parts: typing.List[str]
-    ) -> None:
-        """
-        Render `rdfs:label`s.
-
-        Unlike `rdfs:comment`s and `uco-core:description`s, labels don't have a blank line separating them.  This is just a design choice to keep what might be shorter string annotations together.
-        """
-        if n_thing in n_thing_to_l_labels:
-            label_parts.append("\n")
-            for l_label in sorted(n_thing_to_l_labels[n_thing]):
-                label_parts.append("\n")
-                label_part = "\n".join(wrapper.wrap(str(l_label)))
-                label_parts.append(label_part)
-
-    # Render Agents.
-    for n_agent in n_agents:
-        kwargs = clone_style(prov.constants.PROV_AGENT)
-        kwargs["tooltip"] = "ID - " + str(n_agent)
-
-        # Build label.
-        dot_label_parts = ["ID - " + qname(graph, n_agent)]
-        _annotate_name(n_agent, dot_label_parts)
-        _annotate_labels(n_agent, dot_label_parts)
-        _annotate_descriptions(n_agent, dot_label_parts)
-        _annotate_comments(n_agent, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
-        kwargs["label"] = dot_label
-
-        # _logger.debug("Agent %r.", n_agent)
-        n_thing_to_pydot_node_kwargs[n_agent] = kwargs
-    # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
-
-    # Render Entities.
+    # Render tooltips for InstantaneousEvents of Entities.
     for n_entity in n_entities:
-        if n_entity in n_collections:
-            kwargs = clone_style(PROV_COLLECTION)
-        else:
-            kwargs = clone_style(prov.constants.PROV_ENTITY)
-        kwargs["tooltip"] = "ID - " + str(n_entity)
-
-        # Build label.
-        dot_label_parts = ["ID - " + qname(graph, n_entity)]
-        if n_entity in n_provenance_record_to_l_exhibit_numbers:
-            for l_exhibit_number in sorted(
-                n_provenance_record_to_l_exhibit_numbers[n_entity]
-            ):
-                dot_label_parts.append("\n")
-                dot_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
-        _annotate_name(n_entity, dot_label_parts)
-        _annotate_labels(n_entity, dot_label_parts)
-        _annotate_descriptions(n_entity, dot_label_parts)
-        _annotate_comments(n_entity, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
-        kwargs["label"] = dot_label
-
-        # _logger.debug("Entity %r.", n_entity)
-        n_thing_to_pydot_node_kwargs[n_entity] = kwargs
-
         # Add to tooltips of associated InstantaneousEvents.
         for n_predicate, template in {
             (NS_PROV.qualifiedGeneration, "Generation of %s"),
@@ -1044,59 +1124,19 @@ WHERE {
             for n_instantaneous_event in graph.objects(n_entity, n_predicate):
                 assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
                 n_instant_to_tooltips[n_instantaneous_event].add(template % n_entity)
-    # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
 
-    # Render Activities.
+    # Build set of usages in two steps, one in Activities loop, one on
+    # solely type-review.  (A Usage could appear independent of an
+    # Activity.)
+    n_usages: typing.Set[rdflib.term.IdentifiedNode] = set()
+    for n_subject in graph.subjects(NS_RDF.type, NS_PROV.Usage):
+        assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+        n_usages.add(n_subject)
+
+    # Render tooltips for InstantaneousEvents of Activities, and collect
+    # Usages.
     for n_activity in n_activities:
-        kwargs = clone_style(prov.constants.PROV_ACTIVITY)
-        kwargs["tooltip"] = "ID - " + str(n_activity)
-
-        # Retrieve start and end times from either their unqualified
-        # forms or from the qualified Start/End objects.
-        l_start_time: typing.Optional[rdflib.Literal] = None
-        l_end_time: typing.Optional[rdflib.Literal] = None
-        for l_value in graph.objects(n_activity, NS_PROV.startedAtTime):
-            assert isinstance(l_value, rdflib.Literal)
-            l_start_time = l_value
-        if l_start_time is None:
-            for n_start in graph.objects(n_activity, NS_PROV.qualifiedStart):
-                for l_value in graph.objects(n_start, NS_PROV.atTime):
-                    assert isinstance(l_value, rdflib.Literal)
-                    l_start_time = l_value
-        for l_value in graph.objects(n_activity, NS_PROV.endedAtTime):
-            assert isinstance(l_value, rdflib.Literal)
-            l_end_time = l_value
-        if l_end_time is None:
-            for n_end in graph.objects(n_activity, NS_PROV.qualifiedEnd):
-                for l_value in graph.objects(n_end, NS_PROV.atTime):
-                    assert isinstance(l_value, rdflib.Literal)
-                    l_end_time = l_value
-
-        # Build label.
-        dot_label_parts = ["ID - " + qname(graph, n_activity)]
-        if l_start_time is not None or l_end_time is not None:
-            dot_label_parts.append("\n")
-            section_parts = []
-            if l_start_time is None:
-                section_parts.append("(...")
-            else:
-                section_parts.append("[%s" % l_start_time)
-            if l_end_time is None:
-                section_parts.append("...)")
-            else:
-                section_parts.append("%s]" % l_end_time)
-            dot_label_parts.append(", ".join(section_parts))
-        _annotate_name(n_activity, dot_label_parts)
-        _annotate_labels(n_activity, dot_label_parts)
-        _annotate_descriptions(n_activity, dot_label_parts)
-        _annotate_comments(n_activity, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
-        kwargs["label"] = dot_label
-
-        # _logger.debug("Activity %r.", n_activity)
-        n_thing_to_pydot_node_kwargs[n_activity] = kwargs
-
         # Add to tooltips of associated InstantaneousEvents.
         for n_predicate, template in {
             (NS_PROV.qualifiedEnd, "End of %s"),
@@ -1105,15 +1145,53 @@ WHERE {
             for n_instantaneous_event in graph.objects(n_activity, n_predicate):
                 assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
                 n_instant_to_tooltips[n_instantaneous_event].add(template % n_activity)
-        for n_instantaneous_event in graph.objects(n_activity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_instantaneous_event, rdflib.term.IdentifiedNode)
-            for n_object in graph.objects(n_instantaneous_event, NS_PROV.entity):
-                assert isinstance(n_object, rdflib.term.IdentifiedNode)
-                n_instant_to_tooltips[n_instantaneous_event].add(
-                    "Usage of %s in %s" % (n_object, n_activity)
-                )
+        for n_object in graph.objects(n_activity, NS_PROV.qualifiedUsage):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_usages.add(n_object)
 
-    # _logger.debug("n_thing_to_pydot_node_kwargs = %s." % pprint.pformat(n_thing_to_pydot_node_kwargs))
+    for n_usage in n_usages:
+        # To populate the tooltip text's first description, the entity
+        # and activity of the Usage should be determined, if known.
+        n_entity_of_usage: typing.Optional[rdflib.term.IdentifiedNode] = None
+        for n_object in graph.objects(n_usage, NS_PROV.entity):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_entity_of_usage = n_object
+        n_activity_of_usage: typing.Optional[rdflib.term.IdentifiedNode] = None
+        for n_subject in graph.subjects(NS_PROV.qualifiedUsage, n_usage):
+            assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+            n_activity_of_usage = n_subject
+        if n_activity_of_usage is None and n_entity_of_usage is None:
+            first_description_string = "Usage of some entity in some activity"
+        elif n_activity_of_usage is None:
+            first_description_string = (
+                "Usage of %s in some activity" % n_entity_of_usage
+            )
+        elif n_entity_of_usage is None:
+            first_description_string = (
+                "Usage of some entity in %s" % n_activity_of_usage
+            )
+        else:
+            # Both known.
+            first_description_string = "Usage of %s in %s" % (
+                n_entity_of_usage,
+                n_activity_of_usage,
+            )
+        n_instant_to_tooltips[n_usage].add(first_description_string)
+
+    n_instantaneous_events |= n_usages
+    for n_instantaneous_event_type, n_qualification_property in [
+        (NS_PROV.Start, NS_PROV.qualifiedStart),
+        (NS_PROV.End, NS_PROV.qualifiedEnd),
+        (NS_PROV.Generation, NS_PROV.qualifiedGeneration),
+        (NS_PROV.Invalidation, NS_PROV.qualifiedInvalidation),
+    ]:
+        for n_subject in graph.subjects(NS_RDF.type, n_instantaneous_event_type):
+            assert isinstance(n_subject, rdflib.term.IdentifiedNode)
+            n_instantaneous_events.add(n_subject)
+        for n_object in graph.objects(None, n_qualification_property):
+            assert isinstance(n_object, rdflib.term.IdentifiedNode)
+            n_instantaneous_events.add(n_object)
+
     # _logger.debug("n_instant_to_tooltips = %s." % pprint.pformat(n_instant_to_tooltips))
 
     def _render_edges(
@@ -1383,9 +1461,6 @@ WHERE {
             kwargs = clone_style(prov.constants.PROV_COMMUNICATION)
             _render_edges(select_query_text, "wasInformedBy", kwargs)
 
-    _logger.debug(
-        "len(n_thing_to_pydot_node_kwargs) = %d.", len(n_thing_to_pydot_node_kwargs)
-    )
     _logger.debug("len(edges) = %d.", len(edges))
 
     # S3.2.
@@ -1588,32 +1663,67 @@ WHERE {
     # Entities' Usages can also be related to their Generation and
     # Invalidation events.
 
-    for triple in graph.triples((None, NS_PROV.qualifiedGeneration, None)):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.term.IdentifiedNode)
-        n_entity = triple[0]
-        n_generation = triple[2]
+    query = """\
+SELECT ?nEntity ?nGeneration ?nUsage
+WHERE {
+  ?nEntity
+    prov:qualifiedGeneration ?nGeneration ;
+    .
+  OPTIONAL {
+    ?nActivity
+      prov:qualifiedUsage ?nUsage ;
+      .
+    ?nUsage
+      prov:entity ?nEntity ;
+      .
+  }
+}
+"""
+    for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        assert isinstance(result[1], rdflib.term.IdentifiedNode)
+        n_entity = result[0]
+        n_generation = result[1]
         time_edge_node_pairs.add((n_generation, n_entity))
-        for n_object in graph.objects(n_entity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_usage = n_object
+        if result[2] is not None:
+            assert isinstance(result[2], rdflib.term.IdentifiedNode)
+            n_usage = result[2]
             time_edge_node_pairs.add((n_generation, n_usage))
 
-    for triple in graph.triples((None, NS_PROV.qualifiedInvalidation, None)):
-        assert isinstance(triple[0], rdflib.URIRef)
-        assert isinstance(triple[2], rdflib.term.IdentifiedNode)
-        n_entity = triple[0]
-        n_invalidation = triple[2]
+    query = """\
+SELECT ?nEntity ?nInvalidation ?nUsage
+WHERE {
+  ?nEntity
+    prov:qualifiedInvalidation ?nInvalidation ;
+    .
+  OPTIONAL {
+    ?nActivity
+      prov:qualifiedUsage ?nUsage ;
+      .
+    ?nUsage
+      prov:entity ?nEntity ;
+      .
+  }
+}
+"""
+    for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        assert isinstance(result[1], rdflib.term.IdentifiedNode)
+        n_entity = result[0]
+        n_invalidation = result[1]
         time_edge_node_pairs.add((n_entity, n_invalidation))
-        for n_object in graph.objects(n_entity, NS_PROV.qualifiedUsage):
-            assert isinstance(n_object, rdflib.term.IdentifiedNode)
-            n_usage = n_object
+        if result[2] is not None:
+            assert isinstance(result[2], rdflib.term.IdentifiedNode)
+            n_usage = result[2]
             time_edge_node_pairs.add((n_usage, n_invalidation))
 
     # time:inside relates Intervals to Instants within them.  Note that
-    # even though an Instant inside an Interval is defined in TIME as
-    # 'intended to include beginnings and ends of intervals,' we can
-    # infer a discrete order between the Interval's starting and ending
+    # Instant inside an Interval is defined in TIME as 'not
+    # intended to include beginnings and ends of intervals.'  If an
+    # Interval is already asserted to be a ProperInterval, this will
+    # induce a discrete order between the Interval's starting and ending
     # Instants and the Instant inside the interval, if the Interval is
     # also a PROV Activity:
     #
@@ -1621,10 +1731,6 @@ WHERE {
     #   or invalidation involving an activity follows the activity's
     #   start."  (And likewise for `prov:End`: those
     #   `prov:InstantaneousEvent`s precede the `prov:End` Instant.)
-    # * A `time:Instant` asserted to be inside this `prov:Activity` is
-    #   consistent with the `prov:Activity` being aligned with
-    #   `time:ProperInterval` (as opposed to `time:Interval`s that can
-    #   be 0-length).
     for triple in graph.triples((None, NS_TIME.inside, None)):
         assert isinstance(triple[0], rdflib.term.IdentifiedNode)
         assert isinstance(triple[2], rdflib.term.IdentifiedNode)
@@ -1659,6 +1765,9 @@ WHERE {
             n_type_i = NS_TIME.Instant
         elif (n_entity_i, NS_RDF.type, NS_TIME.ProperInterval) in graph:
             n_type_i = NS_TIME.ProperInterval
+        elif (n_entity_i, NS_RDF.type, NS_TIME.Interval) in graph:
+            # Fall back to Interval after ProperInterval not found.
+            n_type_i = NS_TIME.Interval
         else:
             continue
 
@@ -1666,26 +1775,38 @@ WHERE {
             n_type_j = NS_TIME.Instant
         elif (n_entity_j, NS_RDF.type, NS_TIME.ProperInterval) in graph:
             n_type_j = NS_TIME.ProperInterval
+        elif (n_entity_j, NS_RDF.type, NS_TIME.Interval) in graph:
+            # Fall back to Interval after ProperInterval not found.
+            n_type_j = NS_TIME.Interval
         else:
             continue
 
         if n_type_i == NS_TIME.Instant and n_type_j == NS_TIME.Instant:
             time_edge_node_pairs.add((n_entity_i, n_entity_j))
-        elif n_type_i == NS_TIME.Instant and n_type_j == NS_TIME.ProperInterval:
+        elif n_type_i == NS_TIME.Instant and n_type_j in (
+            NS_TIME.Interval,
+            NS_TIME.ProperInterval,
+        ):
             n_instant = n_entity_i
             n_interval = n_entity_j
             n_interval_bs = get_beginnings(graph, n_interval)
             for n_interval_b in n_interval_bs:
                 time_edge_node_pairs.add((n_instant, n_interval_b))
                 time_edge_node_pairs.add((n_interval_b, n_interval))
-        elif n_type_i == NS_TIME.ProperInterval and n_type_j == NS_TIME.Instant:
+        elif (
+            n_type_i in (NS_TIME.Interval, NS_TIME.ProperInterval)
+            and n_type_j == NS_TIME.Instant
+        ):
             n_instant = n_entity_j
             n_interval = n_entity_i
             n_interval_es = get_ends(graph, n_interval)
             for n_interval_e in n_interval_es:
                 time_edge_node_pairs.add((n_interval_e, n_instant))
                 time_edge_node_pairs.add((n_interval, n_interval_e))
-        elif n_type_i == NS_TIME.ProperInterval and n_type_j == NS_TIME.ProperInterval:
+        elif n_type_i in (NS_TIME.Interval, NS_TIME.ProperInterval) and n_type_j in (
+            NS_TIME.Interval,
+            NS_TIME.ProperInterval,
+        ):
             n_instant_i_bs = get_beginnings(graph, n_entity_i)
             n_instant_i_es = get_ends(graph, n_entity_i)
             n_instant_j_bs = get_beginnings(graph, n_entity_j)
@@ -2045,11 +2166,86 @@ WHERE {
 
     dot_graph = pydot.Dot("PROV-O render", graph_type="digraph", rankdir="BT")
 
-    # Build the PROV chain's Pydot Nodes and Edges.
-    for n_thing in sorted(n_prov_things_to_display):
-        kwargs = n_thing_to_pydot_node_kwargs[n_thing]
-        dot_node = pydot.Node(iri_to_gv_node_id(n_thing), **kwargs)
-        dot_graph.add_node(dot_node)
+    n_things_to_display = n_prov_things_to_display | n_time_things_to_display
+    n_things_displayed: typing.Set[rdflib.term.IdentifiedNode] = set()
+    display_time_intervals = args.display_time_intervals or args.display_time_links
+
+    # Build the PROV and Time Pydot Nodes.
+    for thing_set, n_class_for_style in [
+        (n_agents, prov.constants.PROV_AGENT),
+        (n_collections, NS_PROV.Collection),
+        (n_entities, prov.constants.PROV_ENTITY),
+        (n_activities, prov.constants.PROV_ACTIVITY),
+        (n_intervals, NS_TIME.Interval),
+        (n_instantaneous_events, NS_PROV.InstantaneousEvent),
+        (n_instants, NS_TIME.Instant),
+    ]:
+        for n_thing in sorted(thing_set):
+            if n_thing not in n_things_to_display:
+                continue
+
+            early_label_parts: list[str] = []
+            tooltip_parts: list[str] = []
+            if n_class_for_style in {prov.constants.PROV_ACTIVITY, NS_TIME.Interval}:
+                maybe_interval_string = n_intervalic_perdurant_to_interval_string(
+                    n_thing, graph
+                )
+                if maybe_interval_string is not None:
+                    early_label_parts.append(maybe_interval_string)
+            elif n_class_for_style == NS_PROV.Collection:
+                l_exhibit_numbers: typing.Set[rdflib.Literal] = set()
+                for triple in graph.triples(
+                    (n_thing, NS_CASE_INVESTIGATION.exhibitNumber, None)
+                ):
+                    assert isinstance(triple[2], rdflib.Literal)
+                    l_exhibit_numbers.add(triple[2])
+                for l_exhibit_number in sorted(l_exhibit_numbers):
+                    early_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
+            elif n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
+                if n_thing in n_instant_to_tooltips:
+                    timestamp_string = n_instantaneous_perdurant_to_timestamp_string(
+                        n_thing, graph
+                    )
+                    if timestamp_string is not None:
+                        tooltip_parts.append("")
+                        tooltip_parts.append(timestamp_string)
+                    tooltip_parts.append("")
+                    tooltip_parts.append(
+                        " ;\n".join(sorted(n_instant_to_tooltips[n_thing]))
+                    )
+                else:
+                    # This will only occur for time:Instants in the input that
+                    # aren't related to the provenance chains.
+                    _logger.debug("Instant did not have tooltips: %r.", n_thing)
+
+            style: typing.Optional[str] = None
+            if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
+                style = "filled" if args.display_time_links else "invis"
+            elif n_class_for_style == NS_TIME.Interval:
+                style = "dotted" if display_time_intervals else "invis"
+
+            kwargs = n_thing_to_pydot_node_kwargs(
+                n_thing,
+                graph,
+                n_class_for_style,
+                wrapper,
+                early_label_parts=early_label_parts,
+                style=style,
+                tooltip_parts=tooltip_parts,
+            )
+            dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
+            dot_graph.add_node(dot_node)
+
+            # Transfer from to-display set.
+            n_things_displayed.add(n_thing)
+            n_things_to_display.remove(n_thing)
+
+    if len(n_things_to_display) > 0:
+        _logger.warning("Some things planned to be displayed weren't rendered:")
+        for n_thing in sorted(n_things_to_display):
+            _logger.warning("* %s" % str(n_thing))
+
+    # Build the PROV chain's Pydot Edges.
     for n_thing_1 in sorted(edges.keys()):
         if n_thing_1 not in n_prov_things_to_display:
             continue
@@ -2063,71 +2259,20 @@ WHERE {
                 node_id_1 = iri_to_gv_node_id(n_thing_1)
                 node_id_2 = iri_to_gv_node_id(n_thing_2)
                 kwargs = edges[n_thing_1][n_thing_2][short_edge_label]
-                dot_edge = pydot.Edge(node_id_1, node_id_2, **kwargs)
+                dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
                 dot_graph.add_edge(dot_edge)
-
-    # Render time:Instants.
-    for n_instant in sorted(n_instants & n_time_things_to_display):
-        node_id = iri_to_gv_node_id(n_instant)
-        # _logger.debug("%r -> %r", n_instant, node_id)
-        style = "filled" if args.display_time_links else "invis"
-        instant_kwargs = {
-            "color": "dimgray",
-            "fillcolor": "lightgray",
-            "shape": "point",
-            "style": style,
-        }
-        if n_instant in n_instant_to_tooltips:
-            instant_kwargs["tooltip"] = " ;\n".join(
-                sorted(n_instant_to_tooltips[n_instant])
-            )
-        else:
-            # This will only occur for time:Instants in the input that
-            # aren't related to the provenance chains.
-            _logger.debug("Instant did not have tooltips: %r.", n_instant)
-        dot_node = pydot.Node(
-            node_id,
-            **instant_kwargs,
-        )
-        dot_graph.add_node(dot_node)
-
-    display_time_intervals = args.display_time_intervals or args.display_time_links
-
-    # Render time:ProperIntervals that are not prov:Activities.
-    for n_interval in sorted((n_intervals - n_activities) & n_time_things_to_display):
-        # Build label.
-        dot_label_parts = ["ID - " + qname(graph, n_interval), "\n"]
-        _annotate_name(n_interval, dot_label_parts)
-        _annotate_labels(n_interval, dot_label_parts)
-        _annotate_descriptions(n_interval, dot_label_parts)
-        _annotate_comments(n_interval, dot_label_parts)
-        dot_label = "".join(dot_label_parts)
-
-        style = "dotted" if display_time_intervals else "invis"
-        dot_node = pydot.Node(
-            iri_to_gv_node_id(n_interval),
-            color="dimgray",
-            fillcolor="lightgray",
-            label=dot_label,
-            shape="box",
-            style=style,
-            tooltip="ID - " + str(n_interval),
-        )
-        dot_graph.add_node(dot_node)
 
     # Use union of PROV and TIME things to display to determine which
     # strictly-temporal edges will be rendered.  This covers cases where
     # e.g. a PROV Entity is display-sequenced after its Generation event.
-    n_things_to_display = n_prov_things_to_display | n_time_things_to_display
-
-    n_time_boundable_things = (n_intervals | n_entities) & n_things_to_display
+    n_time_boundable_things = (n_intervals | n_entities) & n_things_displayed
 
     # _logger.debug("len(time_edge_node_pairs) = %d.", len(time_edge_node_pairs))
     # _logger.debug("time_edge_node_pairs = %s.", pprint.pformat(time_edge_node_pairs))
     for time_edge_node_pair in sorted(time_edge_node_pairs):
-        if time_edge_node_pair[0] not in n_things_to_display:
+        if time_edge_node_pair[0] not in n_things_displayed:
             continue
-        if time_edge_node_pair[1] not in n_things_to_display:
+        if time_edge_node_pair[1] not in n_things_displayed:
             continue
         node_id_1 = iri_to_gv_node_id(time_edge_node_pair[0])
         node_id_2 = iri_to_gv_node_id(time_edge_node_pair[1])
@@ -2150,10 +2295,10 @@ WHERE {
         # downwards with the case_prov_dot chart directionality.  This
         # is in alignment with the PROV-O edges' directions being in
         # direction of dependency (& thus reverse of time flow).
-        dot_edge = pydot.Edge(node_id_2, node_id_1, **relator_kwargs)
+        dot_edge = pydot.Edge(node_id_2, node_id_1, None, **relator_kwargs)
         dot_graph.add_edge(dot_edge)
 
-    dot_graph.write_raw(args.out_dot)
+    dot_graph.write(args.out_dot)
 
 
 if __name__ == "__main__":

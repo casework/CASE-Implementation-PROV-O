@@ -1,0 +1,44 @@
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation/> .
+@prefix kb: <http://example.org/kb/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:Action-0048fa2e-6805-4e90-8ccd-a7ea6f488c69
+	a case-investigation:InvestigativeAction ;
+	uco-core:description "Build tool" ;
+	uco-action:result
+		kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ,
+		kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+		;
+	.
+
+kb:Action-1102f1f3-65a2-4e1a-8fa1-87ac6fe6ede0
+	a case-investigation:InvestigativeAction ;
+	uco-core:description "Use tool" ;
+	uco-action:instrument kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	uco-action:object
+		kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728 ,
+		kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+		;
+	uco-action:result kb:ProvenanceRecord-131bd792-a0dc-4f14-aafd-0343b4a19537 ;
+	.
+
+kb:ProvenanceRecord-017983af-c8ed-43e3-8b54-01838c3cb728
+	a case-investigation:ProvenanceRecord ;
+	uco-core:object kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	.
+
+kb:ProvenanceRecord-131bd792-a0dc-4f14-aafd-0343b4a19537
+	a case-investigation:ProvenanceRecord ;
+	uco-core:object kb:Tool-12263638-4202-4a95-ac7b-27c041611853 ;
+	.
+
+kb:Tool-12263638-4202-4a95-ac7b-27c041611853
+	a uco-tool:Tool ;
+	.
+
