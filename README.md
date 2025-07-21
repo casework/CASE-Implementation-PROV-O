@@ -1,5 +1,8 @@
 # CASE Implementation: PROV-O
 
+[![Continuous Integration](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml/badge.svg)](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml)
+![CASE Version](https://img.shields.io/badge/CASE%20Version-1.4.0-green)
+
 This repository maps [CASE](https://caseontology.org/) to [W3C PROV-O](https://www.w3.org/TR/prov-o/) and [OWL-Time](https://www.w3.org/TR/owl-time/), and provides a provenance review mechanism.  Note that contrary to other CASE implementations, this maps CASE out to another data model, instead of mapping another data model or tool into CASE.
 
 
