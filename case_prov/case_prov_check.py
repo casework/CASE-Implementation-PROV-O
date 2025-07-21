@@ -28,7 +28,7 @@ https://github.com/RDFLib/pySHACL
 The pySHACL command line interface is further adapted since its adaptations in `case_validate`.
 """
 
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 import argparse
 import importlib.resources
