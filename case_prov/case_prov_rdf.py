@@ -152,7 +152,7 @@ def main() -> None:
         action_inherence_uuid = case_utils.inherent_uuid.inherence_uuid(n_action)
 
         # Generate Starts.
-        (n_start, inference_triples) = case_prov.infer_interval_terminus(
+        n_start, inference_triples = case_prov.infer_interval_terminus(
             in_graph,
             n_action,
             NS_PROV.qualifiedStart,
@@ -167,7 +167,7 @@ def main() -> None:
 
         # Generate Ends, if there's a sign an end should exist.
         if case_prov.interval_end_should_exist(in_graph, n_action):
-            (n_end, inference_triples) = case_prov.infer_interval_terminus(
+            n_end, inference_triples = case_prov.infer_interval_terminus(
                 in_graph,
                 n_action,
                 NS_PROV.qualifiedEnd,
@@ -581,7 +581,7 @@ def main() -> None:
     # the bounding instants.
     for n_interval in sorted(n_intervals):
         # Generate Ends.
-        (n_time_end, end_graph) = case_prov.infer_interval_terminus(
+        n_time_end, end_graph = case_prov.infer_interval_terminus(
             tmp_graph,
             n_interval,
             NS_TIME.hasEnd,
@@ -594,7 +594,7 @@ def main() -> None:
         del end_graph
 
         # Generate Beginnings.
-        (n_time_beginning, beginning_graph) = case_prov.infer_interval_terminus(
+        n_time_beginning, beginning_graph = case_prov.infer_interval_terminus(
             tmp_graph,
             n_interval,
             NS_TIME.hasBeginning,

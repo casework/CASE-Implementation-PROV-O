@@ -283,7 +283,7 @@ WHERE {
     # there is an indicator they end, an End node.
 
     for n_activity in sorted(n_activities):
-        (_, start_graph) = case_prov.infer_interval_terminus(
+        _, start_graph = case_prov.infer_interval_terminus(
             graph,
             n_activity,
             NS_PROV.qualifiedStart,
@@ -294,7 +294,7 @@ WHERE {
         del start_graph
 
         if case_prov.interval_end_should_exist(graph, n_activity):
-            (_, end_graph) = case_prov.infer_interval_terminus(
+            _, end_graph = case_prov.infer_interval_terminus(
                 graph,
                 n_activity,
                 NS_PROV.qualifiedEnd,
@@ -470,7 +470,7 @@ WHERE {
     # For remaining time:Intervals, guarantee they have beginning
     # and, if appropriate, ending nodes.
     for n_interval in sorted(n_intervals):
-        (_, start_graph) = case_prov.infer_interval_terminus(
+        _, start_graph = case_prov.infer_interval_terminus(
             graph,
             n_interval,
             NS_TIME.hasBeginning,
@@ -481,7 +481,7 @@ WHERE {
         del start_graph
 
         if case_prov.interval_end_should_exist(graph, n_interval):
-            (_, end_graph) = case_prov.infer_interval_terminus(
+            _, end_graph = case_prov.infer_interval_terminus(
                 graph,
                 n_interval,
                 NS_TIME.hasEnd,
