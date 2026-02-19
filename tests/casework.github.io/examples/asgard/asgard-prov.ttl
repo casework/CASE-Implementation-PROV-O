@@ -28,6 +28,11 @@ kb:Association-ac0c946d-71df-5b7e-bf98-d4fe10aa3eb2
 	prov:agent kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
 	.
 
+kb:Attribution-21c89410-5140-58fb-b3ca-13d6878d252d
+	a prov:Attribution ;
+	prov:agent kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
+	.
+
 kb:Attribution-30d6d3ac-29cb-5d7a-9214-8382ac4b82b9
 	a prov:Attribution ;
 	prov:agent kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
@@ -36,6 +41,11 @@ kb:Attribution-30d6d3ac-29cb-5d7a-9214-8382ac4b82b9
 kb:Attribution-489dabd9-2109-5b34-8566-f4ed2cce9ae5
 	a prov:Attribution ;
 	prov:agent kb:configuredtool-4c21b431-1746-410b-bc54-f2fd6a9b2516 ;
+	.
+
+kb:Attribution-990ab39d-f94e-509a-bd04-ad3f6d9823cc
+	a prov:Attribution ;
+	prov:agent kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
 	.
 
 kb:Attribution-b6251b8d-f6d1-5d49-aebe-d925d6f3ed97
@@ -71,6 +81,12 @@ kb:Derivation-0190a193-d9f4-5cbb-b660-4832446f197f
 	prov:hadActivity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	.
 
+kb:Derivation-46eb9c07-1db0-579c-907d-a7c08473d877
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
+	.
+
 kb:Derivation-4def118b-6bd8-5a14-ac82-90701019c5c9
 	a prov:Derivation ;
 	prov:entity prov:EmptyCollection ;
@@ -101,6 +117,12 @@ kb:Derivation-cca3f143-b4e7-5d68-ad97-172f031b7da6
 	prov:hadActivity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
 	.
 
+kb:Derivation-edce7825-986a-5821-8b19-6099d3535c7a
+	a prov:Derivation ;
+	prov:entity prov:EmptyCollection ;
+	prov:hadActivity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
+	.
+
 kb:End-c21c802b-1ef3-5bc5-a856-8de8dc164c99
 	a
 		time:Instant ,
@@ -119,12 +141,28 @@ kb:Generation-356ee4b0-db2e-5eca-81a7-4056c426ebb5
 	prov:activity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	.
 
+kb:Generation-3856f1c2-ae6f-567b-a5da-10c939f366bd
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	prov:activity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
+	.
+
 kb:Generation-45ae8137-f5d6-51bd-b08a-fd0153af1934
 	a
 		time:Instant ,
 		prov:Generation
 		;
 	prov:activity kb:investigativeaction-67f43664-077d-47be-b332-4d1c2b579c49 ;
+	.
+
+kb:Generation-76d34b33-28fe-595a-a0b6-adb3f929d315
+	a
+		time:Instant ,
+		prov:Generation
+		;
+	prov:activity kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	.
 
 kb:Generation-80facc0f-0d47-5a9f-aeec-af40a25bf5f0
@@ -234,6 +272,8 @@ kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd
 	time:hasBeginning kb:Start-7e0658c0-29c5-553c-ac0f-564f6bd82ad0 ;
 	time:inside
 		kb:Generation-356ee4b0-db2e-5eca-81a7-4056c426ebb5 ,
+		kb:Generation-3856f1c2-ae6f-567b-a5da-10c939f366bd ,
+		kb:Generation-76d34b33-28fe-595a-a0b6-adb3f929d315 ,
 		kb:Generation-80facc0f-0d47-5a9f-aeec-af40a25bf5f0 ,
 		kb:Usage-683712a8-abd3-5469-ab16-8e2816e7006d
 		;
@@ -298,6 +338,17 @@ kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0
 	prov:qualifiedDelegation kb:Delegation-58830fbc-a096-5407-8312-388e758bf6ed ;
 	.
 
+kb:operating-system-1b7f841a-8df7-454f-9b7d-1a2ace0573e3
+	a prov:Entity ;
+	prov:qualifiedAttribution kb:Attribution-990ab39d-f94e-509a-bd04-ad3f6d9823cc ;
+	prov:qualifiedDerivation kb:Derivation-edce7825-986a-5821-8b19-6099d3535c7a ;
+	prov:qualifiedGeneration kb:Generation-3856f1c2-ae6f-567b-a5da-10c939f366bd ;
+	prov:wasAttributedTo kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
+	uco-core:name "iOS" ;
+	.
+
 kb:provenancerecord-a2a5098c-43fd-4556-a437-2d3ddb821a53
 	a
 		prov:Collection ,
@@ -325,7 +376,11 @@ kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa
 		prov:Collection ,
 		prov:Entity
 		;
-	prov:hadMember kb:device-9420af3b-4d3a-4239-88fc-d33feec8dc4f ;
+	prov:hadMember
+		kb:device-9420af3b-4d3a-4239-88fc-d33feec8dc4f ,
+		kb:operating-system-1b7f841a-8df7-454f-9b7d-1a2ace0573e3 ,
+		kb:relationship-b6951277-419f-4226-b0d3-76c4d6ae33b4
+		;
 	prov:qualifiedAttribution kb:Attribution-b6251b8d-f6d1-5d49-aebe-d925d6f3ed97 ;
 	prov:qualifiedDerivation kb:Derivation-c6b5212c-76e7-5dff-a47b-167ee05facd6 ;
 	prov:qualifiedGeneration kb:Generation-80facc0f-0d47-5a9f-aeec-af40a25bf5f0 ;
@@ -334,5 +389,15 @@ kb:provenancerecord-c2b73229-9cc1-477a-9024-8117e18d97fa
 	prov:wasGeneratedBy kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	case-investigation:exhibitNumber "AsgardPD-20190330-001A" ;
 	uco-core:description "Suspect device found near Bifrost Bridge after disruption" ;
+	.
+
+kb:relationship-b6951277-419f-4226-b0d3-76c4d6ae33b4
+	a prov:Entity ;
+	prov:qualifiedAttribution kb:Attribution-21c89410-5140-58fb-b3ca-13d6878d252d ;
+	prov:qualifiedDerivation kb:Derivation-46eb9c07-1db0-579c-907d-a7c08473d877 ;
+	prov:qualifiedGeneration kb:Generation-76d34b33-28fe-595a-a0b6-adb3f929d315 ;
+	prov:wasAttributedTo kb:odin-decree-c75747d0-d0e9-4ef4-a868-ba6cf9097ac0 ;
+	prov:wasDerivedFrom prov:EmptyCollection ;
+	prov:wasGeneratedBy kb:investigativeaction-3f7f68f0-f68d-48db-be09-45c1239b0fdd ;
 	.
 

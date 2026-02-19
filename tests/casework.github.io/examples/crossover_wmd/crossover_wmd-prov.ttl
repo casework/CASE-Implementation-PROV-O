@@ -314,6 +314,10 @@ kb:mobiledevice-803df237-bc7e-4e24-a5cb-8157063014b4
 	a prov:Entity ;
 	.
 
+kb:operating-system-cbba474a-d58c-4715-a7fa-5854d811021d
+	a prov:Entity ;
+	.
+
 kb:provenance-record-e64b7aed-cecb-4291-81d4-4adb5b8020b2
 	a
 		prov:Collection ,
@@ -361,6 +365,14 @@ kb:provenancerecord-9326149a-31c5-4d20-ada3-b97743d3e563
 		prov:Collection ,
 		prov:Entity
 		;
-	prov:hadMember kb:mobiledevice-803df237-bc7e-4e24-a5cb-8157063014b4 ;
+	prov:hadMember
+		kb:mobiledevice-803df237-bc7e-4e24-a5cb-8157063014b4 ,
+		kb:operating-system-cbba474a-d58c-4715-a7fa-5854d811021d ,
+		kb:relationship-aca6d788-12e4-45d1-8f00-06a63579309d
+		;
+	.
+
+kb:relationship-aca6d788-12e4-45d1-8f00-06a63579309d
+	a prov:Entity ;
 	.
 
