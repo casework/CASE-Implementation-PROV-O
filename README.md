@@ -42,7 +42,7 @@ The [tests](tests/) directory demonstrates the three standalone scripts run agai
 * `case_prov_dot` - This script takes as input one or more PROV-O graph files, and outputs a Dot render.
 * `case_prov_check` - This script takes as input one or more graph files, and reviews data for OWL consistency according to PROV-O (e.g. ensuring no one graph individual is a member of two PROV-O disjoint sets), and for breaks in chain of custody.
 
-On using `case_prov_rdf.py` to create a PROV-O graph, it is possible to provide that graph to a PROV-O consumer, such as a [PROV-CONSTRAINTS](https://www.w3.org/TR/prov-constraints/) validator.  This CASE project runs a Python package listed on the [W3C 2013 implementations report](https://www.w3.org/TR/2013/NOTE-prov-implementations-20130430/), [`prov-check`](https://github.com/pgroth/prov-check), as part of its sample output.  For instance, the [CASE-Examples repository](https://github.com/casework/CASE-Examples) is analyzed [here](tests/CASE-Examples/examples/prov-constraints.log).
+On using `case_prov_rdf.py` to create a PROV-O graph, it is possible to provide that graph to a PROV-O consumer, such as a [PROV-CONSTRAINTS](https://www.w3.org/TR/prov-constraints/) validator.  This CASE project runs a Python package listed on the [W3C 2013 implementations report](https://www.w3.org/TR/2013/NOTE-prov-implementations-20130430/), [`prov-check`](https://github.com/pgroth/prov-check), as part of its sample output.  For instance, the [CASE website](https://github.com/casework/casework.github.io)'s examples are analyzed [here](tests/casework.github.io/examples/prov-constraints.log).
 
 All of the demonstration rendering (to PROV-O and to SVG images) can be run by cloning this repository and running (optionally with `-j`):
 
