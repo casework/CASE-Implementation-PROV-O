@@ -202,7 +202,7 @@ def interval_end_should_exist(
     return None
 
 
-def infer_prov_instantaneous_influence_event(
+def infer_prov_influence(
     in_graph: rdflib.Graph,
     n_prov_thing: rdflib.term.IdentifiedNode,
     n_predicate: rdflib.URIRef,
@@ -213,7 +213,9 @@ def infer_prov_instantaneous_influence_event(
     **kwargs: typing.Any,
 ) -> typing.Tuple[rdflib.term.IdentifiedNode, TmpTriplesType]:
     """
-    PROV InstantaneousEvents that are also Influences need to be defined inhering in the two things related by the unqualified property.
+    The PROV InstantaneousEvents that are also Influences need to be defined inhering in the two things related by the unqualified property.
+
+    This handles qualifying influences of a form "Given 'x u y', 'u' an unqualified influence property, qualify the influence as 'x q I , I p y'."  E.g., 'x prov:wasGeneratedBy y' -> 'x prov:qualifiedGeneration G; G a prov:Generation; G prov:activity y .'"  Other influences reverse direction or involve multiple links, and are handled with logic not in this function.
 
     :returns: Returns a node N matching the pattern 'n_prov_thing n_predicate N', as well as a supplemental set of triples.  If a node N is not found in the graph, a node is created and linked in the supplemental triples; hence the length of the supplemental triples being >0 can be used as an indicator that the node was created.
     """
@@ -226,13 +228,13 @@ def infer_prov_instantaneous_influence_event(
     }[n_predicate]
 
     ret_triples: TmpTriplesType = set()
-    n_instantaneous_event: typing.Optional[rdflib.IdentifiedNode] = None
+    n_influence: typing.Optional[rdflib.IdentifiedNode] = None
     for n_value in in_graph.objects(n_prov_thing, n_predicate):
         assert isinstance(n_value, rdflib.term.IdentifiedNode)
-        n_instantaneous_event = n_value
+        n_influence = n_value
         break
-    if n_instantaneous_event is None:
-        # Define event node.
+    if n_influence is None:
+        # Define influence node.
         if isinstance(n_prov_thing, rdflib.URIRef) and isinstance(
             n_prov_related_thing, rdflib.URIRef
         ):
@@ -248,32 +250,30 @@ def infer_prov_instantaneous_influence_event(
                 )
             else:
                 node_uuid = local_uuid()
-            n_instantaneous_event = rdf_namespace[slug + node_uuid]
+            n_influence = rdf_namespace[slug + node_uuid]
         else:
-            n_instantaneous_event = rdflib.BNode()
-        # Link event node.
-        ret_triples.add((n_prov_thing, n_predicate, n_instantaneous_event))
-        # Type event node.
-        n_instantaneous_event_type = {
+            n_influence = rdflib.BNode()
+        # Link influence node.
+        ret_triples.add((n_prov_thing, n_predicate, n_influence))
+        # Type influence node.
+        n_influence_type = {
             NS_PROV.qualifiedCommunication: NS_PROV.Communication,
             NS_PROV.qualifiedDerivation: NS_PROV.Derivation,
             NS_PROV.qualifiedGeneration: NS_PROV.Generation,
             NS_PROV.qualifiedInvalidation: NS_PROV.Invalidation,
             NS_PROV.qualifiedUsage: NS_PROV.Usage,
         }[n_predicate]
-        ret_triples.add(
-            (n_instantaneous_event, NS_RDF.type, n_instantaneous_event_type)
-        )
-        # Port timestamp to event node.
-        if n_instantaneous_event_type == NS_PROV.Generation:
+        ret_triples.add((n_influence, NS_RDF.type, n_influence_type))
+        # Port timestamp to influence node if also an instantaneous event node.
+        if n_influence_type == NS_PROV.Generation:
             for l_object in in_graph.objects(n_prov_thing, NS_PROV.generatedAtTime):
                 assert isinstance(l_object, rdflib.Literal)
-                ret_triples.add((n_instantaneous_event, NS_PROV.atTime, l_object))
-        elif n_instantaneous_event_type == NS_PROV.Invalidation:
+                ret_triples.add((n_influence, NS_PROV.atTime, l_object))
+        elif n_influence_type == NS_PROV.Invalidation:
             for l_object in in_graph.objects(n_prov_thing, NS_PROV.invalidatedAtTime):
                 assert isinstance(l_object, rdflib.Literal)
-                ret_triples.add((n_instantaneous_event, NS_PROV.atTime, l_object))
-        # Link provenentially-tied node to event node.
+                ret_triples.add((n_influence, NS_PROV.atTime, l_object))
+        # Link provenentially-tied node to influence node.
         n_inherent_influence_predicate = {
             NS_PROV.qualifiedCommunication: NS_PROV.activity,
             NS_PROV.qualifiedDerivation: NS_PROV.entity,
@@ -283,12 +283,12 @@ def infer_prov_instantaneous_influence_event(
         }[n_predicate]
         ret_triples.add(
             (
-                n_instantaneous_event,
+                n_influence,
                 n_inherent_influence_predicate,
                 n_prov_related_thing,
             )
         )
-    return (n_instantaneous_event, ret_triples)
+    return (n_influence, ret_triples)
 
 
 def infer_interval_terminus(

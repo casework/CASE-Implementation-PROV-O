@@ -333,7 +333,7 @@ def main() -> None:
 
     def _pull_inference_triples(inference_triples: case_prov.TmpTriplesType) -> None:
         """
-        This subroutine is provided to supplement case_prov.infer_prov_instantaneous_influence_event usage.
+        This subroutine is provided to supplement case_prov.infer_prov_influence usage.
         """
         nonlocal tmp_triples
         for inference_triple in inference_triples:
@@ -360,7 +360,7 @@ def main() -> None:
         (
             n_communication,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_informed_activity,
             NS_PROV.qualifiedCommunication,
@@ -385,7 +385,7 @@ def main() -> None:
         (
             n_derivation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_action_result,
             NS_PROV.qualifiedDerivation,
@@ -418,7 +418,7 @@ def main() -> None:
         (
             n_generation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_entity,
             NS_PROV.qualifiedGeneration,
@@ -443,7 +443,7 @@ def main() -> None:
         (
             n_invalidation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_entity,
             NS_PROV.qualifiedInvalidation,
@@ -468,7 +468,7 @@ def main() -> None:
         (
             n_usage,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_activity,
             NS_PROV.qualifiedUsage,
