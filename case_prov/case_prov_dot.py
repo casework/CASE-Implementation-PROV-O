@@ -34,7 +34,7 @@ __version__ = "0.6.0"
 
 import argparse
 import collections
-import copy
+import enum
 import hashlib
 import logging
 import os
@@ -44,9 +44,9 @@ import uuid
 
 import case_utils.inherent_uuid
 import cdo_local_uuid
-import prov.constants  # type: ignore
-import prov.dot  # type: ignore
-import prov.identifier  # type: ignore
+import prov.constants
+import prov.dot
+import prov.identifier
 import pydot
 import rdflib.plugins.sparql
 from case_utils.namespace import NS_CASE_INVESTIGATION, NS_RDF, NS_RDFS, NS_UCO_CORE
@@ -61,37 +61,520 @@ NS_PROV = rdflib.PROV
 NS_TIME = rdflib.TIME
 
 
-def clone_style(
-    prov_constant: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
-) -> typing.Dict[str, str]:
-    retval: typing.Dict[str, str]
-    if prov_constant == NS_PROV.Collection:
-        retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov.constants.PROV_ENTITY])
-    elif prov_constant in (NS_PROV.InstantaneousEvent, NS_TIME.Instant):
-        retval = dict()
-        retval["color"] = "dimgray"
-        retval["fillcolor"] = "lightgray"
-        retval["shape"] = "point"
-    elif prov_constant == NS_TIME.Interval:
-        retval = dict()
-        retval["color"] = "dimgray"
-        retval["fillcolor"] = "lightgray"
-        retval["shape"] = "box"
-    elif isinstance(prov_constant, prov.identifier.QualifiedName):
-        retval = copy.deepcopy(prov.dot.DOT_PROV_STYLE[prov_constant])
-    else:
-        raise NotImplementedError(repr(prov_constant))
+class ColorEnum(enum.StrEnum):
+    """
+    Enumerations specializing this should be GraphViz-compatible color codes.
+    https://graphviz.org/docs/attr-types/color/
+    https://graphviz.org/doc/info/colors.html
+    """
 
-    # Adjust shapes and colors.
-    if prov_constant == NS_PROV.Collection:
-        retval["shape"] = "folder"
-        retval["fillcolor"] = "khaki3"
-    elif prov_constant == prov.constants.PROV_ENTITY:
-        retval["fillcolor"] = "#FFFC87"
-    elif prov_constant == prov.constants.PROV_COMMUNICATION:
-        retval["color"] = "blue3"
+    pass
 
-    return retval
+
+class ProvConventionalColor(ColorEnum):
+    """
+    These constants are provided by this page:
+    https://www.w3.org/2011/prov/wiki/Diagrams
+    """
+
+    AGENT_SUPERDESATURATED = "#FDB266"
+    AGENT_SATURATED = "#FED37F"
+    AGENT_DESATURATED = "#FDEECD"
+    AGENT_STROKE = "#000000"
+
+    ACTIVITY_SATURATED = "#9FB1FC"
+    ACTIVITY_DESATURATED = "#D8D9FE"
+    ACTIVITY_STROKE = "#0000FF"
+
+    ENTITY_SATURATED = "#FFFC87"
+    ENTITY_DESATURATED = "#FFFDE5"
+    ENTITY_STROKE = "#808080"
+
+
+class ProvPackageColor(ColorEnum):
+    """
+    These constants are drawn from:
+    https://github.com/trungdong/prov/blob/22f5a6b8477f2ff190e610c7597f3ac5cbd77db6/src/prov/dot.py
+    """
+
+    ASSOCIATION_STROKE = prov.dot.DOT_PROV_STYLE[prov.model.PROV_ASSOCIATION]["color"]
+
+    ATTRIBUTION_STROKE = prov.dot.DOT_PROV_STYLE[prov.model.PROV_ATTRIBUTION]["color"]
+
+    DELEGATION_STROKE = prov.dot.DOT_PROV_STYLE[prov.model.PROV_DELEGATION]["color"]
+
+    GENERATION_FONTCOLOR = prov.dot.DOT_PROV_STYLE[prov.model.PROV_GENERATION][
+        "fontcolor"
+    ]
+    GENERATION_STROKE = prov.dot.DOT_PROV_STYLE[prov.model.PROV_GENERATION]["color"]
+
+    USAGE_FONTCOLOR = prov.dot.DOT_PROV_STYLE[prov.model.PROV_USAGE]["fontcolor"]
+    USAGE_STROKE = prov.dot.DOT_PROV_STYLE[prov.model.PROV_USAGE]["color"]
+
+
+class ExtraColor(ColorEnum):
+    """
+    These constants come from no guidance source.
+    """
+
+    COLLECTION_SATURATED = "khaki3"
+
+    COMMUNICATION_STROKE = "blue3"
+
+    INSTANTANEOUS_EVENT_SATURATED = "lightgray"
+    INSTANTANEOUS_EVENT_STROKE = "dimgray"
+
+    INSTANT_SATURATED = "lightgray"
+    INSTANT_STROKE = "dimgray"
+
+    INTERVAL_SATURATED = "lightgray"
+    INTERVAL_STROKE = "dimgray"
+
+
+class ThingNode(pydot.Node):
+    """
+    A pydot.Node subclass corresponding to owl:Thing.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        # A code path in pydot.Node where obj_dict is None needs to be followed.
+        _attrs: pydot.classes.AttributeDict = dict()
+        if obj_dict is not None:
+            for key in obj_dict:
+                _attrs.setdefault(key, obj_dict[key])
+        for key in attrs:
+            _attrs.setdefault(key, attrs[key])
+        # TODO ?? _attrs.setdefault("name", name)
+        super().__init__(name, None, **_attrs)
+
+
+class ActivityNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to prov:Activity.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvConventionalColor.ACTIVITY_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ProvConventionalColor.ACTIVITY_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "box")
+        obj_dict_with_defaults.setdefault("style", "filled")
+        super().__init__(name, obj_dict_with_defaults, **attrs)
+
+
+class AgentNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to prov:Agent.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvConventionalColor.AGENT_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ProvConventionalColor.AGENT_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "house")
+        obj_dict_with_defaults.setdefault("style", "filled")
+        super().__init__(name, obj_dict_with_defaults, **attrs)
+
+
+class CollectionNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to prov:Collection.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvConventionalColor.ENTITY_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ExtraColor.COLLECTION_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "folder")
+        obj_dict_with_defaults.setdefault("style", "filled")
+        super().__init__(name, obj_dict_with_defaults, **attrs)
+
+
+class EntityNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to prov:Entity.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvConventionalColor.ENTITY_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ProvConventionalColor.ENTITY_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "ellipse")
+        obj_dict_with_defaults.setdefault("style", "filled")
+        super().__init__(name, obj_dict_with_defaults, **attrs)
+
+
+class InstantaneousEventNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to prov:InstantaneousEvent.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault(
+            "color", str(ExtraColor.INSTANTANEOUS_EVENT_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ExtraColor.INSTANTANEOUS_EVENT_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "point")
+        super().__init__(name, obj_dict_with_defaults)
+
+
+class InstantNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to time:Instant.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("color", str(ExtraColor.INSTANT_STROKE))
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ExtraColor.INSTANT_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "point")
+        super().__init__(name, obj_dict_with_defaults)
+
+
+class IntervalNode(ThingNode):
+    """
+    A pydot.Node subclass corresponding to time:Interval.
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("color", str(ExtraColor.INTERVAL_STROKE))
+        obj_dict_with_defaults.setdefault(
+            "fillcolor", str(ExtraColor.INTERVAL_SATURATED)
+        )
+        obj_dict_with_defaults.setdefault("shape", "box")
+        super().__init__(name, obj_dict_with_defaults)
+
+
+class ProvTimeEdge(pydot.Edge):
+    """
+    A pydot.Edge subclass providing abstract functionality.
+    """
+
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        # A code path in pydot.Edge where obj_dict is None needs to be followed.
+        _attrs: pydot.classes.AttributeDict = dict()
+        if obj_dict is not None:
+            for key in obj_dict:
+                _attrs.setdefault(key, obj_dict[key])
+        for key in attrs:
+            _attrs.setdefault(key, attrs[key])
+        # Font size design point drawn from prov.dot module.DOT_PROV_STYLE.
+        _attrs.setdefault(
+            "fontsize", prov.dot.DOT_PROV_STYLE[prov.constants.PROV_END]["fontsize"]
+        )
+        super().__init__(src, dst, None, **_attrs)
+
+
+class AssociationEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "wasAssociatedWith")
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvPackageColor.ASSOCIATION_STROKE)
+        )
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class AttributionEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "wasAttributedTo")
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvPackageColor.ATTRIBUTION_STROKE)
+        )
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class CommunicationEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "wasInformedBy")
+        obj_dict_with_defaults.setdefault("color", ExtraColor.COMMUNICATION_STROKE)
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class DelegationEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "actedOnBehalfOf")
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvPackageColor.DELEGATION_STROKE)
+        )
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class DerivationEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "wasDerivedFrom")
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class GenerationEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "wasGeneratedBy")
+        obj_dict_with_defaults.setdefault(
+            "color", str(ProvPackageColor.GENERATION_STROKE)
+        )
+        obj_dict_with_defaults.setdefault(
+            "fontcolor", str(ProvPackageColor.GENERATION_FONTCOLOR)
+        )
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class MemberEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("label", "hadMember")
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class TimeEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("color", str(ExtraColor.INTERVAL_STROKE))
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class BeginningEdge(TimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("arrowhead", "tee")
+        obj_dict_with_defaults.setdefault("arrowtail", "none")
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class EndEdge(TimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("arrowhead", "none")
+        obj_dict_with_defaults.setdefault("arrowtail", "tee")
+        obj_dict_with_defaults.setdefault("dir", "back")
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
+
+
+class UsageEdge(ProvTimeEdge):
+    def __init__(
+        self,
+        src: (
+            pydot.core.EdgeDefinition | typing.Sequence[pydot.core.EdgeDefinition]
+        ) = "",
+        dst: pydot.core.EdgeDefinition = "",
+        obj_dict: pydot.classes.AttributeDict | None = None,
+        **attrs: typing.Any,
+    ) -> None:
+        if obj_dict is None:
+            obj_dict_with_defaults = dict()
+        else:
+            obj_dict_with_defaults = obj_dict.copy()
+        obj_dict_with_defaults.setdefault("color", str(ProvPackageColor.USAGE_STROKE))
+        obj_dict_with_defaults.setdefault(
+            "fontcolor", str(ProvPackageColor.USAGE_FONTCOLOR)
+        )
+        obj_dict_with_defaults.setdefault("label", "used")
+        super().__init__(src, dst, obj_dict_with_defaults, **attrs)
 
 
 def get_interval_boundary_instants(
@@ -732,91 +1215,6 @@ def n_intervalic_perdurant_to_interval_string(
     return ", ".join(section_parts)
 
 
-def n_thing_to_pydot_node_kwargs(
-    n_thing: rdflib.term.IdentifiedNode,
-    graph: rdflib.Graph,
-    n_class_for_style: typing.Union[prov.identifier.QualifiedName, rdflib.URIRef],
-    wrapper: textwrap.TextWrapper,
-    *args: typing.Any,
-    early_label_parts: list[str] = [],
-    style: typing.Optional[str] = None,
-    tooltip_parts: list[str] = [],
-    **kwargs: typing.Any,
-) -> typing.Dict[str, str]:
-    """
-    Pull in general object descriptive strings: Name, labels, descriptions, and comments.
-    """
-    kwargs = clone_style(n_class_for_style)
-
-    if style is not None:
-        kwargs["style"] = style
-
-    # Build label parts and tooltip parts.
-    dot_label_parts = ["ID - " + qname(graph, n_thing)]
-    dot_label_parts.extend(early_label_parts)
-    _tooltip_parts: list[str] = ["ID - " + str(n_thing)]
-    _tooltip_parts.extend(tooltip_parts)
-
-    # Extend label or tooltip with descriptive graph parts; which gets
-    # extended depends on whether the shape supports text.  (The point
-    # shape used for instantaneous perdurants doesn't.)
-    if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
-        _parts_list = _tooltip_parts
-    else:
-        _parts_list = dot_label_parts
-
-    # Render `uco-core:name`.
-    # SHACL constraints on UCO will mean there will be only one name.
-    l_uco_names: typing.Set[rdflib.Literal] = set()
-    for triple in graph.triples((n_thing, NS_UCO_CORE.name, None)):
-        assert isinstance(triple[2], rdflib.Literal)
-        l_uco_names.add(triple[2])
-    if len(l_uco_names) > 0:
-        for l_uco_name in l_uco_names:
-            label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
-            _parts_list.append(label_part)
-
-    # Render `rdfs:label`s.
-    # Unlike `rdfs:comment`s and `uco-core:description`s, labels don't
-    # have a blank line separating them.  This is just a design choice
-    # to keep what might be shorter string annotations together.
-    l_labels: typing.Set[rdflib.Literal] = set()
-    for triple in graph.triples((n_thing, NS_RDFS.label, None)):
-        assert isinstance(triple[2], rdflib.Literal)
-        l_labels.add(triple[2])
-    if len(l_labels) > 0:
-        _parts_list.append("")
-        for l_label in sorted(l_labels):
-            label_part = "\n".join(wrapper.wrap(str(l_label)))
-            _parts_list.append(label_part)
-
-    # Render `uco-core:description`s.
-    l_uco_descriptions: typing.Set[rdflib.Literal] = set()
-    for triple in graph.triples((n_thing, NS_UCO_CORE.description, None)):
-        assert isinstance(triple[2], rdflib.Literal)
-        l_uco_descriptions.add(triple[2])
-    # logging.debug("len(l_uco_descriptions) = %d.", len(l_uco_descriptions))
-    for l_uco_description in sorted(l_uco_descriptions):
-        _parts_list.append("")
-        label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
-        _parts_list.append(label_part)
-
-    # Render `rdfs:comment`s.
-    l_comments: typing.Set[rdflib.Literal] = set()
-    for triple in graph.triples((n_thing, NS_RDFS.comment, None)):
-        assert isinstance(triple[2], rdflib.Literal)
-        l_comments.add(triple[2])
-    for l_comment in sorted(l_comments):
-        _parts_list.append("")
-        label_part = "\n".join(wrapper.wrap(str(l_comment)))
-        _parts_list.append(label_part)
-
-    kwargs["label"] = "\n".join(dot_label_parts)
-    kwargs["tooltip"] = "\n".join(_tooltip_parts)
-
-    return kwargs
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true")
@@ -1082,7 +1480,7 @@ WHERE {
         rdflib.term.IdentifiedNode, typing.Set[str]
     ] = collections.defaultdict(set)
 
-    # IdentifiedNode (edge beginning node) -> IdentifiedNode (edge ending node) -> short predicate -> pydot.Edge's kwargs
+    # IdentifiedNode (edge beginning node) -> IdentifiedNode (edge ending node) -> short predicate -> (pydot.Edge subclass, pydot.Edge kwargs)
     EdgesType = typing.DefaultDict[
         rdflib.term.IdentifiedNode,
         typing.DefaultDict[
@@ -1196,8 +1594,7 @@ WHERE {
     def _render_edges(
         select_query_text: str,
         short_edge_label: str,
-        kwargs: typing.Dict[str, str],
-        supplemental_dict: typing.Optional[EdgesType] = None,
+        kwarg_dict: pydot.classes.AttributeDict,
     ) -> None:
         select_query_object = rdflib.plugins.sparql.processor.prepareQuery(
             select_query_text, initNs=nsdict
@@ -1208,9 +1605,7 @@ WHERE {
             assert isinstance(record[1], rdflib.term.IdentifiedNode)
             n_thing_1 = record[0]
             n_thing_2 = record[1]
-            edges[n_thing_1][n_thing_2][short_edge_label] = kwargs
-            if supplemental_dict is not None:
-                supplemental_dict[n_thing_1][n_thing_2][short_edge_label] = kwargs
+            edges[n_thing_1][n_thing_2][short_edge_label] = kwarg_dict
 
     if include_agents:
         # Render actedOnBehalfOf.
@@ -1222,10 +1617,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_DELEGATION)
+        kwarg_dict: pydot.classes.AttributeDict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "actedOnBehalfOf", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "actedOnBehalfOf", kwarg_dict)
         if args.dash_unqualified:
             # Render actedOnBehalfOf, with stronger line from Delegation.
             select_query_text = """\
@@ -1240,8 +1635,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_DELEGATION)
-            _render_edges(select_query_text, "actedOnBehalfOf", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "actedOnBehalfOf", kwarg_dict)
 
     if include_entities:
         # Render hadMember.
@@ -1253,8 +1648,8 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_MEMBERSHIP)
-        _render_edges(select_query_text, "hadMember", kwargs)
+        kwarg_dict = dict()
+        _render_edges(select_query_text, "hadMember", kwarg_dict)
 
     if include_activities and include_entities:
         # Render used.
@@ -1266,10 +1661,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_USAGE)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "used", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "used", kwarg_dict)
         if args.dash_unqualified:
             # Render used, with stronger line from Usage.
             select_query_text = """\
@@ -1284,8 +1679,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_USAGE)
-            _render_edges(select_query_text, "used", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "used", kwarg_dict)
 
     if include_activities and include_agents:
         # Render wasAssociatedWith.
@@ -1297,10 +1692,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_ASSOCIATION)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "wasAssociatedWith", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "wasAssociatedWith", kwarg_dict)
         if args.dash_unqualified:
             # Render wasAssociatedWith, with stronger line from Association.
             select_query_text = """\
@@ -1315,8 +1710,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_ASSOCIATION)
-            _render_edges(select_query_text, "wasAssociatedWith", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "wasAssociatedWith", kwarg_dict)
 
     if include_agents and include_entities:
         # Render wasAttributedTo.
@@ -1328,10 +1723,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_ATTRIBUTION)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "wasAttributedTo", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "wasAttributedTo", kwarg_dict)
         if args.dash_unqualified:
             # Render wasAttributedTo, with stronger line from Attribution.
             select_query_text = """\
@@ -1346,8 +1741,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_ATTRIBUTION)
-            _render_edges(select_query_text, "wasAttributedTo", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "wasAttributedTo", kwarg_dict)
 
     if include_entities:
         # Render wasDerivedFrom.
@@ -1359,10 +1754,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_DERIVATION)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "wasDerivedFrom", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "wasDerivedFrom", kwarg_dict)
         # Render wasDerivedFrom, with stronger line from Derivation.
         # Note that though PROV-O allows using prov:hadUsage and
         # prov:hadGeneration on a prov:Derivation, those are not currently
@@ -1397,8 +1792,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_DERIVATION)
-            _render_edges(select_query_text, "wasDerivedFrom", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "wasDerivedFrom", kwarg_dict)
 
     if include_activities and include_entities:
         # Render wasGeneratedBy.
@@ -1408,10 +1803,10 @@ WHERE {
   ?nEntity (prov:wasGeneratedBy|^prov:generated) ?nActivity .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_GENERATION)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "wasGeneratedBy", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "wasGeneratedBy", kwarg_dict)
         if args.dash_unqualified:
             # Render wasGeneratedBy, with stronger line from Generation.
             select_query_text = """\
@@ -1426,8 +1821,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_GENERATION)
-            _render_edges(select_query_text, "wasGeneratedBy", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "wasGeneratedBy", kwarg_dict)
 
     if include_activities:
         # Render wasInformedBy.
@@ -1439,10 +1834,10 @@ WHERE {
     .
 }
 """
-        kwargs = clone_style(prov.constants.PROV_COMMUNICATION)
+        kwarg_dict = dict()
         if args.dash_unqualified:
-            kwargs["style"] = "dashed"
-        _render_edges(select_query_text, "wasInformedBy", kwargs)
+            kwarg_dict["style"] = "dashed"
+        _render_edges(select_query_text, "wasInformedBy", kwarg_dict)
         if args.dash_unqualified:
             # Render wasInformedBy, with stronger line from Communication.
             select_query_text = """\
@@ -1457,8 +1852,8 @@ WHERE {
     .
 }
 """
-            kwargs = clone_style(prov.constants.PROV_COMMUNICATION)
-            _render_edges(select_query_text, "wasInformedBy", kwargs)
+            kwarg_dict = dict()
+            _render_edges(select_query_text, "wasInformedBy", kwarg_dict)
 
     _logger.debug("len(edges) = %d.", len(edges))
 
@@ -2170,28 +2565,33 @@ WHERE {
     display_time_intervals = args.display_time_intervals or args.display_time_links
 
     # Build the PROV and Time Pydot Nodes.
-    for thing_set, n_class_for_style in [
-        (n_agents, prov.constants.PROV_AGENT),
-        (n_collections, NS_PROV.Collection),
-        (n_entities, prov.constants.PROV_ENTITY),
-        (n_activities, prov.constants.PROV_ACTIVITY),
-        (n_intervals, NS_TIME.Interval),
-        (n_instantaneous_events, NS_PROV.InstantaneousEvent),
-        (n_instants, NS_TIME.Instant),
+    for thing_set, node_class in [
+        (n_agents, AgentNode),
+        (n_collections, CollectionNode),
+        (n_entities, EntityNode),
+        (n_activities, ActivityNode),
+        (n_intervals, IntervalNode),
+        (n_instantaneous_events, InstantaneousEventNode),
+        (n_instants, InstantNode),
     ]:
         for n_thing in sorted(thing_set):
             if n_thing not in n_things_to_display:
                 continue
 
-            early_label_parts: list[str] = []
-            tooltip_parts: list[str] = []
-            if n_class_for_style in {prov.constants.PROV_ACTIVITY, NS_TIME.Interval}:
+            kwarg_dict = dict()
+
+            # Build label parts and tooltip parts.
+            dot_label_parts = ["ID - " + qname(graph, n_thing)]
+            tooltip_parts: list[str] = ["ID - " + str(n_thing)]
+
+            style: typing.Optional[str] = None
+            if node_class in {ActivityNode, IntervalNode}:
                 maybe_interval_string = n_intervalic_perdurant_to_interval_string(
                     n_thing, graph
                 )
                 if maybe_interval_string is not None:
-                    early_label_parts.append(maybe_interval_string)
-            elif n_class_for_style == NS_PROV.Collection:
+                    dot_label_parts.append(maybe_interval_string)
+            elif node_class == CollectionNode:
                 l_exhibit_numbers: typing.Set[rdflib.Literal] = set()
                 for triple in graph.triples(
                     (n_thing, NS_CASE_INVESTIGATION.exhibitNumber, None)
@@ -2199,8 +2599,8 @@ WHERE {
                     assert isinstance(triple[2], rdflib.Literal)
                     l_exhibit_numbers.add(triple[2])
                 for l_exhibit_number in sorted(l_exhibit_numbers):
-                    early_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
-            elif n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
+                    dot_label_parts.append("Exhibit - " + l_exhibit_number.toPython())
+            elif node_class in {InstantaneousEventNode, InstantNode}:
                 if n_thing in n_instant_to_tooltips:
                     timestamp_string = n_instantaneous_perdurant_to_timestamp_string(
                         n_thing, graph
@@ -2217,22 +2617,73 @@ WHERE {
                     # aren't related to the provenance chains.
                     _logger.debug("Instant did not have tooltips: %r.", n_thing)
 
-            style: typing.Optional[str] = None
-            if n_class_for_style in {NS_PROV.InstantaneousEvent, NS_TIME.Instant}:
-                style = "filled" if args.display_time_links else "invis"
-            elif n_class_for_style == NS_TIME.Interval:
-                style = "dotted" if display_time_intervals else "invis"
+            # _parts_list is an alias.
+            #
+            # Extend label or tooltip with descriptive graph parts; which gets
+            # extended depends on whether the shape supports text.  (The point
+            # shape used for instantaneous perdurants doesn't.)
+            if node_class in {InstantaneousEventNode, InstantNode}:
+                _parts_list = tooltip_parts
+            else:
+                _parts_list = dot_label_parts
 
-            kwargs = n_thing_to_pydot_node_kwargs(
-                n_thing,
-                graph,
-                n_class_for_style,
-                wrapper,
-                early_label_parts=early_label_parts,
-                style=style,
-                tooltip_parts=tooltip_parts,
-            )
-            dot_node = pydot.Node(iri_to_gv_node_id(n_thing), None, **kwargs)
+            # Render `uco-core:name`.
+            # SHACL constraints on UCO will mean there will be only one name.
+            l_uco_names: typing.Set[rdflib.Literal] = set()
+            for triple in graph.triples((n_thing, NS_UCO_CORE.name, None)):
+                assert isinstance(triple[2], rdflib.Literal)
+                l_uco_names.add(triple[2])
+            if len(l_uco_names) > 0:
+                for l_uco_name in l_uco_names:
+                    label_part = "\n".join(wrapper.wrap(str(l_uco_name)))
+                    _parts_list.append(label_part)
+
+            # Render `rdfs:label`s.
+            # Unlike `rdfs:comment`s and `uco-core:description`s, labels don't
+            # have a blank line separating them.  This is just a design choice
+            # to keep what might be shorter string annotations together.
+            l_labels: typing.Set[rdflib.Literal] = set()
+            for triple in graph.triples((n_thing, NS_RDFS.label, None)):
+                assert isinstance(triple[2], rdflib.Literal)
+                l_labels.add(triple[2])
+            if len(l_labels) > 0:
+                _parts_list.append("")
+                for l_label in sorted(l_labels):
+                    label_part = "\n".join(wrapper.wrap(str(l_label)))
+                    _parts_list.append(label_part)
+
+            # Render `uco-core:description`s.
+            l_uco_descriptions: typing.Set[rdflib.Literal] = set()
+            for triple in graph.triples((n_thing, NS_UCO_CORE.description, None)):
+                assert isinstance(triple[2], rdflib.Literal)
+                l_uco_descriptions.add(triple[2])
+            # logging.debug("len(l_uco_descriptions) = %d.", len(l_uco_descriptions))
+            for l_uco_description in sorted(l_uco_descriptions):
+                _parts_list.append("")
+                label_part = "\n".join(wrapper.wrap(str(l_uco_description)))
+                _parts_list.append(label_part)
+
+            # Render `rdfs:comment`s.
+            l_comments: typing.Set[rdflib.Literal] = set()
+            for triple in graph.triples((n_thing, NS_RDFS.comment, None)):
+                assert isinstance(triple[2], rdflib.Literal)
+                l_comments.add(triple[2])
+            for l_comment in sorted(l_comments):
+                _parts_list.append("")
+                label_part = "\n".join(wrapper.wrap(str(l_comment)))
+                _parts_list.append(label_part)
+
+            kwarg_dict["label"] = "\n".join(dot_label_parts)
+            kwarg_dict["tooltip"] = "\n".join(tooltip_parts)
+
+            # Decide on style.
+            if node_class in {InstantaneousEventNode, InstantNode}:
+                kwarg_dict["style"] = "filled" if args.display_time_links else "invis"
+            elif node_class == IntervalNode:
+                kwarg_dict["style"] = "dotted" if display_time_intervals else "invis"
+
+            dot_node = node_class(iri_to_gv_node_id(n_thing), kwarg_dict)
+
             dot_graph.add_node(dot_node)
 
             # Transfer from to-display set.
@@ -2257,8 +2708,18 @@ WHERE {
                 # the edge kwargs were being constructed.
                 node_id_1 = iri_to_gv_node_id(n_thing_1)
                 node_id_2 = iri_to_gv_node_id(n_thing_2)
-                kwargs = edges[n_thing_1][n_thing_2][short_edge_label]
-                dot_edge = pydot.Edge(node_id_1, node_id_2, None, **kwargs)
+                kwarg_dict = edges[n_thing_1][n_thing_2][short_edge_label]
+                edge_class = {
+                    "actedOnBehalfOf": DelegationEdge,
+                    "hadMember": MemberEdge,
+                    "used": UsageEdge,
+                    "wasAssociatedWith": AssociationEdge,
+                    "wasAttributedTo": AttributionEdge,
+                    "wasDerivedFrom": DerivationEdge,
+                    "wasGeneratedBy": GenerationEdge,
+                    "wasInformedBy": CommunicationEdge,
+                }[short_edge_label]
+                dot_edge = edge_class(node_id_1, node_id_2, kwarg_dict)
                 dot_graph.add_edge(dot_edge)
 
     # Use union of PROV and TIME things to display to determine which
@@ -2277,24 +2738,26 @@ WHERE {
         node_id_2 = iri_to_gv_node_id(time_edge_node_pair[1])
         style = "dotted" if args.display_time_links else "invis"
         relator_kwargs = {
-            "color": "dimgray",
             "style": style,
         }
-        if time_edge_node_pair[0] in n_terminus_instants:
-            if time_edge_node_pair[1] in n_time_boundable_things:
-                relator_kwargs["arrowhead"] = "tee"
-                relator_kwargs["arrowtail"] = "none"
-        if time_edge_node_pair[1] in n_terminus_instants:
-            if time_edge_node_pair[0] in n_time_boundable_things:
-                relator_kwargs["arrowhead"] = "none"
-                relator_kwargs["arrowtail"] = "tee"
-                relator_kwargs["dir"] = "back"
+        if (
+            time_edge_node_pair[0] in n_terminus_instants
+            and time_edge_node_pair[1] in n_time_boundable_things
+        ):
+            edge_class = BeginningEdge
+        elif (
+            time_edge_node_pair[1] in n_terminus_instants
+            and time_edge_node_pair[0] in n_time_boundable_things
+        ):
+            edge_class = EndEdge
+        else:
+            edge_class = TimeEdge
         # Edge direction is "backwards" in time, favoring use of the
         # "inverse" Allen relationship.  This is so time will flow
         # downwards with the case_prov_dot chart directionality.  This
         # is in alignment with the PROV-O edges' directions being in
         # direction of dependency (& thus reverse of time flow).
-        dot_edge = pydot.Edge(node_id_2, node_id_1, None, **relator_kwargs)
+        dot_edge = edge_class(node_id_2, node_id_1, None, **relator_kwargs)
         dot_graph.add_edge(dot_edge)
 
     dot_graph.write(args.out_dot)
