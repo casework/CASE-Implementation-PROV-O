@@ -13,7 +13,7 @@
 <g id="node1" class="node">
 <title>_397a9e99edc9334a99efac2668700bbb3ceb44a4f2584719710c9c5f82038b67</title>
 <g id="a_node1"><a xlink:title="ID &#45; http://example.org/kb/camera&#45;uuid&#45;1">
-<polygon fill="#fed37f" stroke="black" points="1932.47,-732.84 1815.23,-745.28 1697.98,-732.84 1698.09,-712.71 1932.36,-712.71 1932.47,-732.84"/>
+<polygon fill="#fed37f" stroke="#000000" points="1932.47,-732.84 1815.23,-745.28 1697.98,-732.84 1698.09,-712.71 1932.36,-712.71 1932.47,-732.84"/>
 <text xml:space="preserve" text-anchor="middle" x="1815.23" y="-722.23" font-family="Times,serif" font-size="14.00">ID &#45; kb:camera&#45;uuid&#45;1</text>
 </a>
 </g>
@@ -22,7 +22,7 @@
 <g id="node5" class="node">
 <title>_ffa327987157924d1ae152fdea43f99b98251d8fdd6a67aa829f2bab25e15c91</title>
 <g id="a_node5"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;3">
-<polygon fill="#fed37f" stroke="black" points="4069.31,-840.89 3955.23,-853.33 3841.14,-840.89 3841.25,-820.77 4069.2,-820.77 4069.31,-840.89"/>
+<polygon fill="#fed37f" stroke="#000000" points="4069.31,-840.89 3955.23,-853.33 3841.14,-840.89 3841.25,-820.77 4069.2,-820.77 4069.31,-840.89"/>
 <text xml:space="preserve" text-anchor="middle" x="3955.23" y="-830.28" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;3</text>
 </a>
 </g>
@@ -38,7 +38,7 @@
 <g id="node2" class="node">
 <title>_c74f294e6e5b3b476c50723f525440e37f16bbb4029944635c70f5c4cb0e6d9f</title>
 <g id="a_node2"><a xlink:title="ID &#45; http://example.org/kb/kiosk&#45;uuid&#45;1">
-<polygon fill="#fed37f" stroke="black" points="4063.62,-732.84 3955.23,-745.28 3846.84,-732.84 3846.94,-712.71 4063.52,-712.71 4063.62,-732.84"/>
+<polygon fill="#fed37f" stroke="#000000" points="4063.62,-732.84 3955.23,-745.28 3846.84,-732.84 3846.94,-712.71 4063.52,-712.71 4063.62,-732.84"/>
 <text xml:space="preserve" text-anchor="middle" x="3955.23" y="-722.23" font-family="Times,serif" font-size="14.00">ID &#45; kb:kiosk&#45;uuid&#45;1</text>
 </a>
 </g>
@@ -54,7 +54,7 @@
 <g id="node3" class="node">
 <title>_ce525c27e32383c04497291d356c30387164d9e98e67466567e244b87e47285c</title>
 <g id="a_node3"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;1">
-<polygon fill="#fed37f" stroke="black" points="1035.31,-1009.89 921.23,-1022.33 807.14,-1009.89 807.25,-989.77 1035.2,-989.77 1035.31,-1009.89"/>
+<polygon fill="#fed37f" stroke="#000000" points="1035.31,-1009.89 921.23,-1022.33 807.14,-1009.89 807.25,-989.77 1035.2,-989.77 1035.31,-1009.89"/>
 <text xml:space="preserve" text-anchor="middle" x="921.23" y="-999.28" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;1</text>
 </a>
 </g>
@@ -63,7 +63,7 @@
 <g id="node4" class="node">
 <title>_be1ad1d576ff7128a26a59ee6acb2f1a317b5ed42d49655f1e89b3aed160e6c8</title>
 <g id="a_node4"><a xlink:title="ID &#45; http://example.org/kb/officer&#45;uuid&#45;2">
-<polygon fill="#fed37f" stroke="black" points="1115.31,-840.89 1001.23,-853.33 887.14,-840.89 887.25,-820.77 1115.2,-820.77 1115.31,-840.89"/>
+<polygon fill="#fed37f" stroke="#000000" points="1115.31,-840.89 1001.23,-853.33 887.14,-840.89 887.25,-820.77 1115.2,-820.77 1115.31,-840.89"/>
 <text xml:space="preserve" text-anchor="middle" x="1001.23" y="-830.28" font-family="Times,serif" font-size="14.00">ID &#45; kb:officer&#45;uuid&#45;2</text>
 </a>
 </g>
