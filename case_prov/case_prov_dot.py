@@ -87,8 +87,7 @@ def clone_style(
         retval["shape"] = "folder"
         retval["fillcolor"] = "khaki3"
     elif prov_constant == prov.constants.PROV_ENTITY:
-        # This appeared to be the closest color name to the hex constant.
-        retval["fillcolor"] = "khaki1"
+        retval["fillcolor"] = "#FFFC87"
     elif prov_constant == prov.constants.PROV_COMMUNICATION:
         retval["color"] = "blue3"
 
