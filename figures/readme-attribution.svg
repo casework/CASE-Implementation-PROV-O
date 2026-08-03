@@ -22,7 +22,7 @@
 <g id="node2" class="node">
 <title>_b3e54d5a1184906f1df8e89ec65665c571405b0d8a37d02c3a00fbd34397b3df</title>
 <g id="a_node2"><a xlink:title="ID &#45; urn:example:qualifiablyAttributedEntity">
-<ellipse fill="#fff68f" stroke="#808080" cx="140.92" cy="-18" rx="140.92" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="140.92" cy="-18" rx="140.92" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="140.92" y="-12.95" font-family="Times,serif" font-size="14.00">ID &#45; kb:qualifiablyAttributedEntity</text>
 </a>
 </g>
@@ -38,7 +38,7 @@
 <g id="node3" class="node">
 <title>_480bdfd1fe5b252217b8998900a58a6d302338c1e59158f5873f5cd0cafc676e</title>
 <g id="a_node3"><a xlink:title="ID &#45; urn:example:unqualifiablyAttributedEntity">
-<ellipse fill="#fff68f" stroke="#808080" cx="449.92" cy="-18" rx="150.13" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="449.92" cy="-18" rx="150.13" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="449.92" y="-12.95" font-family="Times,serif" font-size="14.00">ID &#45; kb:unqualifiablyAttributedEntity</text>
 </a>
 </g>

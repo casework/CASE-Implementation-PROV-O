@@ -22,7 +22,7 @@
 <g id="node2" class="node">
 <title>_75447935a41fb2b4562606fec9bace2054521fecb4e82258780e1adacf20741f</title>
 <g id="a_node2"><a xlink:title="ID &#45; urn:example:someEntity">
-<ellipse fill="#fff68f" stroke="#808080" cx="83.08" cy="-101.25" rx="83.08" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="83.08" cy="-101.25" rx="83.08" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="83.08" y="-96.2" font-family="Times,serif" font-size="14.00">ID &#45; kb:someEntity</text>
 </a>
 </g>

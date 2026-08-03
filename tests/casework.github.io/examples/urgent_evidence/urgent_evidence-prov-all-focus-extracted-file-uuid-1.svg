@@ -89,7 +89,7 @@
 <g id="node9" class="node">
 <title>_4e612817f5750d184e4518f1d2ca7aa251f41dfc4fa9e77f6cf49f02268ed43a</title>
 <g id="a_node9"><a xlink:title="ID &#45; http://example.org/kb/subject&#45;device&#45;uuid&#45;1">
-<ellipse fill="#fff68f" stroke="#808080" cx="611" cy="-647" rx="120.96" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="611" cy="-647" rx="120.96" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="611" y="-641.95" font-family="Times,serif" font-size="14.00">ID &#45; kb:subject&#45;device&#45;uuid&#45;1</text>
 </a>
 </g>
@@ -183,7 +183,7 @@
 <g id="node8" class="node">
 <title>_7c406068ab32c3bd872fbeced3a1e91d364c55c40a1ce1086876372606d3a115</title>
 <g id="a_node8"><a xlink:title="ID &#45; http://example.org/kb/extracted&#45;file&#45;uuid&#45;1">
-<ellipse fill="#fff68f" stroke="#808080" cx="388" cy="-18" rx="116.86" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="388" cy="-18" rx="116.86" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="388" y="-12.95" font-family="Times,serif" font-size="14.00">ID &#45; kb:extracted&#45;file&#45;uuid&#45;1</text>
 </a>
 </g>

@@ -22,7 +22,7 @@
 <g id="node3" class="node">
 <title>_243b5d196663b32ca6eedf15ee2f5276f2eec4f8526eba892e66e8e8d1969373</title>
 <g id="a_node3"><a xlink:title="ID &#45; urn:example:File&#45;2">
-<ellipse fill="#fff68f" stroke="#808080" cx="375.5" cy="-101.25" rx="62.61" ry="18"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="375.5" cy="-101.25" rx="62.61" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="375.5" y="-96.2" font-family="Times,serif" font-size="14.00">ID &#45; kb:File&#45;2</text>
 </a>
 </g>
@@ -59,7 +59,7 @@
 <g id="node2" class="node">
 <title>_9640acc41515017ae2496fbc88f8afacf04fb0f88982ca5cc407bff57a578d46</title>
 <g id="a_node2"><a xlink:title="ID &#45; urn:example:File&#45;1">
-<ellipse fill="#fff68f" stroke="#808080" cx="435.5" cy="-206.81" rx="69.65" ry="40.31"/>
+<ellipse fill="#fffc87" stroke="#808080" cx="435.5" cy="-206.81" rx="69.65" ry="40.31"/>
 <text xml:space="preserve" text-anchor="middle" x="435.5" y="-218.01" font-family="Times,serif" font-size="14.00">ID &#45; kb:File&#45;1</text>
 <text xml:space="preserve" text-anchor="middle" x="435.5" y="-185.51" font-family="Times,serif" font-size="14.00">Temporary file</text>
 </a>
