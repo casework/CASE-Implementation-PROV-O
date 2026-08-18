@@ -1092,11 +1092,42 @@ WHERE {
 def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
     """
     This function provides, when a namespace is available, the prefixed form of the input node.  Blank nodes are rendered solely with str().
+
+    >>> from rdflib import Graph, Namespace
+    >>> g = Graph()
+    >>> ns_e = Namespace("http://example.org/schema/")
+    >>> ns_1 = Namespace("http://example.org/namespace-1/")
+    >>> ns_2 = Namespace("http://example.org/namespace-2/")
+    >>> n_a = ns_e["a"]
+    >>> n_b = ns_1["b"]
+    >>> n_c = ns_2["c"]
+    >>> g.bind("ex", ns_e)
+    >>> g.bind("ns1", ns_1)
+    >>> # (ns_2 intentionally not bound.)
+    >>> qname(g, n_a)
+    'ex:a'
+    >>> qname(g, n_b)
+    'ns1:b'
+    >>> qname(g, n_c)
+    'http://example.org/namespace-2/c'
+    >>> # Under some inference conditions, the PROV-O IRI is typed as a
+    >>> # prov:Entity.
+    >>> qname(g, "http://www.w3.org/ns/prov-o#")
+    'http://www.w3.org/ns/prov-o#'
     """
     # TODO This function might be obviated by resolution of this issue:
     # https://github.com/RDFLib/rdflib/issues/2429
     if isinstance(n_thing, rdflib.URIRef):
-        return graph.namespace_manager.qname(n_thing)
+        try:
+            # compute_qname 2nd argument is 'generate'.  If True
+            # (default), 'ns%d' is made, with the digit based on
+            # (often-random) encounter-order of unbound namespaces.
+            prefix, _namespace, name = graph.namespace_manager.compute_qname(
+                n_thing, False
+            )
+            return ":".join([prefix, name])
+        except KeyError:
+            return str(n_thing)
     else:
         return str(n_thing)
 
