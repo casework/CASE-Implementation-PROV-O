@@ -1093,7 +1093,7 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
     """
     This function provides, when a namespace is available, the prefixed form of the input node.  Blank nodes are rendered solely with str().
 
-    >>> from rdflib import Graph, Namespace
+    >>> from rdflib import Graph, Namespace, URIRef
     >>> g = Graph()
     >>> ns_e = Namespace("http://example.org/schema/")
     >>> ns_1 = Namespace("http://example.org/namespace-1/")
@@ -1112,7 +1112,7 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
     'http://example.org/namespace-2/c'
     >>> # Under some inference conditions, the PROV-O IRI is typed as a
     >>> # prov:Entity.
-    >>> qname(g, "http://www.w3.org/ns/prov-o#")
+    >>> qname(g, URIRef("http://www.w3.org/ns/prov-o#"))
     'http://www.w3.org/ns/prov-o#'
     """
     # TODO This function might be obviated by resolution of this issue:
@@ -1127,6 +1127,10 @@ def qname(graph: rdflib.Graph, n_thing: rdflib.term.IdentifiedNode) -> str:
             )
             return ":".join([prefix, name])
         except KeyError:
+            return str(n_thing)
+        except ValueError:
+            # This branch can be reached by a code path in
+            # rdflib.namespace.split_uri.
             return str(n_thing)
     else:
         return str(n_thing)
