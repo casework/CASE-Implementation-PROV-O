@@ -1,7 +1,7 @@
 # CASE Implementation: PROV-O
 
 [![Continuous Integration](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml/badge.svg)](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml)
-![CASE Version](https://img.shields.io/badge/CASE%20Version-1.4.0-green)
+![CASE Version](https://img.shields.io/badge/CASE%20Version-1.5.0-green)
 
 This repository maps [CASE](https://caseontology.org/) to [W3C PROV-O](https://www.w3.org/TR/prov-o/) and [OWL-Time](https://www.w3.org/TR/owl-time/), and provides a provenance review mechanism.  Note that contrary to other CASE implementations, this maps CASE out to another data model, instead of mapping another data model or tool into CASE.
 
@@ -71,8 +71,8 @@ This project follows [SEMVER 2.0.0](https://semver.org/) where versions are decl
 
 This repository supports the CASE and UCO ontology versions that are distributed with the [CASE-Utilities-Python repository](https://github.com/casework/CASE-Utilities-Python), at the newest version below a ceiling-pin in [setup.cfg](setup.cfg).  Currently, those ontology versions are:
 
-* CASE 1.2.0
-* UCO 1.2.0
+* CASE 1.5.0
+* UCO 1.5.0
 
 
 ## Repository locations
