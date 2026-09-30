@@ -1,7 +1,7 @@
 # CASE Implementation: PROV-O
 
 [![Continuous Integration](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml/badge.svg)](https://github.com/casework/CASE-Implementation-PROV-O/actions/workflows/cicd.yml)
-![CASE Version](https://img.shields.io/badge/CASE%20Version-1.4.0-green)
+![CASE Version](https://img.shields.io/badge/CASE%20Version-1.5.0-green)
 
 This repository maps [CASE](https://caseontology.org/) to [W3C PROV-O](https://www.w3.org/TR/prov-o/) and [OWL-Time](https://www.w3.org/TR/owl-time/), and provides a provenance review mechanism.  Note that contrary to other CASE implementations, this maps CASE out to another data model, instead of mapping another data model or tool into CASE.
 
@@ -42,7 +42,7 @@ The [tests](tests/) directory demonstrates the three standalone scripts run agai
 * `case_prov_dot` - This script takes as input one or more PROV-O graph files, and outputs a Dot render.
 * `case_prov_check` - This script takes as input one or more graph files, and reviews data for OWL consistency according to PROV-O (e.g. ensuring no one graph individual is a member of two PROV-O disjoint sets), and for breaks in chain of custody.
 
-On using `case_prov_rdf.py` to create a PROV-O graph, it is possible to provide that graph to a PROV-O consumer, such as a [PROV-CONSTRAINTS](https://www.w3.org/TR/prov-constraints/) validator.  This CASE project runs a Python package listed on the [W3C 2013 implementations report](https://www.w3.org/TR/2013/NOTE-prov-implementations-20130430/), [`prov-check`](https://github.com/pgroth/prov-check), as part of its sample output.  For instance, the [CASE-Examples repository](https://github.com/casework/CASE-Examples) is analyzed [here](tests/CASE-Examples/examples/prov-constraints.log).
+On using `case_prov_rdf.py` to create a PROV-O graph, it is possible to provide that graph to a PROV-O consumer, such as a [PROV-CONSTRAINTS](https://www.w3.org/TR/prov-constraints/) validator.  This CASE project runs a Python package listed on the [W3C 2013 implementations report](https://www.w3.org/TR/2013/NOTE-prov-implementations-20130430/), [`prov-check`](https://github.com/pgroth/prov-check), as part of its sample output.  For instance, the [CASE website](https://github.com/casework/casework.github.io)'s examples are analyzed [here](tests/casework.github.io/examples/prov-constraints.log).
 
 All of the demonstration rendering (to PROV-O and to SVG images) can be run by cloning this repository and running (optionally with `-j`):
 
@@ -71,8 +71,8 @@ This project follows [SEMVER 2.0.0](https://semver.org/) where versions are decl
 
 This repository supports the CASE and UCO ontology versions that are distributed with the [CASE-Utilities-Python repository](https://github.com/casework/CASE-Utilities-Python), at the newest version below a ceiling-pin in [setup.cfg](setup.cfg).  Currently, those ontology versions are:
 
-* CASE 1.2.0
-* UCO 1.2.0
+* CASE 1.5.0
+* UCO 1.5.0
 
 
 ## Repository locations

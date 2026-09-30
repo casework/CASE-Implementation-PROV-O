@@ -18,7 +18,7 @@
 This script executes CONSTRUCT queries and other data translation, returning a supplemental graph.
 """
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 import argparse
 import importlib.resources
@@ -152,7 +152,7 @@ def main() -> None:
         action_inherence_uuid = case_utils.inherent_uuid.inherence_uuid(n_action)
 
         # Generate Starts.
-        (n_start, inference_triples) = case_prov.infer_interval_terminus(
+        n_start, inference_triples = case_prov.infer_interval_terminus(
             in_graph,
             n_action,
             NS_PROV.qualifiedStart,
@@ -167,7 +167,7 @@ def main() -> None:
 
         # Generate Ends, if there's a sign an end should exist.
         if case_prov.interval_end_should_exist(in_graph, n_action):
-            (n_end, inference_triples) = case_prov.infer_interval_terminus(
+            n_end, inference_triples = case_prov.infer_interval_terminus(
                 in_graph,
                 n_action,
                 NS_PROV.qualifiedEnd,
@@ -333,7 +333,7 @@ def main() -> None:
 
     def _pull_inference_triples(inference_triples: case_prov.TmpTriplesType) -> None:
         """
-        This subroutine is provided to supplement case_prov.infer_prov_instantaneous_influence_event usage.
+        This subroutine is provided to supplement case_prov.infer_prov_influence usage.
         """
         nonlocal tmp_triples
         for inference_triple in inference_triples:
@@ -360,7 +360,7 @@ def main() -> None:
         (
             n_communication,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_informed_activity,
             NS_PROV.qualifiedCommunication,
@@ -385,7 +385,7 @@ def main() -> None:
         (
             n_derivation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_action_result,
             NS_PROV.qualifiedDerivation,
@@ -418,7 +418,7 @@ def main() -> None:
         (
             n_generation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_entity,
             NS_PROV.qualifiedGeneration,
@@ -443,7 +443,7 @@ def main() -> None:
         (
             n_invalidation,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_entity,
             NS_PROV.qualifiedInvalidation,
@@ -468,7 +468,7 @@ def main() -> None:
         (
             n_usage,
             inference_triples,
-        ) = case_prov.infer_prov_instantaneous_influence_event(
+        ) = case_prov.infer_prov_influence(
             tmp_graph,
             n_activity,
             NS_PROV.qualifiedUsage,
@@ -581,7 +581,7 @@ def main() -> None:
     # the bounding instants.
     for n_interval in sorted(n_intervals):
         # Generate Ends.
-        (n_time_end, end_graph) = case_prov.infer_interval_terminus(
+        n_time_end, end_graph = case_prov.infer_interval_terminus(
             tmp_graph,
             n_interval,
             NS_TIME.hasEnd,
@@ -594,7 +594,7 @@ def main() -> None:
         del end_graph
 
         # Generate Beginnings.
-        (n_time_beginning, beginning_graph) = case_prov.infer_interval_terminus(
+        n_time_beginning, beginning_graph = case_prov.infer_interval_terminus(
             tmp_graph,
             n_interval,
             NS_TIME.hasBeginning,

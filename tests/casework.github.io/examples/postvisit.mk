@@ -1,3 +1,5 @@
+#!/usr/bin/make -f
+
 # Portions of this file contributed by NIST are governed by the
 # following statement:
 #
@@ -12,17 +14,31 @@
 #
 # We would appreciate acknowledgement if the software is used.
 
-repos:
-  - repo: https://github.com/psf/black
-    rev: 26.5.1
-    hooks:
-      - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.4.1
-    hooks:
-      - id: flake8
-  - repo: https://github.com/pycqa/isort
-    rev: 9.0.2
-    hooks:
-      - id: isort
-        name: isort (python)
+SHELL := /bin/bash
+
+top_srcdir := $(shell cd ../../.. ; pwd)
+
+exdirs := $(shell find * -maxdepth 0 -type d | sort | egrep -v '^src$$')
+
+ttl_files := $(foreach exdir,$(exdirs),$(exdir)/$(exdir)-prov.ttl)
+
+all:
+
+check: \
+  prov-constraints.log
+
+clean:
+	@rm -f \
+	  _* \
+	  prov-constraints.log
+
+prov-constraints.log: \
+  $(top_srcdir)/dependencies/prov-check/provcheck/provconstraints.py \
+  $(ttl_files)
+	source $(top_srcdir)/tests/venv/bin/activate \
+	  && python3 $(top_srcdir)/dependencies/prov-check/provcheck/provconstraints.py \
+	    --debug \
+	    $(ttl_files) \
+	    > _$@ \
+	    2>&1
+	mv _$@ $@

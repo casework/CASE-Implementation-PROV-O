@@ -28,6 +28,8 @@ clean_targets     := $(foreach exdir,$(exdirs),clean-$(exdir))
 
 all: \
   $(all_targets)
+	$(MAKE) \
+	  --file postvisit.mk
 
 all-%:
 	$(MAKE) \
@@ -39,6 +41,9 @@ check: \
 	  <(ls */prov-constraints.log | while read x; do dirname $$x ; done) \
 	  <(cd $(examples_srcdir) ; ls */*.json | while read x; do dirname $$x ; done | sort | uniq) \
 	  || (echo "ERROR:Makefile:The illustrations listed above do not have evaluation directories under $(top_srcdir)/tests/casework.github.io/examples." >&2 ; exit 1)
+	$(MAKE) \
+	  --file postvisit.mk \
+	  check
 
 check-%:
 	$(MAKE) \
@@ -47,6 +52,9 @@ check-%:
 
 clean: \
   $(clean_targets)
+	@$(MAKE) \
+	  --file postvisit.mk \
+	  clean
 
 clean-%:
 	@$(MAKE) \
